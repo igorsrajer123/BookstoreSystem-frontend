@@ -1,0 +1,134 @@
+body {
+    background: rgb(36,32,0);
+    background: radial-gradient(circle, rgba(36,32,0,0.9556197478991597) 0%, rgba(121,97,9,0.6082808123249299) 50%, rgba(255,124,0,0.3253676470588235) 100%);
+}
+
+.topbarWrapper {
+    background-color: wheat;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+}
+
+hr {
+    width: 88vw;
+}
+
+.topbarTop {
+    flex: 6;
+    display: flex;
+    align-items: center;
+}
+
+.topbarBottom {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbarTopLeft {
+    height: 100%;
+    width: 25vw;
+    display: flex;
+    align-items: center;
+}
+
+.topbarTopCenter {
+    height: 100%;
+    width: 45vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbarTopRight {
+    height: 100%;
+    width: 28vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topbarLogo {
+    color: brown;
+    font-size: 6.5vh;
+    margin-left: 1%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.topbarLogo:hover {
+    color: black;
+    font-size: 7vh;
+}
+
+.topbarSearch {
+    width: 55%;
+    height: 35%;
+    display: flex;
+}
+
+.searchInput {
+    width: 86%;
+    height: 5vh;
+    outline: none;
+    font-size: medium;
+    border-style: none;
+
+}
+
+.searchIcon {
+    font-size: 5.2vh !important;
+    cursor: pointer;
+    color: brown;
+    background-color: white;
+}
+
+.optionText {
+    color: brown;
+    font-size: 3vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.optionText:hover {
+    color: black;
+}
+
+.shoppingCart {
+    font-size: 4vh !important;
+    color: brown;
+    cursor: pointer;
+    margin-left: 0.5vw;
+}
+
+.shoppingCart:hover {
+    font-size: 5vh !important;
+    color: black;
+}
+
+.topbarBottomButton {
+    background-color: wheat;
+    height: 100%;
+    width: 13vh;
+    outline: none;
+    border-style: none;
+    cursor: pointer;
+    color: brown;
+    font-size: large;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 0.5%;
+}
+
+.topbarBottomButton:hover {
+    color: black;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}

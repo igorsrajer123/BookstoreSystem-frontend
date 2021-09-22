@@ -1,0 +1,69 @@
+.otherProductsWrapper {
+    background-color: wheat;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+}
+
+.otherProductCategories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 13vw;
+    color: brown;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.otherProductCategory {
+    margin-top: 10%;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
+.otherProductCategory:hover {
+    color: black;
+}
+
+.otherProducts {
+    width: 76vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 5px;
+}
+
+.otherProductsHr {
+    width: 1px;
+    margin-left: 1px;
+}
+
+.otherProduct {
+    border-style: solid;
+    width: 15vw;
+    height: 40vh;
+    margin-left: 15%;
+    margin-top: 5%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.otherProduct:hover {
+    border-color: brown;
+}
+
+.otherProductImage {
+    width: 100%;
+    height: 80%;
+    background-color: brown;
+}
+
+.otherProductName {
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

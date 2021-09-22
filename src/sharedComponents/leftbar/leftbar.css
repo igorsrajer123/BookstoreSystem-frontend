@@ -1,0 +1,37 @@
+.leftbarWrapper {
+    background-color: wheat;
+    width: 15vw;
+    display: flex;
+}
+
+.leftbarHr {
+    border: none;
+    border-left: 1px solid hsla(200, 10%, 50%,100);
+    width: 1px;
+    margin-top: 10%;
+    margin-right: 10%;
+    margin-bottom: 1%;
+}
+
+.leftbarGenres {
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.oneGenre {
+    color: brown;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    transition: 0.7s;
+    margin-top: 5%;
+
+}
+
+.oneGenre:hover {
+    color: black;
+}

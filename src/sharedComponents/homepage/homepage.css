@@ -1,0 +1,40 @@
+.homepageWrapper {
+    background-color: wheat;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.product {
+    border-style: solid;
+    width: 15vw;
+    height: 40vh;
+    margin-left: 15%;
+    margin-top: 15%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.product:hover {
+    border-color: brown;
+}
+
+.productImage {
+    width: 100%;
+    height: 80%;
+    background-color: brown;
+}
+
+.productName {
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+

@@ -13,8 +13,8 @@ body {
     flex-direction: column;
 }
 
-hr {
-    width: 88vw;
+.topbarHr {
+    width: 86vw;
 }
 
 .topbarTop {

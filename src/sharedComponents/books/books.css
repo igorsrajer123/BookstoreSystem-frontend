@@ -1,0 +1,44 @@
+.booksWrapper {
+    background-color: wheat;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+}
+
+.books {
+    width: 70vw;
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.book {
+    border-style: solid;
+    width: 14vw;
+    height: 40vh;
+    margin-left: 10%;
+    margin-top: 10%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.book:hover {
+    border-color: brown;
+}
+
+.bookImage {
+    width: 100%;
+    height: 80%;
+    background-color: brown;
+}
+
+.bookName {
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

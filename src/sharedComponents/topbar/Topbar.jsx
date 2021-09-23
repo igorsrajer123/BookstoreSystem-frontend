@@ -2,11 +2,15 @@
 import React, { Component } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import "./topbar.css";
+import './topbar.css';
+import LoginModal from './../../modals/LoginModal';
+import LoginService from './../../services/loginService';
 
 export default class Topbar extends Component {
     constructor(props) {
         super(props);
+
+        this.child = React.createRef();
 
         this.state = {
             onHomePage: false,
@@ -14,7 +18,8 @@ export default class Topbar extends Component {
             onBookstoresPage: false,
             onWritersPage: false,
             onProfilePage: false,
-            onOtherProductsPage: false
+            onOtherProductsPage: false,
+            loggedIn: null
         }
 
         this.booksClick = this.booksClick.bind(this);
@@ -23,7 +28,13 @@ export default class Topbar extends Component {
         this.writersClick = this.writersClick.bind(this);
         this.profileClick = this.profileClick.bind(this);
         this.otherProductsClick = this.otherProductsClick.bind(this);
+        this.loginClick = this.loginClick.bind(this);
+        this.logoutClick = this.logoutClick.bind(this);
     }
+
+    loginClick = () => this.child.current.toggleModal();
+
+    logoutClick = () => LoginService.logout();
 
     booksClick = () => window.location.href = "http://localhost:3000/books";
 
@@ -67,6 +78,12 @@ export default class Topbar extends Component {
             this.refreshPageOptions();
             this.setState({onHomePage: true})
         }
+
+        const currentUser = await LoginService.getCurrentUser();
+        if(currentUser == null)
+            this.setState({loggedIn: null})
+        else
+            this.setState({loggedIn: currentUser});
     }
 
     render() {
@@ -84,12 +101,13 @@ export default class Topbar extends Component {
                     </div>
                     <div className="topbarTopRight">
                         <div className="options">
-                            <span className="optionText">Sign In</span>
-                            <span className="optionText">Sign Out</span>
+                            <span className="optionText" onClick={this.loginClick} style={{display: this.state.loggedIn==null ? 'inline' : 'none'}}>Sign In</span>
+                            <span className="optionText" onClick={this.logoutClick} style={{display: this.state.loggedIn==null ? 'none' : 'inline'}}>Sign Out</span>
                             <AddShoppingCartIcon className="shoppingCart"/>
                         </div>
                     </div>
                 </div>
+                <LoginModal ref={this.child}/>
                 <hr className="topbarHr"/>
                 <div className="topbarBottom">
                     <button className="topbarBottomButton" 

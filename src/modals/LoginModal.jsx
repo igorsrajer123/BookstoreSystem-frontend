@@ -83,11 +83,19 @@ export default class LoginModal extends Component {
                                 data-tip data-for="wrongPassword"
                                 style={{borderColor: this.state.wrongPassword ? 'red' : '', borderStyle: this.state.wrongPassword ? 'solid' : 'none'}} />
                         <span className="loginNotAMember" style={{color: 'black', textDecoration: 'underline', cursor: 'pointer'}}>Forgot password?</span>
-                        <ReactTooltip id="wrongEmail" type="error" disable={this.state.wrongEmail ? false : true}>
-                            <span>This user doesn't exist!</span>
+                        <ReactTooltip id="wrongEmail" 
+                                        type="error" 
+                                        disable={this.state.wrongEmail ? false : true}
+                                        place="top" 
+                                        effect="solid">
+                            <span>Invalid email address!</span>
                         </ReactTooltip>
-                        <ReactTooltip id="wrongPassword" type="error" disable={this.state.wrongPassword ? false : true}>
-                            <span><span>Wrong password!</span></span>
+                        <ReactTooltip id="wrongPassword" 
+                                        type="error" 
+                                        disable={this.state.wrongPassword ? false : true}
+                                        place="top" 
+                                        effect="solid">
+                            <span><span>Invalid password!</span></span>
                         </ReactTooltip>
                     </div>
                     <RegistrationModal ref={this.child} />

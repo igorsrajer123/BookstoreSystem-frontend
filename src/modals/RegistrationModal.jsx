@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import RegistrationService from './../services/registrationService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ReactTooltip from 'react-tooltip';
 
 export default class RegistrationModal extends Component {
     constructor(props) {
@@ -138,13 +139,66 @@ export default class RegistrationModal extends Component {
                     </div>
                     <div className="registrationBottom">
                         <div className="registrationFullName">
-                            <input type="text" placeholder="First Name*" className="registrationInput" onChange={this.firstNameInputChange} style={{border: this.state.validFirstName ? '' : 'solid red'}} />
-                            <input type="text" placeholder="Last Name*" className="registrationInput" onChange={this.lastNameInputChange} style={{border: this.state.validLastName ? '' : 'solid red'}} />
+                            <input type="text" 
+                                    placeholder="First Name*" 
+                                    className="registrationInput" 
+                                    onChange={this.firstNameInputChange} 
+                                    style={{border: this.state.validFirstName ? '' : 'solid red'}}
+                                    data-tip data-for="wrongFirstName" />
+                            <ReactTooltip id="wrongFirstName" 
+                                            type="error" 
+                                            disable={this.state.validFirstName ? true : false}
+                                            place="top" 
+                                            effect="solid">
+                                <span>Please enter your first name!</span>
+                            </ReactTooltip>
+                            <input type="text" 
+                                    placeholder="Last Name*" 
+                                    className="registrationInput" 
+                                    onChange={this.lastNameInputChange} 
+                                    style={{border: this.state.validLastName ? '' : 'solid red'}}
+                                    data-tip data-for="wrongLastName" />
+                            <ReactTooltip id="wrongLastName" 
+                                            type="error" 
+                                            disable={this.state.validLastName ? true : false}
+                                            place="top" 
+                                            effect="solid">
+                                <span>Please enter your last name!</span>
+                            </ReactTooltip>
                         </div>
                         <div className="registrationCredentials">
-                            <input type="text" placeholder="Email*" className="registrationInput" onChange={this.emailInputChange} style={{border: this.state.validEmail ? '' : 'solid red'}}/>
-                            <input type="password" placeholder="Password*" className="registrationInput" onChange={this.passwordInputChange} style={{border: this.state.validPassword ? '' : 'solid red'}} />
-                            <input type="password" placeholder="Confirm Password*" className="registrationInput" onChange={this.confirmPasswordInputChange} style={{border: this.state.validPassword ? '' : 'solid red'}}/>
+                            <input type="text" 
+                                    placeholder="Email*" 
+                                    className="registrationInput" 
+                                    onChange={this.emailInputChange} 
+                                    style={{border: this.state.validEmail ? '' : 'solid red'}}
+                                    data-tip data-for="wrongEmail"/>
+                            <ReactTooltip id="wrongEmail" 
+                                            type="error" 
+                                            disable={this.state.validEmail ? true : false}
+                                            place="top" 
+                                            effect="solid">
+                                <span>Invalid email!</span>
+                            </ReactTooltip>
+                            <input type="password" 
+                                    placeholder="Password*" 
+                                    className="registrationInput" 
+                                    onChange={this.passwordInputChange} 
+                                    style={{border: this.state.validPassword ? '' : 'solid red'}} 
+                                    data-tip data-for="wrongPassword"/>
+                            <input type="password" 
+                                    placeholder="Confirm Password*" 
+                                    className="registrationInput" 
+                                    onChange={this.confirmPasswordInputChange} 
+                                    style={{border: this.state.validPassword ? '' : 'solid red'}}
+                                    data-tip data-for="wrongPassword"/>
+                            <ReactTooltip id="wrongPassword" 
+                                            type="error" 
+                                            disable={this.state.validPassword ? true : false}
+                                            place="top" 
+                                            effect="solid">
+                                <span>Passwords must match!</span>
+                            </ReactTooltip>
                         </div>
                         <div className="registrationOtherInfo">
                             <input type="text" placeholder="Phone Number" className="registrationInput" onChange={this.phoneNumberInputChange} />

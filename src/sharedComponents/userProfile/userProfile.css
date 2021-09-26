@@ -1,0 +1,92 @@
+.userProfileWrapper{
+    background-color: wheat;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 55vh;
+    display: flex;
+}
+
+.userProfileLeft {
+    flex: 2;
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: red;
+}
+
+.userProfileCenter {
+    background-color: blue;
+    flex: 4;
+}
+
+.userProfileRight {
+    background-color: yellow;
+    flex: 4;
+    margin-right: 3%;
+}
+
+.profilePhoto {
+    width: 35vh;
+    background-color: wheat;
+    width: 15vw;
+    height: 30vh;
+    margin-top: 5%;
+    border-radius: 20%;
+    margin: 2%;
+    transition: 0.5s;
+    border-style: solid;
+}
+
+.profilePhoto:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+    border-color: white;
+}
+
+.inputFile {
+    margin: 5%;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+.dummyLabel{
+    display: block;
+    position: relative;
+    width: 15vw;
+    height: 50px;
+    border-radius: 25px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+    background-color: blanchedalmond;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform .2s ease-out;
+}
+
+.dummyLabel:hover {
+    background-color: wheat;
+}
+
+.submitPhoto {
+    color: brown;
+    font-weight: bold;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-style: none;
+    outline: none;
+    margin-top: 5%;
+}
+
+.submitPhoto:hover {
+    color: black;
+    background-color: khaki;
+    cursor: pointer;
+}

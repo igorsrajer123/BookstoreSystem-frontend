@@ -2,7 +2,7 @@ async function checkUserExists(email) {
     const url = "http://localhost:8080/getUserByEmail/" + email;
     const response = await fetch(url);
 
-    if(response.status == 404)
+    if(response.status === 404)
         return false;
 
     return true;
@@ -10,7 +10,7 @@ async function checkUserExists(email) {
 
 async function registration(newUser) { 
     const url = "http://localhost:8080/register";  
-    const response = await fetch(url, {
+    await fetch(url, {
         method: "POST",
         headers: {
                     "Content-Type": 'application/json'
@@ -21,7 +21,7 @@ async function registration(newUser) {
 
 async function sendAccountConfirmation(email) {
     const url = "http://localhost:8080/sendAccountConfirmation";  
-    const response = await fetch(url, {
+    await fetch(url, {
         method: "POST",
         headers: {
                     "Content-Type": 'application/json',
@@ -31,8 +31,9 @@ async function sendAccountConfirmation(email) {
     }).catch(e => console.error(e));
 }
 
-export default {
+const registrationService = {
     checkUserExists,
     registration,
     sendAccountConfirmation
 }
+export default registrationService;

@@ -57,7 +57,7 @@ async function getOtherProducts() {
     return myProducts;
 }
 
-export default {
+const productService = {
     getAllProducts,
     getAllBooks,
     getAllToys,
@@ -66,3 +66,5 @@ export default {
     getEverySchoolkit,
     getOtherProducts
 }
+
+export default productService;

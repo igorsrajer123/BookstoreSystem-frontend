@@ -149,7 +149,8 @@ export default class Topbar extends Component {
                             onClick={this.profileClick} 
                             style={{color: this.state.onProfilePage ? 'black' : '',
                                     borderBottomStyle: this.state.onProfilePage ? 'solid' : '',
-                                    borderColor: this.state.onProfilePage ? 'black' : ''}}>
+                                    borderColor: this.state.onProfilePage ? 'black' : '',
+                                    display: this.state.loggedIn==null ? 'none' : 'inline'}}>
                         Profile
                     </button>
                 </div>

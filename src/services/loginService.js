@@ -10,7 +10,7 @@ async function login(credentials) {
         body: JSON.stringify(credentials)
     }).catch(e => console.error(e));
 
-    if(response.status == 200){
+    if(response.status === 200){
         const resp = await response.json();
         Cookies.set('token', resp.accessToken);
     }
@@ -32,14 +32,16 @@ async function getCurrentUser() {
         }
     });
 
-    if(response.status == 404) return null;
+    if(response.status === 404) return null;
 
     const currentUser = await response.json();
     return currentUser;
 }
 
-export default {
+const loginService = {
     login,
     logout,
     getCurrentUser
 }
+
+export default loginService;

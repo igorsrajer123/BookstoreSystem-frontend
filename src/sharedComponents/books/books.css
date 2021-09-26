@@ -13,32 +13,31 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+.books > div:nth-child(2n){
+    background: darksalmon;
+}
+
+.books > div:nth-child(2n + 1){
+    background: lightgreen;
+}
+
+.books > div:nth-child(2n):hover{
+    background: navajowhite;
+}
+
+.books > div:nth-child(2n + 1):hover{
+    background: navajowhite;
+}
+
 .book {
-    border-style: solid;
-    width: 14vw;
+    width: 15vw;
     height: 40vh;
-    margin-left: 10%;
-    margin-top: 10%;
+    margin-left: 15%;
+    margin-top: 15%;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-}
-
-.book:hover {
-    border-color: brown;
-}
-
-.bookImage {
-    width: 100%;
-    height: 80%;
-    background-color: brown;
-}
-
-.bookName {
-    font-size: large;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: brown;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    transition: 0.3s;
+    padding: 2%;
+    text-align: center;
 }

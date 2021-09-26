@@ -1,0 +1,34 @@
+.productWrapper {
+    height: 100%;
+    width: 100%;
+    transition: 0.5s;
+}
+
+.productWrapper:hover {
+    background-color: navajowhite;
+}
+
+.productImage {
+    width: 100%;
+    height: 80%;
+    background-color: brown;
+    transition: 0.3s;
+}
+
+.productImage:hover {
+    transform: scale(1.03);
+}
+
+.productInfo {
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+}
+
+.productWriter {
+    font-size: medium;
+}

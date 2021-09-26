@@ -45,17 +45,17 @@ export default class LoginModal extends Component {
         }
 
         const response = await LoginService.login(user);
-        if(response == 401) {
+        if(response === 401) {
             this.setState({wrongEmail: false});
             this.setState({wrongPassword: true});
         }
 
-        if(response == 404) {
+        if(response === 404) {
             this.setState({wrongEmail: true});
             this.setState({wrongPassword: false});
         }
 
-        if(response == 200) {
+        if(response === 200) {
             this.setState({wrongEmail: false});
             this.setState({wrongPassword: false});
             window.location.href = "http://localhost:3000/";

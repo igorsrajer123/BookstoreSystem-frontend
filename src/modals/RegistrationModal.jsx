@@ -48,7 +48,7 @@ export default class RegistrationModal extends Component {
         let firstNameValid = false;
         let lastNameValid = false;
 
-        if(this.state.password === this.state.confirmPassword && this.state.password != ""){
+        if(this.state.password === this.state.confirmPassword && this.state.password !== ""){
             passwordValid = true;
             this.setState({validPassword: passwordValid});
         }else{
@@ -56,7 +56,7 @@ export default class RegistrationModal extends Component {
             this.setState({validPassword: passwordValid});
         }
 
-        if(this.state.firstName != ""){
+        if(this.state.firstName !== ""){
             firstNameValid = true;
             this.setState({validFirstName: firstNameValid});
         }else{
@@ -64,7 +64,7 @@ export default class RegistrationModal extends Component {
             this.setState({validFirstName: firstNameValid});
         }
 
-        if(this.state.lastName != ""){
+        if(this.state.lastName !== ""){
             lastNameValid = true;
             this.setState({validLastName: lastNameValid});
         }else{
@@ -73,7 +73,7 @@ export default class RegistrationModal extends Component {
         }
 
         const userExists = await RegistrationService.checkUserExists(this.state.email);
-        if(this.state.email != "" && !userExists){
+        if(this.state.email !== "" && !userExists){
             emailValid = true;
             this.setState({validEmail: emailValid});
         }else{

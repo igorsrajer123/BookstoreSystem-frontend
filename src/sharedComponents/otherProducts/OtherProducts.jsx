@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import './otherProducts.css';
 import ProductService from './../../services/productService';
-import NoImage from './../../assets/noimg.webp';
+import Product from './../product/Product';
 
 export default class OtherProducts extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
-            otherProducts: [],
-            productImage: null
+            otherProducts: []
         }
     }
 
@@ -32,10 +31,7 @@ export default class OtherProducts extends Component {
                 <div className="otherProducts">
                     {this.state.otherProducts.map(o => (
                         <div key={o.id} className="otherProduct">
-                            <img className="otherProductImage" alt="otherProductImage" src={NoImage} />
-                            <div className="otherProductName">
-                                <span className="otherProductInfo"><b>{o.name}</b></span>
-                            </div>
+                            <Product product={o} />
                         </div>
                     ))}
                 </div>

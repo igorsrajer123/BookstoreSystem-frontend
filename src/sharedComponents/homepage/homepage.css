@@ -7,8 +7,23 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+.homepageWrapper > div:nth-child(2n){
+    background: darksalmon;
+}
+
+.homepageWrapper > div:nth-child(2n + 1){
+    background: lightgreen;
+}
+
+.homepageWrapper > div:nth-child(2n):hover{
+    background: navajowhite;
+}
+
+.homepageWrapper > div:nth-child(2n + 1):hover{
+    background: navajowhite;
+}
+
 .product {
-    border-style: solid;
     width: 15vw;
     height: 40vh;
     margin-left: 15%;
@@ -16,25 +31,7 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    padding: 2%;
+    text-align: center;
+    transition: 0.5s;
 }
-
-.product:hover {
-    border-color: brown;
-}
-
-.productImage {
-    width: 100%;
-    height: 80%;
-    background-color: brown;
-}
-
-.productName {
-    font-size: large;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: brown;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-

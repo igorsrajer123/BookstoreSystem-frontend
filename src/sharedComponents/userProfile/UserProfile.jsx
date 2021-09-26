@@ -4,6 +4,8 @@ import UserService from './../../services/userService';
 import './userProfile.css';
 import NoImage from './../../assets/noimg.webp';
 import DatePicker from 'react-datepicker';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import ReactTooltip from 'react-tooltip';
 
 export default class userProfile extends Component {
     constructor() {
@@ -65,31 +67,36 @@ export default class userProfile extends Component {
 
     async updateUserInformation() {
 
-        let birthDate = this.state.currentBirthDate;
-        let test = new Date(birthDate).toISOString().split('T');
-        let br = new Date(birthDate) + Math.abs(new Date(birthDate).getTimezoneOffset()*60000);
-        let ah = br.split('T');
-        /*
-        const object = {
-            id: parseInt(this.state.currentId),
-            firstName: this.state.currentFirstName,
-            lastName: this.state.currentLastName,
-            phoneNumber: this.state.currentPhoneNumber,
-            address: this.state.currentAddress,
-            city: this.state.currentCity,
-            dateOfBirth: test[0].toString()
+        let birthDateString = this.state.currentBirthDate;
+        let birthDate = new Date(birthDateString);
+        birthDate.setDate(birthDate.getDate() + 1);
+        let readableDate = birthDate.toISOString().split('T');
+        
+        if(this.state.currentFirstName !== "" && this.state.currentLastName !== ""){
+            const object = {
+                id: parseInt(this.state.currentId),
+                firstName: this.state.currentFirstName,
+                lastName: this.state.currentLastName,
+                phoneNumber: this.state.currentPhoneNumber,
+                address: this.state.currentAddress,
+                city: this.state.currentCity,
+                dateOfBirth: readableDate[0]
+            }
+            
+            const responseStatus = await UserService.updateUser(object);
+            if(responseStatus == 200)
+                NotificationManager.success("User Account updated successfully!", "Update Successful!");
+            else
+                NotificationManager.error("Something went wrong!", "Update Failed!");
+        }else{
+            NotificationManager.error("First and last name cannot be empty!", "Update Failed!");
         }
-        await UserService.updateUser(object);
-*/
+            
     }
 
-    filePicked = () => {
-        this.setState({hideUploadButton: false})
-    }
+    filePicked = () => this.setState({hideUploadButton: false})
 
-    reloadPage = () => {
-        window.location.reload();
-    }
+    reloadPage = () => window.location.reload();
 
     handleDateChange = date => this.setState({currentBirthDate: date});
 
@@ -129,11 +136,39 @@ export default class userProfile extends Component {
                     </div>
                     <div className="userInformation" >
                         <span className="userInformationLabel"><b>First Name</b></span>
-                        <input type="text" placeholder="First Name" className="userInformationInput" value={this.state.currentFirstName} onChange={this.handleFirstNameChange}/>
+                        <input type="text" 
+                                placeholder="First Name" 
+                                className="userInformationInput" 
+                                value={this.state.currentFirstName} 
+                                onChange={this.handleFirstNameChange}
+                                style={{borderStyle: this.state.currentFirstName === '' ? 'solid' : 'none',
+                                        borderColor: this.state.currentFirstName === '' ? 'red' : ''}} 
+                                data-tip data-for="wrongFirstName"/>
+                        <ReactTooltip id="wrongFirstName" 
+                                            type="error" 
+                                            disable={this.state.currentFirstName === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter your first name!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="userInformation" >
                         <span className="userInformationLabel"><b>Last Name</b></span>
-                        <input type="text" placeholder="Last Name" className="userInformationInput" value={this.state.currentLastName} onChange={this.handleLastNameChange}/>
+                        <input type="text" 
+                                placeholder="Last Name" 
+                                className="userInformationInput" 
+                                value={this.state.currentLastName} 
+                                onChange={this.handleLastNameChange}
+                                style={{borderStyle: this.state.currentLastName === '' ? 'solid' : 'none',
+                                        borderColor: this.state.currentLastName === '' ? 'red' : ''}}
+                                data-tip data-for="wrongLastName"/>
+                        <ReactTooltip id="wrongLastName" 
+                                            type="error" 
+                                            disable={this.state.currentLastName === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter your last name!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="userInformation" >
                         <span className="userInformationLabel"><b>Phone Number</b></span>
@@ -163,6 +198,7 @@ export default class userProfile extends Component {
                         <button className="changePasswordButton" id="changePassword">Change Password?</button>
                     </div>
                 </div>
+                <NotificationContainer />
             </div>
         )
     }

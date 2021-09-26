@@ -14,18 +14,23 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: red;
 }
 
 .userProfileCenter {
-    background-color: blue;
     flex: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
 }
 
 .userProfileRight {
-    background-color: yellow;
     flex: 4;
     margin-right: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
 }
 
 .profilePhoto {
@@ -89,4 +94,96 @@
     color: black;
     background-color: khaki;
     cursor: pointer;
+}
+
+.userInformation {
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 25vw;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-weight: bold;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+}
+
+.userInformationLabel {
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    width: 40%;
+    text-align: center;
+}
+
+.userInformationInput {
+    border-style: none;
+    outline: none;
+    text-align: center;
+    margin-left: 5%;
+    width: 15vw;
+    height: 5vh;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+.changePassword {
+    width: 25vw;
+    height: 15vh;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userBirthDate {
+    border-style: none;
+    outline: none;
+    text-align: center;
+    width: 15vw;
+    height: 5vh;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 3vw;
+}
+
+.changePasswordButton {
+    height: 7vh;
+    width: 10vw;
+    margin-left: 5%;
+    border-style: none;
+    outline: none;
+    font-size: large;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    color: white;
+}
+
+#saveChanges {
+    background-color: lawngreen;
+    transition: 0.5s;
+}
+
+#saveChanges:hover {
+    background-color: white;
+    color: lawngreen;
+}
+
+#changePassword {
+    background-color: orangered;
+    transition: 0.5s;
+}
+
+#changePassword:hover {
+    background-color: white;
+    color: orangered;
 }

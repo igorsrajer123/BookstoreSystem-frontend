@@ -11,8 +11,8 @@ function App() {
         <BrowserRouter>
             <Route path="/" component={Topbar} />
             <Route path="/" exact component={Homepage} />
-            <Route path="/books" exact component={Books} />
-            <Route path="/otherProducts" exact component={OtherProducts} />
+            <Route path="/books" component={Books} />
+            <Route path="/otherProducts" component={OtherProducts} />
             <Route path="/profile" exact component={UserProfile} />
         </BrowserRouter>
     );

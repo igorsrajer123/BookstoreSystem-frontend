@@ -6,10 +6,15 @@ import NoImage from './../../assets/noimg.webp';
 import DatePicker from 'react-datepicker';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import ReactTooltip from 'react-tooltip';
+import ProfilePhotoModal from './../../modals/userProfile/ProfilePhotoModal';
+import ChangePasswordModal from './../../modals/userProfile/ChangePasswordModal';
 
 export default class userProfile extends Component {
     constructor() {
         super();
+
+        this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             currentUser: null,
@@ -33,6 +38,8 @@ export default class userProfile extends Component {
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleCityChange = this.handleCityChange.bind(this);
         this.updateUserInformation = this.updateUserInformation.bind(this);
+        this.profilePhotoClick = this.profilePhotoClick.bind(this);
+        this.changePasswordClick = this.changePasswordClick.bind(this);
     }
 
     async componentDidMount() {
@@ -84,7 +91,7 @@ export default class userProfile extends Component {
             }
             
             const responseStatus = await UserService.updateUser(object);
-            if(responseStatus == 200)
+            if(responseStatus === 200)
                 NotificationManager.success("User Account updated successfully!", "Update Successful!");
             else
                 NotificationManager.error("Something went wrong!", "Update Failed!");
@@ -93,6 +100,10 @@ export default class userProfile extends Component {
         }
             
     }
+
+    profilePhotoClick = () => this.child.current.toggleModal();
+
+    changePasswordClick = () => this.child2.current.toggleModal();
 
     filePicked = () => this.setState({hideUploadButton: false})
 
@@ -114,7 +125,9 @@ export default class userProfile extends Component {
         return (
             <div className="userProfileWrapper">
                 <div className="userProfileLeft">
-                    <img src={this.state.profilePhoto} alt="pic" className="profilePhoto" />
+                    <ProfilePhotoModal ref={this.child} photo={this.state.profilePhoto} />
+                    <ChangePasswordModal ref={this.child2} userId={this.state.currentId} />
+                    <img src={this.state.profilePhoto} alt="pic" className="profilePhoto" onClick={this.profilePhotoClick} />
                     <iframe name="dummyframe" title="Just a dummy frame #1" id="dummyframe" style={{display: "none"}}></iframe>
                     <form action={this.state.action} target="dummyframe" encType="multipart/form-data" method="POST">
                         <input type="file" id="file" name="file" className="inputFile" onChange={this.filePicked} />
@@ -195,7 +208,7 @@ export default class userProfile extends Component {
                     </div>
                     <div className="changePassword">
                         <button className="changePasswordButton" id="saveChanges" onClick={this.updateUserInformation}>Save Changes</button>
-                        <button className="changePasswordButton" id="changePassword">Change Password?</button>
+                        <button className="changePasswordButton" id="changePassword" onClick={this.changePasswordClick}>Change Password?</button>
                     </div>
                 </div>
                 <NotificationContainer />

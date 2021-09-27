@@ -15,6 +15,14 @@ async function getAllBooks() {
     return books;
 }
 
+async function getBooksByGenre(genre) {
+    const url = "http://localhost:8080/getBooksByGenre/" + genre;
+    const response = await fetch(url);
+
+    const books = await response.json();
+    return books;
+}
+
 async function getAllToys() {
     const url = "http://localhost:8080/getProductsByType/TOY";
     const toysResponse = await fetch(url);
@@ -57,6 +65,14 @@ async function getOtherProducts() {
     return myProducts;
 }
 
+async function getProductsByType(type) {
+    const url = "http://localhost:8080/getProductsByType/" + type;
+    const response = await fetch(url);
+
+    const products = await response.json();
+    return products;
+}
+
 const productService = {
     getAllProducts,
     getAllBooks,
@@ -64,7 +80,9 @@ const productService = {
     getAllAccessories,
     getAllGifts,
     getEverySchoolkit,
-    getOtherProducts
+    getOtherProducts,
+    getBooksByGenre,
+    getProductsByType
 }
 
 export default productService;

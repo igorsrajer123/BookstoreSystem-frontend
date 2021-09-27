@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import './registration.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import RegistrationService from './../services/registrationService';
+import RegistrationService from '../../services/registrationService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import ReactTooltip from 'react-tooltip';
@@ -26,7 +26,8 @@ export default class RegistrationModal extends Component {
             validFirstName: true,
             validLastName: true,
             validEmail: true,
-            validPassword: true
+            passwordsDoNotMatch: false,
+            passwordTooShort: false
         }
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -43,17 +44,26 @@ export default class RegistrationModal extends Component {
     }
 
     async registration() {
-        let passwordValid = false;
+        let passwordsDoNotMatch = true;
+        let passwordTooShort = true;
         let emailValid = false;
         let firstNameValid = false;
         let lastNameValid = false;
 
-        if(this.state.password === this.state.confirmPassword && this.state.password !== ""){
-            passwordValid = true;
-            this.setState({validPassword: passwordValid});
+        if(this.state.password !== "" && this.state.password > 3){
+            passwordTooShort = false;
+            this.setState({passwordTooShort: passwordTooShort});
+            if(this.state.password === this.state.confirmPassword){
+                passwordsDoNotMatch = false
+                this.setState({passwordsDoNotMatch: passwordsDoNotMatch});
+            }else {
+                passwordsDoNotMatch = true
+                this.setState({passwordsDoNotMatch: passwordsDoNotMatch});
+                NotificationManager.error("Passwords must match!", "Error!");
+            }
         }else{
-            passwordValid = false;
-            this.setState({validPassword: passwordValid});
+            passwordTooShort = true;
+            this.setState({passwordTooShort: passwordTooShort});
         }
 
         if(this.state.firstName !== ""){
@@ -81,7 +91,7 @@ export default class RegistrationModal extends Component {
             this.setState({validEmail: emailValid});
         }
 
-        if(firstNameValid && lastNameValid && passwordValid && emailValid) {
+        if(firstNameValid && lastNameValid && !passwordTooShort && emailValid && !passwordsDoNotMatch) {
             const object = {
                 dateOfBirth: this.state.birthDate,
                 phoneNumber: this.state.phoneNumber,
@@ -98,6 +108,8 @@ export default class RegistrationModal extends Component {
             await RegistrationService.registration(object);
             await RegistrationService.sendAccountConfirmation(object.user.email);
             NotificationManager.success("Confirmation mail has been sent to " + object.user.email, "Registration Successfull!");
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            window.location.reload();
         }
     }
 
@@ -130,6 +142,7 @@ export default class RegistrationModal extends Component {
         return (
             <Modal isOpen={this.state.isOpen} onRequestClose={this.toggleModal} ariaHideApp={false} className="registrationModal">
                 <div className="registrationWrapper">
+                    <NotificationContainer />
                     <div className="registrationTop">
                         <h1 className="registrationTitle">User Registration</h1>
                         <p className="registrationDescription">
@@ -184,17 +197,24 @@ export default class RegistrationModal extends Component {
                                     placeholder="Password*" 
                                     className="registrationInput" 
                                     onChange={this.passwordInputChange} 
-                                    style={{border: this.state.validPassword ? '' : 'solid red'}} 
+                                    style={{border: this.state.passwordTooShort ? 'solid red' : ''}} 
                                     data-tip data-for="wrongPassword"/>
+                            <ReactTooltip id="wrongPassword" 
+                                            type="error" 
+                                            disable={this.state.passwordTooShort ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                                <span>Password must be at least 4 characters long!</span>
+                            </ReactTooltip>        
                             <input type="password" 
                                     placeholder="Confirm Password*" 
                                     className="registrationInput" 
                                     onChange={this.confirmPasswordInputChange} 
-                                    style={{border: this.state.validPassword ? '' : 'solid red'}}
-                                    data-tip data-for="wrongPassword"/>
-                            <ReactTooltip id="wrongPassword" 
+                                    style={{border: this.state.passwordsDoNotMatch ? 'solid red' : ''}}
+                                    data-tip data-for="passwordsDontMatch"/>
+                            <ReactTooltip id="passwordsDontMatch" 
                                             type="error" 
-                                            disable={this.state.validPassword ? true : false}
+                                            disable={this.state.passwordsDoNotMatch ? false : true}
                                             place="top" 
                                             effect="solid">
                                 <span>Passwords must match!</span>
@@ -214,7 +234,6 @@ export default class RegistrationModal extends Component {
                         <div className="registrationDone">
                             <button className="register" onClick={this.registration}>Register</button>
                         </div>
-                        <NotificationContainer />
                     </div>
                 </div>
             </Modal>

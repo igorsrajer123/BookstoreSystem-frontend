@@ -1,0 +1,17 @@
+.profilePhotoModal{
+    background-color: wheat;
+    outline: none;
+    border-radius: 25%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 25vw;
+    height: 65vh;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    border-radius: 25%;
+}

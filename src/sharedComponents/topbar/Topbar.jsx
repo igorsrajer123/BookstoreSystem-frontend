@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './topbar.css';
-import LoginModal from './../../modals/LoginModal';
+import LoginModal from './../../modals/login/LoginModal';
 import LoginService from './../../services/loginService';
 
 export default class Topbar extends Component {
@@ -91,7 +91,7 @@ export default class Topbar extends Component {
             <div className="topbarWrapper">
                 <div className="topbarTop">
                     <div className="topbarTopLeft">
-                        <span className="topbarLogo">Bookstore++</span>
+                        <span className="topbarLogo" onClick={this.homepageClick}>Bookstore++</span>
                     </div>
                     <div className="topbarTopCenter">
                         <div className="topbarSearch">

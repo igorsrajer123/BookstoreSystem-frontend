@@ -9,6 +9,8 @@ export default class Leftbar extends Component {
         this.state = {
             bookGenres: []
         }
+
+        this.chooseGenre = this.chooseGenre.bind(this);
     }
 
     async componentDidMount() {
@@ -17,12 +19,14 @@ export default class Leftbar extends Component {
         this.setState({bookGenres: allGenres});
     }
 
+    chooseGenre = genreName => window.location.href = "http://localhost:3000/books/" + genreName;
+
     render() {
         return (
             <div className="leftbarWrapper">
                 <div className="leftbarGenres">
                     {this.state.bookGenres.map( g => (
-                        <span key={g.id} className="oneGenre">{g.name}</span>
+                        <span key={g.id} className="oneGenre" onClick={() =>this.chooseGenre(g.name)}>{g.name}</span>
                     ))}
                 </div>
                 <hr className="leftbarHr" />

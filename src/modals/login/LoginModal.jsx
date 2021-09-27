@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import "./login.css";
-import LoginService from './../services/loginService';
+import LoginService from './../../services/loginService';
 import ReactTooltip from 'react-tooltip';
-import RegistrationModal from './RegistrationModal';
+import RegistrationModal from './../registration/RegistrationModal';
 
 export default class LoginModal extends Component {
     constructor() {
@@ -88,14 +88,14 @@ export default class LoginModal extends Component {
                                         disable={this.state.wrongEmail ? false : true}
                                         place="top" 
                                         effect="solid">
-                            <span>Invalid email address!</span>
+                            <span>Wrong email address!</span>
                         </ReactTooltip>
                         <ReactTooltip id="wrongPassword" 
                                         type="error" 
                                         disable={this.state.wrongPassword ? false : true}
                                         place="top" 
                                         effect="solid">
-                            <span><span>Invalid password!</span></span>
+                            <span><span>Wrong password!</span></span>
                         </ReactTooltip>
                     </div>
                     <RegistrationModal ref={this.child} />

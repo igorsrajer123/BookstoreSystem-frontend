@@ -1,0 +1,61 @@
+.bookstoresWrapper {
+    background-color: wheat;
+    min-height: 50vh;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+}
+
+.bookstores {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    align-items: center;
+}
+
+.bookstore {
+    background: rgb(18,18,17);
+    background: linear-gradient(90deg, rgba(18,18,17,1) 0%, rgba(22,22,20,0.3533788515406162) 88%, rgba(235,229,238,1) 100%);
+    width: 60vw;
+    height: 30vh;
+    margin-top: 5%;
+    transition: 0.5s;
+    display: flex;
+    border-radius: 17%;
+}
+
+.bookstore:hover {
+    transform: scale(1.05);
+}
+
+.bookstorePhoto {
+    width: 50%;
+    height: 100%;
+    border-top-left-radius: 17%;
+    border-bottom-left-radius: 17%;
+}
+
+.bookstoreInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    cursor: default;
+}
+
+.bookstoreName {
+    font-size: xx-large;
+}
+
+.bookstoreAddress, .bookstoreCity, .bookstorePhone {
+    font-size: large;
+    margin-top: 2%;
+}

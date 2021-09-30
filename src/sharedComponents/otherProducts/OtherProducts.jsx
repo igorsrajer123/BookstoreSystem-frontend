@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './otherProducts.css';
-import ProductService from './../../services/productService';
 import Product from './../product/Product';
+import OtherProductService from './../../services/otherProductService';
 
 export default class OtherProducts extends Component {
     constructor() {
@@ -21,14 +21,12 @@ export default class OtherProducts extends Component {
         let parts = urlParts[1].split('/');
 
         if(parts[2] === undefined){
-            const otherProducts = await ProductService.getOtherProducts();
-            otherProducts.sort((a, b) => a.name.localeCompare(b.name));
-            this.setState({otherProducts: otherProducts});
+            const otherProducts = await OtherProductService.getAllOtherProducts();
+            this.setState({otherProducts: otherProducts.sort((a, b) => a.name.localeCompare(b.name))});
             this.setState({filterCategory: undefined});
         }else {
-            const otherProducts = await ProductService.getProductsByType(parts[2]);
-            otherProducts.sort((a, b) => a.name.localeCompare(b.name));
-            this.setState({otherProducts: otherProducts});
+            const otherProducts = await OtherProductService.getOtherProductsByType(parts[2]);
+            this.setState({otherProducts: otherProducts.sort((a, b) => a.name.localeCompare(b.name))});
             this.parseCategory(parts[2]);
         }
     }

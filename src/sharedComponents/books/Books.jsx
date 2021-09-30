@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './books.css';
 import Leftbar from './../leftbar/Leftbar';
-import ProductService from './../../services/productService';
 import Product from './../product/Product';
+import BookService from './../../services/bookService';
 
 export default class Books extends Component {
     constructor() {
@@ -20,15 +20,13 @@ export default class Books extends Component {
         let parts = urlParts[1].split('/');
         
         if(parts[2] === undefined){
-            const allBooks = await ProductService.getAllBooks();
-            allBooks.sort((a, b) => a.name.localeCompare(b.name));
-            this.setState({books: allBooks});
+            const allBooks = await BookService.getAllBooks();
+            this.setState({books: allBooks.sort((a, b) => a.name.localeCompare(b.name))});
             this.setState({filterCategory: undefined});
         }else {
             parts[2] = parts[2].replaceAll('%20', ' ');
-            const myBooks = await ProductService.getBooksByGenre(parts[2]);
-            myBooks.sort((a, b) => a.name.localeCompare(b.name));
-            this.setState({books: myBooks});
+            const myBooks = await BookService.getBooksByGenre(parts[2]);
+            this.setState({books: myBooks.sort((a, b) => a.name.localeCompare(b.name))});
             this.setState({filterCategory: parts[2]});
         }
     }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './homepage.css';
-import ProductService from './../../services/productService';
 import Product from './../product/Product';
+import BookService from './../../services/bookService';
+import OtherProductService from './../../services/otherProductService';
 
 export default class Homepage extends Component {
     constructor() {
@@ -13,9 +14,9 @@ export default class Homepage extends Component {
     }
 
     async componentDidMount() {
-        const allProducts = await ProductService.getAllProducts();
-        allProducts.sort((a, b) => a.name.localeCompare(b.name));
-        this.setState({products: allProducts});
+        const allBooks = await BookService.getAllBooks();
+        const allOtherProducts = await OtherProductService.getAllOtherProducts();
+        this.setState({products: allBooks.concat(allOtherProducts).sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     render() {

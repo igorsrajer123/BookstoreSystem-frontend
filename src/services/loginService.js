@@ -38,10 +38,23 @@ async function getCurrentUser() {
     return currentUser;
 }
 
+async function sendPasswordResetEmail(email) {
+    const url = "http://localhost:8080/sendPasswordRestart/" + email;  
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return response.status;
+}
+
 const loginService = {
     login,
     logout,
-    getCurrentUser
+    getCurrentUser,
+    sendPasswordResetEmail
 }
 
 export default loginService;

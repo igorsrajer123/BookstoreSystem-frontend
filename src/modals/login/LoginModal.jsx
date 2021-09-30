@@ -4,12 +4,14 @@ import "./login.css";
 import LoginService from './../../services/loginService';
 import ReactTooltip from 'react-tooltip';
 import RegistrationModal from './../registration/RegistrationModal';
+import ForgotPasswordModal from '../forgotPassword/ForgotPasswordModal';
 
 export default class LoginModal extends Component {
     constructor() {
         super();
 
         this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             isOpen: false,
@@ -23,6 +25,7 @@ export default class LoginModal extends Component {
         this.emailInputChange = this.emailInputChange.bind(this);
         this.passwordInputChange = this.passwordInputChange.bind(this);
         this.login = this.login.bind(this);
+        this.forgotPasswordClick = this.forgotPasswordClick.bind(this);
     }
 
     toggleModal = () => {
@@ -37,6 +40,8 @@ export default class LoginModal extends Component {
     passwordInputChange = event => this.setState({password: event.target.value});
 
     registrationClick = () => this.child.current.toggleModal();
+
+    forgotPasswordClick = () => this.child2.current.toggleModal();
 
     async login(){
         const user = {
@@ -82,7 +87,9 @@ export default class LoginModal extends Component {
                                 onChange={this.passwordInputChange} 
                                 data-tip data-for="wrongPassword"
                                 style={{borderColor: this.state.wrongPassword ? 'red' : '', borderStyle: this.state.wrongPassword ? 'solid' : 'none'}} />
-                        <span className="loginNotAMember" style={{color: 'black', textDecoration: 'underline', cursor: 'pointer'}}>Forgot password?</span>
+                        <span className="loginNotAMember" 
+                                style={{color: 'black', textDecoration: 'underline', cursor: 'pointer'}}
+                                onClick={this.forgotPasswordClick}>Forgot password?</span>
                         <ReactTooltip id="wrongEmail" 
                                         type="error" 
                                         disable={this.state.wrongEmail ? false : true}
@@ -99,6 +106,7 @@ export default class LoginModal extends Component {
                         </ReactTooltip>
                     </div>
                     <RegistrationModal ref={this.child} />
+                    <ForgotPasswordModal ref={this.child2} />
                     <div className="loginBottom">
                         <button className="loginButton" onClick={this.login}>LOGIN</button>
                         <span className="loginNotAMember">Not a member? 

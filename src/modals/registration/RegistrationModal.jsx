@@ -50,14 +50,15 @@ export default class RegistrationModal extends Component {
         let firstNameValid = false;
         let lastNameValid = false;
 
-        if(this.state.password !== "" && this.state.password > 3){
+        if(this.state.password !== "" && this.state.password.length > 3){
             passwordTooShort = false;
             this.setState({passwordTooShort: passwordTooShort});
             if(this.state.password === this.state.confirmPassword){
                 passwordsDoNotMatch = false
                 this.setState({passwordsDoNotMatch: passwordsDoNotMatch});
             }else {
-                passwordsDoNotMatch = true
+                passwordsDoNotMatch = true;
+                console.log(passwordTooShort);
                 this.setState({passwordsDoNotMatch: passwordsDoNotMatch});
                 NotificationManager.error("Passwords must match!", "Error!");
             }
@@ -93,15 +94,15 @@ export default class RegistrationModal extends Component {
 
         if(firstNameValid && lastNameValid && !passwordTooShort && emailValid && !passwordsDoNotMatch) {
             const object = {
-                dateOfBirth: this.state.birthDate,
-                phoneNumber: this.state.phoneNumber,
-                city: this.state.city,
-                address: this.state.address,
                 user: {
                     email: this.state.email,
                     password: this.state.password,
                     firstName: this.state.firstName,
-                    lastName: this.state.lastName
+                    lastName: this.state.lastName,
+                    dateOfBirth: this.state.birthDate,
+                    phoneNumber: this.state.phoneNumber,
+                    city: this.state.city,
+                    address: this.state.address
                 }
             };
 

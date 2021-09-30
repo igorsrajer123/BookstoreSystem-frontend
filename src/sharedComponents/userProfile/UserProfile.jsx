@@ -53,14 +53,19 @@ export default class userProfile extends Component {
             this.setState({currentEmail: currentUser.email});
             this.setState({currentFirstName: currentUser.firstName});
             this.setState({currentLastName: currentUser.lastName});
-            this.setState({currentPhoneNumber: currentUser.phoneNumber});
-            this.setState({currentAddress: currentUser.address});
-            this.setState({currentCity: currentUser.city});
+            this.setState({currentPhoneNumber: currentUser.phoneNumber === null ? '' : currentUser.phoneNumber});
+            this.setState({currentAddress: currentUser.address === null ? '' : currentUser.address});
+            this.setState({currentCity: currentUser.city === null ? '' : currentUser.city});
 
-            let birthDate = currentUser.dateOfBirth;
-            let dateSplit = birthDate.split('-');
-            let ourDate = dateSplit[1] + '/' + dateSplit[2] + '/' + dateSplit[0];
-            this.setState({currentBirthDate: ourDate});
+            if(currentUser.dateOfBirth !== null) {
+                let birthDate = currentUser.dateOfBirth;
+                let dateSplit = birthDate.split('-');
+                let ourDate = dateSplit[1] + '/' + dateSplit[2] + '/' + dateSplit[0];
+                this.setState({currentBirthDate: ourDate});
+            }else {
+                this.setState({currentBirthDate: null});
+            }
+            
 
             this.setState({currentUser: currentUser});
             this.setState({action: "http://localhost:8080/uploadProfileImage/" + currentUser.email});

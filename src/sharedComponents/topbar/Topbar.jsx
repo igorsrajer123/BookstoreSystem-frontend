@@ -5,6 +5,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './topbar.css';
 import LoginModal from './../../modals/login/LoginModal';
 import LoginService from './../../services/loginService';
+import HelperToolbar from './HelperToolbar';
 
 export default class Topbar extends Component {
     constructor(props) {
@@ -19,7 +20,8 @@ export default class Topbar extends Component {
             onWritersPage: false,
             onProfilePage: false,
             onOtherProductsPage: false,
-            loggedIn: null
+            loggedIn: null,
+            showHelperToolbar: false
         }
 
         this.booksClick = this.booksClick.bind(this);
@@ -74,9 +76,11 @@ export default class Topbar extends Component {
         }else if(currentUrl.includes("/otherProducts")) {
             this.refreshPageOptions();
             this.setState({onOtherProductsPage: true})
-        }else {
+        }else if(currentUrl === "http://localhost:3000/") {
             this.refreshPageOptions();
             this.setState({onHomePage: true})
+        }else{
+            this.refreshPageOptions();
         }
 
         const currentUser = await LoginService.getCurrentUser();
@@ -153,6 +157,9 @@ export default class Topbar extends Component {
                                     display: this.state.loggedIn==null ? 'none' : 'inline'}}>
                         Profile
                     </button>
+                </div>
+                <div className="topbarBottomBottom">
+                    <HelperToolbar currentUser={this.state.loggedIn} />
                 </div>
             </div>
         )

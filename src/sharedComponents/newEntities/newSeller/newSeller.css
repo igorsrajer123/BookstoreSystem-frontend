@@ -1,0 +1,107 @@
+.newSellerWrapper{ 
+    background-color: wheat;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: 50vh;
+    height: auto;
+    display: flex;
+}
+
+.newSellerLeft {
+    flex: 5;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newSellerRight {
+    flex: 5;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newSellerInfo {
+    height: 8vh;
+    width: 30vw;
+    margin: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dummySellerInfo {
+    height: 8vh;
+}
+
+.saveNewSeller {
+    height: 5vh;
+    width: 30vw;
+    margin: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.newSellerLabel {
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    width: 40%;
+    text-align: center;
+    color: brown;
+}
+
+.newSellerInput {
+    margin-right: 5%;
+    border-style: none;
+    outline: none;
+    text-align: center;
+    margin-left: 5%;
+    width: 15vw;
+    height: 5vh;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+.newSellerBirthDate {
+    margin-left: 22%;
+    width: 15vw;
+    height: 5vh;
+    border-style: none;
+    outline: none;
+    text-align: center;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    align-self: center;
+}
+
+.saveNewSellerButton {
+    height: 5vh;
+    width: 10vw;
+    margin-right: 5%;
+    border-style: none;
+    outline: none;
+    font-size: large;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    color: white;
+    background-color: lawngreen;
+    transition: 0.5s;
+}
+
+.saveNewSellerButton:hover {
+    background-color: white;
+    color: lawngreen;
+    border-color: lawngreen;
+}
+

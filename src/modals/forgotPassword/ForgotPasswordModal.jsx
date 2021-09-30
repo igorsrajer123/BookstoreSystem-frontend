@@ -47,7 +47,7 @@ export default class ForgotPasswordModal extends Component {
                 <div className="forgotPasswordConfirm">
                     <button className="forgotPasswordButton" onClick={this.confirmPasswordReset} >Confirm</button>
                 </div>
-                <NotificationContainer />
+                <NotificationContainer className="modalReset" />
             </Modal>
         )
     }

@@ -20,7 +20,7 @@
 }
 
 .newBookstoreAdminRight {
-    margin-top: 2%;
+    margin-top: 1%;
     margin-right: 5%;
     flex: 5;
     width: 100%;
@@ -67,7 +67,7 @@
     margin-left: 5%;
     width: 15vw;
     height: 5vh;
-    font-size: large;
+    font-size: medium;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: bold;
 }

@@ -11,8 +11,18 @@ async function createNewBookstoreAdmin(newAdmin) {
     return response.status;
 }
 
+async function getBookstoreAdministratorByUserId(id) {
+    const url = "http://localhost:8080/getBookstoreAdministratorByUserId/" + id;  
+    const response = await fetch(url);
+
+    const admin = await response.json();
+
+    return admin;
+}
+
 const bookstoreAdministratorService = {
-    createNewBookstoreAdmin
+    createNewBookstoreAdmin,
+    getBookstoreAdministratorByUserId
 }
 
 export default bookstoreAdministratorService;

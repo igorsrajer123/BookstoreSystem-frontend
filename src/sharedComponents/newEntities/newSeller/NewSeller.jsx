@@ -3,6 +3,11 @@ import './newSeller.css';
 import DatePicker from 'react-datepicker';
 import LoginService from './../../../services/loginService';
 import SellerService from './../../../services/sellerService';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import UserService from './../../../services/userService';
+import ReactTooltip from 'react-tooltip';
+import BookstoreService from './../../../services/bookstoreService';
+import BookstoreAdministratorService from '../../../services/bookstoreAdministratorService';
 
 export default class NewSeller extends Component {
     constructor() {
@@ -17,10 +22,11 @@ export default class NewSeller extends Component {
             currentAddress: "",
             currentCity: "",
             currentPassword: "",
-            emailValid: false,
-            passwordValid: false,
-            firstNameValid: false,
-            lastNameValid: false,
+            emailValid: null,
+            passwordValid: null,
+            firstNameValid: null,
+            lastNameValid: null,
+            currentBookstore: null
         }
 
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -52,8 +58,13 @@ export default class NewSeller extends Component {
 
     async componentDidMount() {
         const currentUser = await LoginService.getCurrentUser();
-        if(currentUser === null) 
+        if(currentUser === null || currentUser.type === "ROLE_SELLER"
+            || currentUser.type === "ROLE_CUSTOMER" || currentUser.type === "ROLE_SYSTEM_ADMIN") 
             window.location.href = "http://localhost:3000/";
+        
+        const admin = await BookstoreAdministratorService.getBookstoreAdministratorByUserId(currentUser.id);
+        const bookstore = await BookstoreService.getBookstoreByAdminId(admin.id);
+        this.setState({currentBookstore: bookstore});
     }
 
     async submitNewSeller() {
@@ -62,7 +73,11 @@ export default class NewSeller extends Component {
         birthDate.setDate(birthDate.getDate() + 1);
         let readableDate = birthDate.toISOString().split('T');
 
-        if(this.state.currentEmail !== "")
+        const status = await UserService.checkIfEmailTaken(this.state.currentEmail);
+        if(status === 200)
+            NotificationManager.error("Email already taken!", "Error!");
+
+        if(this.state.currentEmail !== "" && status !== 200)
             this.setState({emailValid: true});
         else
             this.setState({emailValid: false});
@@ -70,12 +85,12 @@ export default class NewSeller extends Component {
         if(this.state.currentPassword !== "")
             this.setState({passwordValid: true});
         else
-            this.setState({passwordValid: true});
+            this.setState({passwordValid: false});
         
         if(this.state.currentFirstName !== "")
             this.setState({firstNameValid: true});
         else
-            this.setState({firstName: false});
+            this.setState({firstNameValid: false});
         
         if(this.state.currentLastName !== "")
             this.setState({lastNameValid: true});
@@ -95,12 +110,17 @@ export default class NewSeller extends Component {
                     dateOfBirth: readableDate[0]
                 },
                 bookstore: {
-                    id: 1
+                    id: this.state.currentBookstore.id
                 }
             }
-            console.log(object);
+
             const responseStatus = await SellerService.createNewBookstoreSeller(object);
-            console.log(responseStatus);
+            if(responseStatus === 201) {
+                NotificationManager.success("Bookstore seller successfully created!", "Success!");
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                    window.location.href="http://localhost:3000/"
+            }else
+                NotificationManager.error("Something went wrong!", "Error!");
         }
     }
 
@@ -110,19 +130,71 @@ export default class NewSeller extends Component {
                 <div className="newSellerLeft">
                     <div className="newSellerInfo" >
                         <span className="newSellerLabel"><b>Email</b></span>
-                        <input type="text" placeholder="Email" className="newSellerInput" onChange={this.handleEmailChange} />
+                        <input type="text" 
+                                placeholder="Email" 
+                                className="newSellerInput" 
+                                onChange={this.handleEmailChange} 
+                                style={{borderStyle: this.state.emailValid === true || this.state.emailValid === null ? 'none' : 'solid',
+                                        borderColor: this.state.emailValid === true || this.state.emailValid === null ? 'none' : 'red'}}
+                                data-tip data-for="wrongEmail"/>
+                        <ReactTooltip id="wrongEmail" 
+                                            type="error" 
+                                            disable={this.state.currentEmail === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter bookstore seller's email!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="newSellerInfo" >
                         <span className="newSellerLabel"><b>Temporary Password</b></span>
-                        <input type="password" placeholder="Password" className="newSellerInput" onChange={this.handlePasswordChange} />
+                        <input type="password" 
+                                placeholder="Password" 
+                                className="newSellerInput" 
+                                onChange={this.handlePasswordChange} 
+                                style={{borderStyle: this.state.passwordValid === true || this.state.passwordValid === null ? 'none' : 'solid',
+                                        borderColor: this.state.passwordValid === true || this.state.passwordValid === null ? 'none' : 'red'}}
+                                data-tip data-for="wrongPassword"/>
+                        <ReactTooltip id="wrongPassword" 
+                                            type="error" 
+                                            disable={this.state.currentPassword === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter bookstore seller's temporary password!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="newSellerInfo" >
                         <span className="newSellerLabel"><b>First Name</b></span>
-                        <input type="text" placeholder="First Name" className="newSellerInput" onChange={this.handleFirstNameChange}/>
+                        <input type="text" 
+                                placeholder="First Name" 
+                                className="newSellerInput" 
+                                onChange={this.handleFirstNameChange}
+                                style={{borderStyle: this.state.firstNameValid === true || this.state.firstNameValid === null ? 'none' : 'solid',
+                                        borderColor: this.state.firstNameValid === true || this.state.firstNameValid === null ? 'none' : 'red'}}
+                                data-tip data-for="wrongFirstName"/>
+                        <ReactTooltip id="wrongFirstName" 
+                                            type="error" 
+                                            disable={this.state.currentFirstName === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter bookstore seller's first name!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="newSellerInfo" >
                         <span className="newSellerLabel"><b>Last Name</b></span>
-                        <input type="text" placeholder="Last Name" className="newSellerInput" onChange={this.handleLastNameChange} />
+                        <input type="text" 
+                                placeholder="Last Name" 
+                                className="newSellerInput" 
+                                onChange={this.handleLastNameChange}
+                                style={{borderStyle: this.state.lastNameValid === true || this.state.lastNameValid === null ? 'none' : 'solid',
+                                        borderColor: this.state.lastNameValid === true || this.state.lastNameValid === null ? 'none' : 'red'}} 
+                                data-tip data-for="wrongLastName" />
+                        <ReactTooltip id="wrongLastName" 
+                                            type="error" 
+                                            disable={this.state.currentLastName === '' ? false : true}
+                                            place="top" 
+                                            effect="solid">
+                            <span>Please enter bookstore seller's last name!</span>
+                        </ReactTooltip>
                     </div>
                     <div className="dummySellerInfo" >
                     
@@ -154,6 +226,7 @@ export default class NewSeller extends Component {
                         <button className="saveNewSellerButton" onClick={this.submitNewSeller}>Save</button>
                     </div>
                 </div>
+                <NotificationContainer />
             </div>
         )
     }

@@ -6,12 +6,14 @@ import './topbar.css';
 import LoginModal from './../../modals/login/LoginModal';
 import LoginService from './../../services/loginService';
 import HelperToolbar from './HelperToolbar';
+import FirstLoginModal from './../../modals/firstLogin/FirstLoginModal';
 
 export default class Topbar extends Component {
     constructor(props) {
         super(props);
 
         this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             onHomePage: false,
@@ -84,10 +86,23 @@ export default class Topbar extends Component {
         }
 
         const currentUser = await LoginService.getCurrentUser();
-        if(currentUser == null)
+        if(currentUser === null)
             this.setState({loggedIn: null})
-        else
+        else {
             this.setState({loggedIn: currentUser});
+            if(currentUser.type === "ROLE_SELLER" || currentUser.type === "ROLE_BOOKSTORE_ADMIN") {
+                if(currentUser.firstLogin) {
+                    this.child2.current.toggleModal();
+
+                    if(!window.location.href.toString().includes("profile")){
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        window.location.href="http://localhost:3000/profile";
+                        this.child2.current.toggleModal();
+                        this.child2.current.toggleModal();
+                    }
+                }
+            }
+        }
     }
 
     render() {
@@ -112,6 +127,7 @@ export default class Topbar extends Component {
                     </div>
                 </div>
                 <LoginModal ref={this.child}/>
+                <FirstLoginModal ref={this.child2}/>
                 <hr className="topbarHr"/>
                 <div className="topbarBottom">
                     <button className="topbarBottomButton" 

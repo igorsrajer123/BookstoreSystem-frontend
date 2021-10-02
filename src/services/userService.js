@@ -28,9 +28,22 @@ async function changeUserPassword(user) {
     return response.status;
 }
 
+async function checkIfEmailTaken(email) {
+    const url = "http://localhost:8080/getUserByEmail/" + email;  
+
+    if(email !== ""){
+        const response = await fetch(url);
+        return response.status;
+    }
+
+    return 404;
+}
+
+
 const userService = {
     updateUser,
-    changeUserPassword
+    changeUserPassword,
+    checkIfEmailTaken
 }
 
 export default userService;

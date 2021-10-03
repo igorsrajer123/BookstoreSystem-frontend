@@ -1,0 +1,38 @@
+.editWriterImageModal {
+    background-color: wheat;
+    width: 40vw;
+    min-height: 75vh;
+    height: auto;
+    outline: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editWriterImage {
+    width: 100%;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.editWriterPhoto {
+    width: 90%;
+    height: 80%;
+    border-radius: 25%;
+    margin-bottom: 3%;
+}
+
+.dummyLabel {
+    width: 10vw;
+}
+
+.submitPhoto{
+    margin-top: 10%;
+}

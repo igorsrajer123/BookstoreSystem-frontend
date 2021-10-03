@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './editBookstore.css';
 import Modal from 'react-modal';
-import NoImage from './../../assets/noimg.webp';
 import LoginService from './../../services/loginService';
 import BookstoreService from './../../services/bookstoreService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -12,15 +11,12 @@ export default class EditBookstoreModal extends Component {
         
         this.state = {
             isOpen: false,
-            bookstorePhoto: null,
             currentUser: null,
             currentBookstore: null,
             currentName: "",
             currentCity: "",
             currentAddress: "",
             currentPhone: "",
-            hideUploadButton: true,
-            action: "",
             bookstoreNameValid: true,
             bookstoreAddressValid: true,
             bookstoreCityValid: true,
@@ -33,7 +29,6 @@ export default class EditBookstoreModal extends Component {
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.updateBookstore = this.updateBookstore.bind(this);
-        this.filePicked = this.filePicked.bind(this);
     }
 
     toggleModal = () => {
@@ -46,35 +41,22 @@ export default class EditBookstoreModal extends Component {
     async componentDidMount() {
         const currentUser = await LoginService.getCurrentUser();
         this.setState({currentUser: currentUser});
-        this.setBookstorePhoto();
 
         if(this.props.bookstore !== null){
             this.setState({currentName: this.props.bookstore.name});
             this.setState({currentAddress: this.props.bookstore.address});
             this.setState({currentCity: this.props.bookstore.city});
             this.setState({currentPhone: this.props.bookstore.contactPhone});
-            this.setState({action: "http://localhost:8080/uploadBookstoreImage/" + this.props.bookstore.id});
         }
     }
 
     async componentDidUpdate(prevProps) {
         if(prevProps.bookstore !== this.props.bookstore) {
             this.setState({currentBookstore: this.props.bookstore});
-            this.setBookstorePhoto();
             this.setState({currentName: this.props.bookstore.name});
             this.setState({currentAddress: this.props.bookstore.address});
             this.setState({currentCity: this.props.bookstore.city});
             this.setState({currentPhone: this.props.bookstore.contactPhone});
-            this.setState({action: "http://localhost:8080/uploadBookstoreImage/" + this.props.bookstore.id});
-        }
-    }
-
-    setBookstorePhoto() {
-        if(this.props.bookstore !== null){
-            if(this.props.bookstore.photo !== null)
-                this.setState({bookstorePhoto: "http://localhost:8080/uploads/" + this.props.bookstore.photo});
-            else 
-                this.setState({bookstorePhoto: NoImage})
         }
     }
 
@@ -131,30 +113,11 @@ export default class EditBookstoreModal extends Component {
             this.setState({bookstorePhoneValid: true});
     }
 
-    filePicked = () => this.setState({hideUploadButton: false});
-
-    reloadPage = () => window.location.reload();
-
     render() {
         return (
             <Modal isOpen={this.state.isOpen} onRequestClose={this.toggleModal} ariaHideApp={false} className="editBookstoreModal">
                 <div className="editBookstoreWrapper">
                         <NotificationContainer />
-                        <iframe name="dummyframe" title="Just a dummy frame #1" id="dummyframe" style={{display: "none"}}></iframe>
-                        <div className="editBookstoreImage">
-                            <img src={this.state.bookstorePhoto} alt="pic" className="editBookstorePhoto" />
-                            <form target="dummyframe" action={this.state.action} encType="multipart/form-data" method="POST">
-                                <input type="file" id="file" name="file" className="inputFile" onChange={this.filePicked}/>
-                                <label htmlFor="file" className="dummyLabel">Select Photo</label>
-                                <input type="submit" 
-                                    value="Save Photo" 
-                                    className="submitPhoto" 
-                                    style={{width: this.state.hideUploadButton ? '0.1px' : '100%',
-                                            height: this.state.hideUploadButton ? '0.1px' : '50%',
-                                            alignSelf: 'center'}}
-                                    onClick={this.reloadPage} />
-                            </form>
-                        </div>
                         <div className="editBookstoreOption">
                             <span className="editBookstoreLabel">Name</span>
                             <input type="text" 

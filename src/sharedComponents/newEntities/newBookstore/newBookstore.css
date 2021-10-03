@@ -1,0 +1,68 @@
+.newBookstoreWrapper {
+    background-color: wheat;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: 45vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.newBookstoreInfo {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
+
+.newBookstoreHelper {
+    height: 100%;
+    width: 100%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.newBookstoreInput {
+    margin-right: 5%;
+    height: 70%;
+    width: 60%;
+    outline: none;
+    border-style: none;
+    text-align: center;
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.newBookstoreLabel {
+    color: brown;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+    width: 30%;
+}
+
+.newBookstoreSave {
+    margin-right: 3%;
+    height: 5vh;
+    width: 10vw;
+    border-style: none;
+    outline: none;
+    font-size: large;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    color: white;
+    background-color: lawngreen;
+    transition: 0.5s;
+}
+
+.newBookstoreSave:hover {
+    background-color: white;
+    color: lawngreen;
+    border-color: lawngreen;
+}

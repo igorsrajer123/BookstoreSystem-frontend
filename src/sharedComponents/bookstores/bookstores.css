@@ -82,6 +82,16 @@
     cursor: pointer;
 }
 
+.photoIcon {
+    margin-left: 3%;
+    color: black;
+}
+
+.photoIcon:hover {
+    color:lightcoral;
+    cursor: pointer;
+}
+
 .bookstoreAddress, .bookstoreCity, .bookstorePhone {
     font-size: large;
     margin-top: 2%;

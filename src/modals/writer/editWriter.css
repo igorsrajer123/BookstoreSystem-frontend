@@ -1,6 +1,6 @@
-.editBookstoreModal {
+.editWriterModal {
     background-color: wheat;
-    width: 35vw;
+    width: 45vw;
     min-height: 55vh;
     height: auto;
     outline: none;
@@ -13,8 +13,8 @@
     justify-content: center;
 }
 
-.editBookstoreWrapper {
-    height: 100%;
+.editWriterWrapper {
+    height: 55vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -22,45 +22,46 @@
     justify-content: center;
 }
 
-.editBookstoreOption {
-    margin: 5%;
-    width: 80%;
-    height: 7%;
+.editWriterInfo {
+    margin: 2%;
+    width: 100%;
+    height: 45%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 }
 
-.editBookstoreLabel {
+.editWriterLabel {
     color: brown;
-    font-weight: bold;
     font-size: large;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    margin-right: 7%;
+    font-weight: bold;
+    margin-right: 3%;
+    margin-left: 3%;
 }
 
-.editBookstoreInput {
-    margin-right: 25%;
-    width: 35%;
-    height: 3vh;
+.editWriterTextarea {
     outline: none;
     border-style: none;
-    font-weight: bold;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 25vh;
+    width: 90%;
+    margin-right: 3%;
+    font-size: medium;
+}
+
+.editWriterInput {
+    outline: none;
+    border-style: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 30%;
+    width: 40%;
+    margin-right: 3%;
     font-size: medium;
     text-align: center;
 }
 
-.editBookstoreSave {
-    width: 50%;
-    height: 15%;
-    margin-left: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.editBookstoreSaveButton {
+.editWriterSaveButton {
     border-style: none;
     outline: none;
     color: brown;
@@ -72,10 +73,10 @@
     background-color: greenyellow;
     cursor: pointer;
     transition: 0.7s;
-    margin-top: 7%;
+    margin-top: 5%;
 }
 
-.editBookstoreSaveButton:hover {
+.editWriterSaveButton:hover {
     color: white;
     background-color: brown;
 }

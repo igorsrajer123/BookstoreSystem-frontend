@@ -38,11 +38,26 @@ async function updateBookstore(bookstore) {
     return response.status;
 }
 
+async function createNewBookstore(bookstore) {
+    const url = "http://localhost:8080/createNewBookstore";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + Cookies.get('token'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookstore)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const bookstoreService = {
     getAllBookstores,
     getBookstoreById,
     getBookstoreByAdminId,
-    updateBookstore
+    updateBookstore,
+    createNewBookstore
 }
 
 export default bookstoreService;

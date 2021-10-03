@@ -7,6 +7,8 @@ import Writers from './sharedComponents/writers/Writers';
 import Bookstores from './sharedComponents/bookstores/Bookstores';
 import NewBookstoreAdmin from './sharedComponents/newEntities/newBookstoreAdmin/NewBookstoreAdmin';
 import NewSeller from './sharedComponents/newEntities/newSeller/NewSeller';
+import NewBookstore from './sharedComponents/newEntities/newBookstore/NewBookstore';
+import NewWriter from './sharedComponents/newEntities/newWriter/NewWriter';
 
 import {BrowserRouter, Route} from 'react-router-dom';
 
@@ -22,6 +24,8 @@ function App() {
             <Route path="/bookstores" exact component={Bookstores} />
             <Route path="/newBookstoreAdmin" exact component={NewBookstoreAdmin} />
             <Route path="/newSeller" exact component={NewSeller} />
+            <Route path="/newBookstore" exact component={NewBookstore} />
+            <Route path="/newWriter" exact component={NewWriter} />
         </BrowserRouter>
     );
 }

@@ -3,9 +3,12 @@ import './bookstores.css';
 import BookstoreService from './../../services/bookstoreService';
 import EditIcon from '@material-ui/icons/Edit';
 import GroupIcon from '@material-ui/icons/Group';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import LoginService from './../../services/loginService';
 import EditBookstoreModal from '../../modals/bookstore/EditBookstoreModal';
 import ViewBookstoreStaffModal from '../../modals/bookstore/ViewBookstoreStaffModal';
+import EditBookstoreImageModal from '../../modals/bookstore/EditBookstoreImageModal';
+import NoImage from './../../assets/noimg.webp';
 
 export default class Bookstores extends Component {
     constructor() {
@@ -13,17 +16,20 @@ export default class Bookstores extends Component {
 
         this.child = React.createRef();
         this.child2 = React.createRef();
+        this.child3 = React.createRef();
 
         this.state = {
             bookstores: [],
             currentUser: null,
             showEditBookstore: false,
             showBookstoreStaff: false,
-            selectedBookstore: null
+            selectedBookstore: null,
+            showBookstoreEditPhoto: false
         }
 
         this.editBookstoresClick = this.editBookstoresClick.bind(this);
         this.viewBookstoreStaffClick = this.viewBookstoreStaffClick.bind(this);
+        this.editBookstorePhotoClick = this.editBookstorePhotoClick.bind(this);
     }
 
     async componentDidMount() {
@@ -36,9 +42,11 @@ export default class Bookstores extends Component {
             if(currentUser.type === "ROLE_SYSTEM_ADMIN" || currentUser.type === "ROLE_SELLER") {
                 this.setState({showEditBookstore: false});
                 this.setState({showBookstoreStaff: true});
+                this.setState({showBookstoreEditPhoto: false});
             }else if(currentUser.type === "ROLE_BOOKSTORE_ADMIN") {
                 this.setState({showEditBookstore: true});
                 this.setState({showBookstoreStaff: true});
+                this.setState({showBookstoreEditPhoto: true});
             }
         }
     }
@@ -53,15 +61,21 @@ export default class Bookstores extends Component {
         this.child2.current.toggleModal();
     }
 
+    editBookstorePhotoClick = bookstore => {
+        this.setState({selectedBookstore: bookstore});
+        this.child3.current.toggleModal();
+    }
+
     render() {
         return (
             <div className="bookstoresWrapper">
                 <EditBookstoreModal ref={this.child} bookstore={this.state.selectedBookstore} />
                 <ViewBookstoreStaffModal ref={this.child2} currentUser={this.state.currentUser} bookstore={this.state.selectedBookstore} />
+                <EditBookstoreImageModal ref={this.child3} bookstore={this.state.selectedBookstore} />
                 <div className="bookstores">
                     {this.state.bookstores.map(b => (
                         <div key={b.id} className="bookstore">
-                            <img alt="img" src={"http://localhost:8080/uploads/" + b.photo} className="bookstorePhoto" />
+                            <img alt="img" src={b.photo !== null ? "http://localhost:8080/uploads/" + b.photo  : NoImage} className="bookstorePhoto" />
                             <div className="bookstoreInfo">
                                 <div className="bookstoreHelperDiv">
                                     <span className="bookstoreName">{b.name}</span>
@@ -71,6 +85,9 @@ export default class Bookstores extends Component {
                                     <GroupIcon className="groupIcon" 
                                                 style={{display: this.state.showBookstoreStaff ? 'inline' : 'none'}}
                                                 onClick={() => this.viewBookstoreStaffClick(b)} />
+                                    <PhotoCameraIcon className="photoIcon" 
+                                                style={{display: this.state.showBookstoreEditPhoto ? 'inline' : 'none'}}
+                                                onClick={() => this.editBookstorePhotoClick(b)} />
                                 </div>
                                 <span className="bookstoreAddress">{b.address}</span>
                                 <span className="bookstoreCity">{b.city}</span>

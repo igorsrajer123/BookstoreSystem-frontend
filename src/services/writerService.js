@@ -14,9 +14,37 @@ async function getBookWriters(bookName) {
     return writers;
 }
 
+async function createNewWriter(writer) {
+    const url = "http://localhost:8080/createNewWriter";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(writer)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
+async function updateWriter(writer) {
+    const url = "http://localhost:8080/updateWriter";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(writer)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const writerService = {
     getAllWriters,
-    getBookWriters
+    getBookWriters,
+    createNewWriter,
+    updateWriter
 }
 
 export default writerService;

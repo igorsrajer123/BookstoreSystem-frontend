@@ -50,11 +50,7 @@
     font-size: x-large;
     color: whitesmoke;
     cursor: default;
-}
-
-.writerName:hover {
-    text-decoration: underline;
-    cursor: pointer;
+    width: 50%;
 }
 
 .writerDescription {

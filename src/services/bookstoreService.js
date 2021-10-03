@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 async function getAllBookstores() {
     const url = "http://localhost:8080/getAllBookstores";
     const response = await fetch(url);
@@ -22,10 +24,25 @@ async function getBookstoreByAdminId(id) {
     return bookstore;
 }
 
+async function updateBookstore(bookstore) {
+    const url = "http://localhost:8080/updateBookstore";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('token'),
+                    'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookstore)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const bookstoreService = {
     getAllBookstores,
     getBookstoreById,
-    getBookstoreByAdminId
+    getBookstoreByAdminId,
+    updateBookstore
 }
 
 export default bookstoreService;

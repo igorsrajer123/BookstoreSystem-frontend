@@ -11,8 +11,18 @@ async function createNewBookstoreSeller(newSeller) {
     return response.status;
 }
 
+async function getAllBookstoreSellers(id) {
+    const url = "http://localhost:8080/getAllBookstoreSellers/" + id;
+    const response = await fetch(url);
+
+    const sellers = await response.json();
+
+    return sellers;
+}
+
 const sellerService = {
-    createNewBookstoreSeller
+    createNewBookstoreSeller,
+    getAllBookstoreSellers
 }
 
 export default sellerService;

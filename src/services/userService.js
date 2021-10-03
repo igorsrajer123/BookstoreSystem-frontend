@@ -14,6 +14,14 @@ async function updateUser(user) {
     return response.status;
 }
 
+async function getUserById(id) {
+    const url = "http://localhost:8080/getUserById/" + id;  
+    const response = await fetch(url);
+
+    const user = await response.json();
+    return user;
+}
+
 async function changeUserPassword(user) {
     const url = "http://localhost:8080/changePassword";  
     const response = await fetch(url, {
@@ -39,11 +47,35 @@ async function checkIfEmailTaken(email) {
     return 404;
 }
 
+async function disableAccount(id) {
+    const url = "http://localhost:8080/disableAccount/" + id;  
+    await fetch(url, {
+        method: "PUT",
+        headers: {
+                    'Content-Type': 'application/json'
+        }
+    }).catch(e => console.error(e));
+}
+
+async function enableAccount(id) {
+    const url = "http://localhost:8080/enableAccount/" + id;  
+    await fetch(url, {
+        method: "PUT",
+        headers: {
+                    'Content-Type': 'application/json'
+        }
+    }).catch(e => console.error(e));
+}
+
+
 
 const userService = {
     updateUser,
     changeUserPassword,
-    checkIfEmailTaken
+    checkIfEmailTaken,
+    disableAccount,
+    enableAccount,
+    getUserById
 }
 
 export default userService;

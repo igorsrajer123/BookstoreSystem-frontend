@@ -55,6 +55,33 @@
     font-size: xx-large;
 }
 
+.bookstoreHelperDiv {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editIcon {
+    margin-left: 3%;
+    color: black;
+}
+
+.editIcon:hover {
+    color:lightcoral;
+    cursor: pointer;
+}
+
+.groupIcon {
+    margin-left: 3%;
+    color: black;
+}
+
+.groupIcon:hover {
+    color:lightcoral;
+    cursor: pointer;
+}
+
 .bookstoreAddress, .bookstoreCity, .bookstorePhone {
     font-size: large;
     margin-top: 2%;

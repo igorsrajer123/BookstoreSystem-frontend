@@ -1,0 +1,174 @@
+.newProductWrapper {
+    background-color: wheat;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: 43vh;
+    height: auto;
+    display: flex;
+    transition: 0.7s;
+}
+
+.newProductLeft {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    height: 30vh;
+}
+
+.newProductCenter {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    height: 23vh;
+}
+
+.newProductRight {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newProductInfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5%;
+    height: 5vh;
+    width: 100%;
+}
+
+.newProductInfoDate {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5%;
+    height: 5vh;
+    width: 23vw;
+}
+
+.newProductLabel {
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: brown;
+    font-weight: bold;
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 10vw;
+    text-align: right;
+}
+
+.newProductInput {
+    height: 3vh;
+    width: 16vw;
+    outline: none;
+    border-style: none;
+    text-align: center;
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.newProductSelect {
+    height: 3vh;
+    width: 16vw;
+    outline: none;
+    border-style: none;
+    text-align: center;
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+    text-shadow:0 1px 0 rgba(0,0,0,0.4);
+}
+
+option:not(:checked) { 
+    background-color: sienna; 
+}
+
+.specialDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+    width: 90%;
+}
+
+.newProductPublishedDate {
+    outline: none;
+    border-style: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    text-align: center;
+    width: 14vw;
+}
+
+.newProductExpirationDate {
+    outline: none;
+    border-style: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    text-align: center;
+    width: 14vw;
+}
+
+.newProductSave {
+    width: 100%;
+    height: 5vh;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.newProductSaveButton {
+    height: 5vh;
+    width: 15vw;
+    border-style: none;
+    outline: none;
+    font-size: large;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    color: white;
+    background-color: lawngreen;
+    transition: 0.5s;
+}
+
+.newProductSaveButton:hover {
+    background-color: white;
+    color: lawngreen;
+    border-color: lawngreen;
+}
+
+.newProductGenresButton {
+    height: 3.5vh;
+    width: 12vw;
+    border-style: none;
+    outline: none;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+    color: white;
+    background-color: lawngreen;
+    transition: 0.5s;
+}
+
+#genresInput {
+    width: 10vw;
+}
+
+.newProductTextarea {
+    outline: none;
+    border-style: none;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 1%;
+    width: 100%;
+    font-size: medium;
+}

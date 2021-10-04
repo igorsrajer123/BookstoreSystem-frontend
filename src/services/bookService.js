@@ -14,9 +14,23 @@ async function getBooksByGenre(genre) {
     return books;
 }
 
+async function createNewBook(book) {
+    const url = "http://localhost:8080/createNewBook";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(book)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const bookService = {
     getAllBooks,
-    getBooksByGenre
+    getBooksByGenre,
+    createNewBook
 }
 
 export default bookService;

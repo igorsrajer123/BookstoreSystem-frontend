@@ -14,9 +14,24 @@ async function getOtherProductsByType(type) {
     return products;
 }
 
+async function createNewOtherProduct(otherProduct) {
+    const url = "http://localhost:8080/createNewOtherProduct";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(otherProduct)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
+
 const otherProductService = {
     getAllOtherProducts,
-    getOtherProductsByType
+    getOtherProductsByType,
+    createNewOtherProduct
 }
 
 export default otherProductService;

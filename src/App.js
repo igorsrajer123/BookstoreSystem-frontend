@@ -9,7 +9,7 @@ import NewBookstoreAdmin from './sharedComponents/newEntities/newBookstoreAdmin/
 import NewSeller from './sharedComponents/newEntities/newSeller/NewSeller';
 import NewBookstore from './sharedComponents/newEntities/newBookstore/NewBookstore';
 import NewWriter from './sharedComponents/newEntities/newWriter/NewWriter';
-
+import NewProduct from './sharedComponents/newEntities/newProduct/NewProduct';
 import {BrowserRouter, Route} from 'react-router-dom';
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
             <Route path="/newSeller" exact component={NewSeller} />
             <Route path="/newBookstore" exact component={NewBookstore} />
             <Route path="/newWriter" exact component={NewWriter} />
+            <Route path="/newProduct" exact component={NewProduct} />
         </BrowserRouter>
     );
 }

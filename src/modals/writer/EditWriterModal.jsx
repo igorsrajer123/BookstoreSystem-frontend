@@ -34,7 +34,9 @@ export default class EditWriterModal extends Component {
         if(this.props.writer !== null){
             this.setState({currentName: this.props.writer.name});
             this.setState({currentName: this.props.writer.name});
-            this.setState({currentDescription: this.props.writer.description});
+            let a = this.props.writer.description.trim();
+            this.setState({currentDescription: a});
+            // this.setState({currentDescription: this.props.writer.description});
         }
     }
 
@@ -42,7 +44,8 @@ export default class EditWriterModal extends Component {
         if(prevProps.writer !== this.props.writer) {
             this.setState({currentWriter: this.props.bookstore});
             this.setState({currentName: this.props.writer.name});
-            this.setState({currentDescription: this.props.writer.description});
+            let a = this.props.writer.description.trim();
+            this.setState({currentDescription: a});
         }
     }
 

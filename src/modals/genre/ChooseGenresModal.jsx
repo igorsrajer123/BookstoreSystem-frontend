@@ -49,21 +49,22 @@ export default class ChooseGenresModal extends Component {
     sendGenres(event) {
         this.props.sendData(this.state.selectedGenres);
         event.preventDefault();
+        this.toggleModal();
     }
 
     render() {
         return (
             <Modal isOpen={this.state.isOpen} onRequestClose={this.toggleModal} ariaHideApp={false} className="chooseBookGenres">
                 <div className="chooseBookGenresWrapper">
-                {this.state.genres.map(g => (
-                    <div key={g.id}>
-                        <input type="checkbox" key={g.id} onChange={this.handleGenreChange} value={g.id} />
-                        <span>{g.name}</span>
+                    {this.state.genres.map(g => (
+                        <div key={g.id} className="chooseBookGenresInfo">
+                            <input type="checkbox" key={g.id} onChange={this.handleGenreChange} value={g.id} className="chooseBookGenresInput"/>
+                            <span className="chooseBookGenresLabel">{g.name}</span>
+                        </div>
+                    ))}
+                    <div className="chooseBookGenresSave">
+                        <button onClick={this.sendGenres} className="chooseBookGenresButton">Save</button>
                     </div>
-                ))}
-                <div className="chooseBookGenresSave">
-                    <button onClick={this.sendGenres}>Save</button>
-                </div>
                 </div>
             </Modal>
         )

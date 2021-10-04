@@ -6,8 +6,17 @@ async function getAllGenres() {
     return genres;
 }
 
+async function getGenreById(id) {
+    const url = "http://localhost:8080/getGenreById/" + id;
+    const response = await fetch(url);
+
+    const genre = await response.json();
+    return genre;
+}
+
 const genreService = {
-    getAllGenres
+    getAllGenres,
+    getGenreById
 }
 
 export default genreService;

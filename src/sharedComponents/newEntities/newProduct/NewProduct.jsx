@@ -7,12 +7,16 @@ import PublisherService from './../../../services/publisherService';
 import BookService from './../../../services/bookService';
 import OtherProductService from './../../../services/otherProductService';
 import ChooseGenresModal from './../../../modals/genre/ChooseGenresModal';
+import GenreService from './../../../services/genreService';
+import ChooseWritersModal from './../../../modals/writer/ChooseWritersModal';
+import WriterService from './../../../services/writerService';
 
 export default class NewProduct extends Component {
     constructor(props) {
         super(props);
 
         this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             currentPublishedDate: null,
@@ -38,7 +42,11 @@ export default class NewProduct extends Component {
             languageValid: null,
             coverTypeValid: null,
             dataFromChild: null,
-            genresValid: null
+            genresValid: null,
+            dataFromChildNames: [],
+            dataFromChildWriters: null,
+            writersValid: null,
+            dataFromChildNamesWriters: []
         }
 
         this.handlePublishedDateChange = this.handlePublishedDateChange.bind(this);
@@ -54,6 +62,9 @@ export default class NewProduct extends Component {
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handlePriceChange = this.handlePriceChange.bind(this);
         this.handleNumberOfPagesChange = this.handleNumberOfPagesChange.bind(this);
+        this.handleCallback = this.handleCallback.bind(this);
+        this.handleCallback2 = this.handleCallback2.bind(this);
+        this.openWritersModal = this.openWritersModal.bind(this);
     }
 
     handlePublishedDateChange = date => this.setState({currentPublishedDate: date});
@@ -90,8 +101,26 @@ export default class NewProduct extends Component {
         this.setState({allPublishers: allPublishers});
     }
 
-    handleCallback = childData => this.setState({dataFromChild: childData});
-    
+    async handleCallback(childData){
+        this.setState({dataFromChild: childData});
+        let genres = [];
+        for (let id of childData) {
+            const genre = await GenreService.getGenreById(id);
+            genres.push(genre.name);
+        }
+        this.setState({dataFromChildNames: genres});
+    }
+
+    async handleCallback2(childData) {
+        this.setState({dataFromChildWriters: childData});
+        let writers = [];
+        for (let id of childData) {
+            const writer = await WriterService.getOneWriterById(id);
+            writers.push(writer.name);
+        }
+        this.setState({dataFromChildNamesWriters: writers});
+    }
+
     async submitNewProduct() {
         if(this.state.selectedProductClass === "BOOK") {
             const productValid = await this.checkProductValid();
@@ -133,6 +162,7 @@ export default class NewProduct extends Component {
         let validCoverType = false;
         let validLanguage = false;
         let validGenres = false;
+        let validWriters = false;
 
         if(this.state.currentNumberOfPages === "") {
             this.setState({numberOfPagesValid: false});
@@ -166,7 +196,15 @@ export default class NewProduct extends Component {
             validGenres = true;
         }
 
-        if(validNumberOfPages && validCoverType && validLanguage && validGenres)
+        if(this.state.dataFromChildWriters === "" || this.state.dataFromChildWriters === null) {
+            this.setState({writersValid: false});
+            validWriters = false;
+        }else {
+            this.setState({writersValid: true});
+            validWriters = true;
+        }
+
+        if(validNumberOfPages && validCoverType && validLanguage && validGenres && validWriters)
             return true;
         else
             return false;
@@ -251,11 +289,29 @@ export default class NewProduct extends Component {
 
     openGenresModal = () => this.child.current.toggleModal();
 
+    openWritersModal = () => this.child2.current.toggleModal();
+
     async createNewBook() {
         let dateString = this.state.currentPublishedDate;
         let publishedDate = new Date(dateString);
         publishedDate.setDate(publishedDate.getDate() + 1);
         let readableDate = publishedDate.toISOString().split('T');
+
+        let genresObjects = [];
+        for(var id of this.state.dataFromChild) {
+            const genre = {
+                id: id
+            }
+            genresObjects.push(genre);
+        }
+
+        let writersObjects = [];
+        for(var idx of this.state.dataFromChildWriters) {
+            const writer = {
+                id: idx
+            }
+            writersObjects.push(writer);
+        }
 
         const object = {
             name: this.state.currentName,
@@ -268,12 +324,18 @@ export default class NewProduct extends Component {
             },
             numberOfPages: parseInt(this.state.currentNumberOfPages),
             language: this.state.selectedLanguage,
-            coverType: this.state.selectedCoverType
+            coverType: this.state.selectedCoverType,
+            genres: genresObjects
         }
 
         const resp = await BookService.createNewBook(object);
         if(resp === 201) {
-            NotificationManager.success("New Book successfully created!", "Success!");
+            const resp2 = await WriterService.addWriterNewBook(this.state.currentCode, writersObjects);
+            if(resp2 === 200){
+                NotificationManager.success("New Book successfully created!", "Success!");
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                window.location.href = "http://localhost:3000/";
+            }
         }else {
             NotificationManager.error("Something went wrong!", "Error!");
         }
@@ -320,6 +382,7 @@ export default class NewProduct extends Component {
             <div className="newProductWrapper">
                 <NotificationContainer />
                 <ChooseGenresModal ref={this.child} sendData={this.handleCallback}/>
+                <ChooseWritersModal ref={this.child2} sendData={this.handleCallback2}/>
                 <div className="newProductLeft">
                     <div className="newProductInfo">
                         <span className="newProductLabel">Code</span>
@@ -431,7 +494,7 @@ export default class NewProduct extends Component {
                                     placeholder="Genres" 
                                     id="genresInput"
                                     disabled={true}
-                                    value={this.state.dataFromChild === null ? '' : this.state.dataFromChild}
+                                    value={this.state.dataFromChild === null ? '' : this.state.dataFromChildNames}
                                     style={{borderStyle: this.state.genresValid === false ? 'solid' : 'none',
                                             borderColor: this.state.genresValid === false ? 'red' : ''}} />
                             <button className="newProductGenresButton" onClick={this.openGenresModal}>Choose Genres</button>
@@ -457,6 +520,18 @@ export default class NewProduct extends Component {
                                             name="startDate"
                                             dateFormat="MM/dd/yyyy"
                                             selected={Date.parse(this.state.currentExpirationDate)}/>
+                        </div>
+                        <div className="newProductInfo" style={{display: this.state.selectedProductClass === "BOOK" ? '': 'none'}}>
+                            <span className="newProductLabel">Writers</span>
+                            <input type="text" 
+                                    className="newProductInput" 
+                                    placeholder="Writers" 
+                                    id="genresInput"
+                                    disabled={true}
+                                    value={this.state.dataFromChildWriters === null ? '' : this.state.dataFromChildNamesWriters}
+                                    style={{borderStyle: this.state.writersValid === false ? 'solid' : 'none',
+                                            borderColor: this.state.writersValid === false ? 'red' : ''}} />
+                            <button className="newProductGenresButton" onClick={this.openWritersModal}>Choose Writers</button>
                         </div>
                         <div className="newProductSave">
                             <button className="newProductSaveButton" onClick={this.submitNewProduct}>Save</button>

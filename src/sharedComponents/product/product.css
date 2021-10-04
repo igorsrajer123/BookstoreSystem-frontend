@@ -32,3 +32,7 @@
 .productWriter {
     font-size: medium;
 }
+
+.productHelperIcons:hover {
+    color: crimson;
+}

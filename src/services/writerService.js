@@ -40,11 +40,34 @@ async function updateWriter(writer) {
     return response.status;
 }
 
+async function getOneWriterById(id) {
+    const url = "http://localhost:8080/getOneWriterById/" + id;
+    const response = await fetch(url);
+
+    const writer = await response.json();
+    return writer;
+}
+
+async function addWriterNewBook(bookCode, writers) {
+    const url = "http://localhost:8080/addWriterNewBook/" + bookCode;
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(writers)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const writerService = {
     getAllWriters,
     getBookWriters,
     createNewWriter,
-    updateWriter
+    updateWriter,
+    getOneWriterById,
+    addWriterNewBook
 }
 
 export default writerService;

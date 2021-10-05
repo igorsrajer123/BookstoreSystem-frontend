@@ -1,0 +1,89 @@
+.viewPublishersAndGenresWrapper {
+    background-color: wheat;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.viewPublishersHelper1 {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.viewPublishersHelper2 {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.viewPublishersAndGenresHeader {
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.createNewButton {
+    display: flex;
+    align-items: center;
+    outline: none;
+    border-style: none;
+    background-color: chocolate;
+    cursor: pointer;
+    color: white;
+    height: 4vh;
+    transition: 0.5s;
+}
+
+.createNewButton:hover {
+    background-color: white;
+    color: chocolate;
+}
+
+.viewPublishersTable {
+    margin-top: 1%;
+    width: 100%;
+    min-height: 35%;
+    height: auto;
+    border-collapse: collapse;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: default;
+}
+
+.viewPublishersTableHead {
+    position: sticky;
+    background-color: brown;
+    color: #fff;
+}
+
+.viewPublishersTableBody {
+    background-color: #fff;
+}
+
+.viewPublishersTableBody > tr {
+    transition: 0.3s;
+}
+
+.viewPublishersTableBody > tr:hover {
+    transform: scale(1.02);
+}
+
+.viewPublishersContent {
+    color: white;
+    background-color: chocolate;
+    border-style: none;
+    outline: none;
+    height: 4vh;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+}

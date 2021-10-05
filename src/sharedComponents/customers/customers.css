@@ -1,0 +1,74 @@
+.viewCustomersWrapper {
+    background-color: wheat;
+    height: auto;
+    min-height: 30vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.viewCustomersHelper {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.viewCustomersHeader {
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.viewCustomersTable {
+    margin-top: 1%;
+    width: 100%;
+    min-height: 35%;
+    height: auto;
+    border-collapse: collapse;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: default;
+}
+
+.viewCustomersTableHead {
+    position: sticky;
+    background-color: brown;
+    color: #fff;
+}
+
+.viewCustomersTableBody {
+    background-color: #fff;
+}
+
+.viewCustomersTableBody > tr {
+    transition: 0.3s;
+}
+
+.viewCustomersTableBody > tr:hover {
+    transform: scale(1.02);
+}
+
+.viewCustomersContent {
+    color: white;
+    background-color: chocolate;
+    border-style: none;
+    outline: none;
+    height: 4vh;
+    text-align: center;
+    font-weight: bold;
+}
+
+.disableCustomerAccount {
+    width: 6vw;
+    height: 3vh;
+    border-style: none;
+    outline: none;
+    color: White;
+}
+
+.disableCustomerAccount:hover {
+    cursor: pointer;
+}

@@ -85,7 +85,6 @@ export default class ViewBookstoreStaffModal extends Component {
 
     async buttonClick(userId) {
         const user = await UserService.getUserById(userId);
-        this.setState({selectedUserAccount: user});
         if(user.enabled)
             await UserService.disableAccount(userId);
         else

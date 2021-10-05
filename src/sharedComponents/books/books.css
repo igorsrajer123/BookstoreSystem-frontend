@@ -31,7 +31,8 @@
 
 .book {
     width: 15vw;
-    height: 40vh;
+    min-height: 40vh;
+    max-height: 50vh;
     margin-left: 15%;
     margin-top: 15%;
     cursor: pointer;

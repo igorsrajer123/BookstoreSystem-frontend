@@ -11,6 +11,8 @@ import NewBookstore from './sharedComponents/newEntities/newBookstore/NewBooksto
 import NewWriter from './sharedComponents/newEntities/newWriter/NewWriter';
 import NewProduct from './sharedComponents/newEntities/newProduct/NewProduct';
 import {BrowserRouter, Route} from 'react-router-dom';
+import PublishersAndGenres from './sharedComponents/publishersAndGenres/PublishersAndGenres';
+import Customers from './sharedComponents/customers/Customers';
 
 function App() {
 	return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/newBookstore" exact component={NewBookstore} />
             <Route path="/newWriter" exact component={NewWriter} />
             <Route path="/newProduct" exact component={NewProduct} />
+            <Route path="/publishersAndGenres" exact component={PublishersAndGenres} />
+            <Route path="/customers" exact component={Customers} />
         </BrowserRouter>
     );
 }

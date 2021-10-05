@@ -14,9 +14,37 @@ async function getGenreById(id) {
     return genre;
 }
 
+async function createNewGenre(genre) {
+    const url = "http://localhost:8080/createNewGenre";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(genre)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
+async function editGenre(genre) {
+    const url = "http://localhost:8080/editGenre";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(genre)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const genreService = {
     getAllGenres,
-    getGenreById
+    getGenreById,
+    createNewGenre,
+    editGenre
 }
 
 export default genreService;

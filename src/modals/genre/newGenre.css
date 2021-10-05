@@ -1,0 +1,51 @@
+.newGenreModal {
+    background-color: wheat;
+    width: 30vw;
+    min-height: 25vh;
+    height: auto;
+    outline: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+}
+
+.newGenreWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 25vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.newGenreLabel {
+    color: brown;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+.newGenreInput {
+    outline: none;
+    border-style: none;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+    height: 10%;
+    margin-top: 5%;
+}
+
+.newGenreSave {
+    height: 4vh;
+    width: 7vw;
+    background-color: lawngreen;
+    color: brown;
+    outline: none;
+    border-style: none;
+    font-weight: bold;
+    transition: 0.7s;
+    margin-top: 5%;
+    cursor: pointer;
+}

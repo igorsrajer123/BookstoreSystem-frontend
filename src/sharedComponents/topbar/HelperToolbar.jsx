@@ -14,7 +14,8 @@ export default class HelperToolbar extends Component {
             onNewBookstoreAdminPage: false,
             onNewWriterPage: false,
             onNewProductPage: false,
-            onNewSellerPage: false
+            onNewSellerPage: false,
+            onPublishersAndGenresPage: false
         }
 
         this.newProductClick = this.newProductClick.bind(this);
@@ -22,6 +23,7 @@ export default class HelperToolbar extends Component {
         this.newBookstoreAdminClick = this.newBookstoreAdminClick.bind(this);
         this.newSellerClick = this.newSellerClick.bind(this);
         this.newWriterClick = this.newWriterClick.bind(this);
+        this.publishersAndGenresClick = this.publishersAndGenresClick.bind(this);
     }
 
     refreshPageOptions = () => {
@@ -30,6 +32,7 @@ export default class HelperToolbar extends Component {
         this.setState({onNewWriterPage: false});
         this.setState({onNewProductPage: false});
         this.setState({onNewSellerPage: false});
+        this.setState({onPublishersAndGenresPage: false});
     }
 
     setLoggedInStates(loggedIn) {
@@ -79,6 +82,9 @@ export default class HelperToolbar extends Component {
         }else if(currentUrl.includes("/newSeller")) {
             this.refreshPageOptions();
             this.setState({onNewSellerPage: true});
+        }else if(currentUrl.includes("/publishersAndGenres")) {
+            this.refreshPageOptions();
+            this.setState({onPublishersAndGenresPage: true});
         }
     }
 
@@ -97,6 +103,8 @@ export default class HelperToolbar extends Component {
 
     newSellerClick = () => window.location.href = "http://localhost:3000/newSeller";
 
+    publishersAndGenresClick = () => window.location.href = "http://localhost:3000/publishersAndGenres";
+
     render() {
         return (
             <div style={{display: this.props.currentUser === null ? 'none' : 'inline'}} className="helperToolbarWrapper">
@@ -106,31 +114,37 @@ export default class HelperToolbar extends Component {
                             style={{color: this.state.onNewBookstorePage ? 'black' : '',
                                     borderBottomStyle: this.state.onNewBookstorePage ? 'solid' : '',
                                     borderColor: this.state.onNewBookstorePage ? 'black' : '',
-                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Add Bookstore</button>
+                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>New Bookstore</button>
                     <button className="helperToolbarOption" 
                             onClick={this.newBookstoreAdminClick}
                             style={{color: this.state.onNewBookstoreAdminPage ? 'black' : '',
                                     borderBottomStyle: this.state.onNewBookstoreAdminPage ? 'solid' : '',
                                     borderColor: this.state.onNewBookstoreAdminPage ? 'black' : '',
-                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Add Bookstore Admin</button>
+                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>New Bookstore Admin</button>
                     <button className="helperToolbarOption" 
                             onClick={this.newSellerClick}
                             style={{color: this.state.onNewSellerPage ? 'black' : '',
                                     borderBottomStyle: this.state.onNewSellerPage ? 'solid' : '',
                                     borderColor: this.state.onNewSellerPage ? 'black' : '',
-                                    display: this.state.bookstoreAdminLogged ? 'inline' : 'none'}}>Add Bookstore Seller</button>
+                                    display: this.state.bookstoreAdminLogged ? 'inline' : 'none'}}>New Bookstore Seller</button>
                     <button className="helperToolbarOption" 
                             onClick={this.newWriterClick}
                             style={{color: this.state.onNewWriterPage ? 'black' : '',
                                     borderBottomStyle: this.state.onNewWriterPage ? 'solid' : '',
                                     borderColor: this.state.onNewWriterPage ? 'black' : '',
-                                    display: this.state.sysAdminLogged  ? 'inline' : 'none'}}>Add Writer</button>
+                                    display: this.state.sysAdminLogged  ? 'inline' : 'none'}}>New Writer</button>
                     <button className="helperToolbarOption" 
                             onClick={this.newProductClick}
                             style={{color: this.state.onNewProductPage ? 'black' : '',
                                     borderBottomStyle: this.state.onNewProductPage ? 'solid' : '',
                                     borderColor: this.state.onNewProductPage ? 'black' : '',
-                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Add Product</button>
+                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>New Product</button>
+                    <button className="helperToolbarOption" 
+                            onClick={this.publishersAndGenresClick}
+                            style={{color: this.state.onPublishersAndGenresPage ? 'black' : '',
+                                    borderBottomStyle: this.state.onPublishersAndGenresPage ? 'solid' : '',
+                                    borderColor: this.state.onPublishersAndGenresPage ? 'black' : '',
+                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Publishers and Genres</button>
                 </div>
             </div>
         )

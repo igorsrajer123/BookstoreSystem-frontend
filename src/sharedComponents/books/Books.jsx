@@ -3,6 +3,7 @@ import './books.css';
 import Leftbar from './../leftbar/Leftbar';
 import Product from './../product/Product';
 import BookService from './../../services/bookService';
+import LoginService from '../../services/loginService';
 
 export default class Books extends Component {
     constructor() {
@@ -10,11 +11,15 @@ export default class Books extends Component {
 
         this.state = {
             books: [],
-            filterCategory: undefined
+            filterCategory: undefined,
+            currentUser: null
         }
     }
 
     async componentDidMount() {
+        const currentUser = await LoginService.getCurrentUser();
+        this.setState({currentUser: currentUser});
+
         const currentUrl = window.location.href.toString();
         let urlParts = currentUrl.split('3000');
         let parts = urlParts[1].split('/');
@@ -40,7 +45,7 @@ export default class Books extends Component {
                     <div className="books">
                         {this.state.books.map(b => (
                         <div key={b.id} className="book">
-                            <Product product={b} />
+                            <Product product={b} currentUser={this.state.currentUser}/>
                         </div>
                         ))}
                     </div>

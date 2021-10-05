@@ -25,7 +25,8 @@
 
 .product {
     width: 15vw;
-    height: 40vh;
+    min-height: 35vh;
+    height: auto;
     margin-left: 15%;
     margin-top: 15%;
     cursor: pointer;

@@ -39,7 +39,7 @@ export default class NewWriter extends Component {
         else
             this.setState({nameValid: true});
 
-        if(this.state.currentName) {
+        if(this.state.nameValid) {
             const object = {
                 name: this.state.currentName,
                 description: this.state.currentDescription

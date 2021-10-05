@@ -23,7 +23,9 @@ export default class Topbar extends Component {
             onProfilePage: false,
             onOtherProductsPage: false,
             loggedIn: null,
-            showHelperToolbar: false
+            showHelperToolbar: false,
+            onCustomersPage: false,
+            sysAdminLogged: false
         }
 
         this.booksClick = this.booksClick.bind(this);
@@ -34,6 +36,7 @@ export default class Topbar extends Component {
         this.otherProductsClick = this.otherProductsClick.bind(this);
         this.loginClick = this.loginClick.bind(this);
         this.logoutClick = this.logoutClick.bind(this);
+        this.customersClick = this.customersClick.bind(this);
     }
 
     loginClick = () => this.child.current.toggleModal();
@@ -52,6 +55,8 @@ export default class Topbar extends Component {
 
     otherProductsClick = () => window.location.href = "http://localhost:3000/otherProducts";
 
+    customersClick = () => window.location.href = "http://localhost:3000/customers";
+
     refreshPageOptions = () => {
         this.setState({onHomePage: false});
         this.setState({onBooksPage: false});
@@ -59,6 +64,7 @@ export default class Topbar extends Component {
         this.setState({onWritersPage: false});
         this.setState({onProfilePage: false});
         this.setState({onOtherProductsPage: false});
+        this.setState({onCustomersPage: false});
     }
 
     async componentDidMount() {
@@ -80,7 +86,10 @@ export default class Topbar extends Component {
             this.setState({onOtherProductsPage: true})
         }else if(currentUrl === "http://localhost:3000/") {
             this.refreshPageOptions();
-            this.setState({onHomePage: true})
+            this.setState({onHomePage: true});
+        }else if(currentUrl === "http://localhost:3000/customers"){
+            this.refreshPageOptions();
+            this.setState({onCustomersPage: true})
         }else{
             this.refreshPageOptions();
         }
@@ -90,6 +99,11 @@ export default class Topbar extends Component {
             this.setState({loggedIn: null})
         else {
             this.setState({loggedIn: currentUser});
+            if(currentUser.type === "ROLE_SYSTEM_ADMIN")
+                this.setState({sysAdminLogged: true});
+            else
+                this.setState({sysAdminLogged: false});
+
             if(currentUser.type === "ROLE_SELLER" || currentUser.type === "ROLE_BOOKSTORE_ADMIN") {
                 if(currentUser.firstLogin) {
                     this.child2.current.toggleModal();
@@ -172,6 +186,14 @@ export default class Topbar extends Component {
                                     borderColor: this.state.onProfilePage ? 'black' : '',
                                     display: this.state.loggedIn==null ? 'none' : 'inline'}}>
                         Profile
+                    </button>
+                    <button className="topbarBottomButton" 
+                            onClick={this.customersClick} 
+                            style={{color: this.state.onCustomersPage ? 'black' : '',
+                                    borderBottomStyle: this.state.onCustomersPage ? 'solid' : '',
+                                    borderColor: this.state.onCustomersPage ? 'black' : '',
+                                    display: this.state.sysAdminLogged=== false ? 'none' : 'inline'}}>
+                        Customers
                     </button>
                 </div>
                 <div className="topbarBottomBottom">

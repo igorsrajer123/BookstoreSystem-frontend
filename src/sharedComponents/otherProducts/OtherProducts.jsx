@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './otherProducts.css';
 import Product from './../product/Product';
 import OtherProductService from './../../services/otherProductService';
+import LoginService from '../../services/loginService';
 
 export default class OtherProducts extends Component {
     constructor() {
@@ -9,13 +10,17 @@ export default class OtherProducts extends Component {
 
         this.state = {
             otherProducts: [],
-            filterCategory: undefined
+            filterCategory: undefined,
+            currentUser: null
         }
 
         this.chooseCategory = this.chooseCategory.bind(this);
     }
 
     async componentDidMount() {
+        const currentUser = await LoginService.getCurrentUser();
+        this.setState({currentUser: currentUser});
+
         const currentUrl = window.location.href.toString();
         let urlParts = currentUrl.split('3000');
         let parts = urlParts[1].split('/');
@@ -62,7 +67,7 @@ export default class OtherProducts extends Component {
                     <div className="otherProducts">
                         {this.state.otherProducts.map(o => (
                             <div key={o.id} className="otherProduct">
-                                <Product product={o} />
+                                <Product product={o} currentUser={this.state.currentUser}/>
                             </div>
                         ))}
                     </div>

@@ -7,18 +7,18 @@
     display: flex;
 }
 
-.newWriterLeft {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    height: 13vh;
-    margin-top: 0%;
-}
-
-.newWriterRight {
+.newWriterInfo {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: 5%;
+}
+
+.newWriterHelper {
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 45%;
@@ -53,7 +53,7 @@
     margin-top: 5%;
     margin-left: 5%;
     width: 70%;
-    height: 100%;
+    height: 20vh;
     outline: none;
     border-style: none;
     font-size: medium;
@@ -62,8 +62,8 @@
 
 .newWriterSave {
     margin-top: 5%;
-    margin-right: -70%;
-    height: 5vh;
+    margin-left: 13%;
+    height: 10vh;
     width: 10vw;
     border-style: none;
     outline: none;
@@ -74,4 +74,5 @@
     color: white;
     background-color: lawngreen;
     transition: 0.5s;
+    margin-bottom: 3%;
 }

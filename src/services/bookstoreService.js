@@ -24,6 +24,14 @@ async function getBookstoreByAdminId(id) {
     return bookstore;
 }
 
+async function getBookstoreBySellerId(id) {
+    const url = "http://localhost:8080/getBookstoreBySellerId/" + id;
+    const response = await fetch(url);
+
+    const bookstore = await response.json();
+    return bookstore;
+}
+
 async function updateBookstore(bookstore) {
     const url = "http://localhost:8080/updateBookstore";
     const response = await fetch(url, {
@@ -57,7 +65,8 @@ const bookstoreService = {
     getBookstoreById,
     getBookstoreByAdminId,
     updateBookstore,
-    createNewBookstore
+    createNewBookstore,
+    getBookstoreBySellerId
 }
 
 export default bookstoreService;

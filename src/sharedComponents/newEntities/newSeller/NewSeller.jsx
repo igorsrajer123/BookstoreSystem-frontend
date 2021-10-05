@@ -118,7 +118,7 @@ export default class NewSeller extends Component {
             if(responseStatus === 201) {
                 NotificationManager.success("Bookstore seller successfully created!", "Success!");
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                    window.location.href="http://localhost:3000/"
+                window.location.href="http://localhost:3000/"
             }else
                 NotificationManager.error("Something went wrong!", "Error!");
         }

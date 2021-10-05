@@ -9,6 +9,8 @@ import EditBookstoreModal from '../../modals/bookstore/EditBookstoreModal';
 import ViewBookstoreStaffModal from '../../modals/bookstore/ViewBookstoreStaffModal';
 import EditBookstoreImageModal from '../../modals/bookstore/EditBookstoreImageModal';
 import NoImage from './../../assets/noimg.webp';
+import BookstoreAdministratorService from './../../services/bookstoreAdministratorService';
+import SellerService from './../../services/sellerService';
 
 export default class Bookstores extends Component {
     constructor() {
@@ -21,10 +23,11 @@ export default class Bookstores extends Component {
         this.state = {
             bookstores: [],
             currentUser: null,
-            showEditBookstore: false,
             showBookstoreStaff: false,
             selectedBookstore: null,
-            showBookstoreEditPhoto: false
+            showBookstoreEditPhoto: false,
+            currentAdminBookstoreId: "",
+            currentSellerBookstoreId: ""
         }
 
         this.editBookstoresClick = this.editBookstoresClick.bind(this);
@@ -39,13 +42,20 @@ export default class Bookstores extends Component {
         const currentUser = await LoginService.getCurrentUser();
         this.setState({currentUser: currentUser})
         if(currentUser !== null) {
-            if(currentUser.type === "ROLE_SYSTEM_ADMIN" || currentUser.type === "ROLE_SELLER") {
-                this.setState({showEditBookstore: false});
+            if(currentUser.type === "ROLE_SYSTEM_ADMIN"){
                 this.setState({showBookstoreStaff: true});
                 this.setState({showBookstoreEditPhoto: false});
+            }else if(currentUser.type === "ROLE_SELLER") {
+                const bookstoreSeller = await SellerService.getSellerByUserId(currentUser.id);
+                const sellerBookstore = await BookstoreService.getBookstoreBySellerId(bookstoreSeller.id);
+                this.setState({currentSellerBookstoreId: sellerBookstore.id});
+                this.setState({showBookstoreStaff: false});
+                this.setState({showBookstoreEditPhoto: false});
             }else if(currentUser.type === "ROLE_BOOKSTORE_ADMIN") {
-                this.setState({showEditBookstore: true});
-                this.setState({showBookstoreStaff: true});
+                const bookstoreAdmin = await BookstoreAdministratorService.getBookstoreAdministratorByUserId(currentUser.id);
+                const adminBookstore = await BookstoreService.getBookstoreByAdminId(bookstoreAdmin.id);
+                this.setState({currentAdminBookstoreId: adminBookstore.id});
+                this.setState({showBookstoreStaff: false});
                 this.setState({showBookstoreEditPhoto: true});
             }
         }
@@ -80,13 +90,15 @@ export default class Bookstores extends Component {
                                 <div className="bookstoreHelperDiv">
                                     <span className="bookstoreName">{b.name}</span>
                                     <EditIcon className="editIcon" 
-                                                style={{display: this.state.showEditBookstore ? 'inline' : 'none'}}
+                                                style={{display: b.id === this.state.currentAdminBookstoreId ? 'inline' : 'none'}}
                                                 onClick={() => this.editBookstoresClick(b)} />
                                     <GroupIcon className="groupIcon" 
-                                                style={{display: this.state.showBookstoreStaff ? 'inline' : 'none'}}
+                                                style={{display: this.state.showBookstoreStaff || 
+                                                        b.id === this.state.currentAdminBookstoreId || 
+                                                        b.id === this.state.currentSellerBookstoreId? 'inline' : 'none'}}
                                                 onClick={() => this.viewBookstoreStaffClick(b)} />
                                     <PhotoCameraIcon className="photoIcon" 
-                                                style={{display: this.state.showBookstoreEditPhoto ? 'inline' : 'none'}}
+                                                style={{display: b.id === this.state.currentAdminBookstoreId ? 'inline' : 'none'}}
                                                 onClick={() => this.editBookstorePhotoClick(b)} />
                                 </div>
                                 <span className="bookstoreAddress">{b.address}</span>

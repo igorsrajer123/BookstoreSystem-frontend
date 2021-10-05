@@ -52,6 +52,7 @@ async function disableAccount(id) {
     await fetch(url, {
         method: "PUT",
         headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('token'),
                     'Content-Type': 'application/json'
         }
     }).catch(e => console.error(e));
@@ -62,6 +63,7 @@ async function enableAccount(id) {
     await fetch(url, {
         method: "PUT",
         headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('token'),
                     'Content-Type': 'application/json'
         }
     }).catch(e => console.error(e));

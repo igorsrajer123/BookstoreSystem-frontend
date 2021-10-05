@@ -59,16 +59,16 @@ export default class NewWriter extends Component {
         return (
             <div className="newWriterWrapper">
                 <NotificationContainer />
-                <div className="newWriterLeft">
-                    <span className="newWriterLabel">Name</span>
-                    <input type="text" 
-                                className="newWriterInput" 
-                                placeholder="Name" 
-                                onChange={this.handleNameChange}
-                                style={{borderStyle: this.state.nameValid === false ? 'solid' : 'none',
-                                        borderColor: this.state.nameValid === false ? 'red' : ''}} />
-                </div>
-                <div className="newWriterRight">
+                <div className="newWriterInfo">
+                    <div className="newWriterHelper">
+                        <span className="newWriterLabel">Name</span>
+                        <input type="text" 
+                                    className="newWriterInput" 
+                                    placeholder="Name" 
+                                    onChange={this.handleNameChange}
+                                    style={{borderStyle: this.state.nameValid === false ? 'solid' : 'none',
+                                            borderColor: this.state.nameValid === false ? 'red' : ''}} />
+                    </div>    
                     <div className="newWriterHelper">
                         <span className="newWriterLabel">Description</span>
                         <textarea className="newWriterDescription" onChange={this.handleDescriptionChange}></textarea>

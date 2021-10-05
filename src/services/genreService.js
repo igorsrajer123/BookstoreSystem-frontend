@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 async function getAllGenres() {
     const url = "http://localhost:8080/getAllGenres";
     const response = await fetch(url);
@@ -19,6 +21,7 @@ async function createNewGenre(genre) {
     const response = await fetch(url, {
         method: "POST",
         headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('token'),
                     "Content-Type": 'application/json'
         },
         body: JSON.stringify(genre)
@@ -32,6 +35,7 @@ async function editGenre(genre) {
     const response = await fetch(url, {
         method: "PUT",
         headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('token'),
                     "Content-Type": 'application/json'
         },
         body: JSON.stringify(genre)

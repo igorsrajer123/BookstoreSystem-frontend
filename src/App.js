@@ -13,6 +13,7 @@ import NewProduct from './sharedComponents/newEntities/newProduct/NewProduct';
 import {BrowserRouter, Route} from 'react-router-dom';
 import PublishersAndGenres from './sharedComponents/publishersAndGenres/PublishersAndGenres';
 import Customers from './sharedComponents/customers/Customers';
+import ProductsInBookstores from './sharedComponents/productsInBookstores/ProductsInBookstores';
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/newProduct" exact component={NewProduct} />
             <Route path="/publishersAndGenres" exact component={PublishersAndGenres} />
             <Route path="/customers" exact component={Customers} />
+            <Route path="/productsStock" exact component={ProductsInBookstores} />
         </BrowserRouter>
     );
 }

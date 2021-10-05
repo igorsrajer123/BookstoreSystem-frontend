@@ -1,0 +1,15 @@
+.productsInBookstoresWrapper {
+    background-color: wheat;
+    min-height: 50vh;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booksInBookstore {
+    display: flex;
+    flex-direction: column;
+}

@@ -15,7 +15,8 @@ export default class HelperToolbar extends Component {
             onNewWriterPage: false,
             onNewProductPage: false,
             onNewSellerPage: false,
-            onPublishersAndGenresPage: false
+            onPublishersAndGenresPage: false,
+            onProductsStockPage: false
         }
 
         this.newProductClick = this.newProductClick.bind(this);
@@ -24,6 +25,7 @@ export default class HelperToolbar extends Component {
         this.newSellerClick = this.newSellerClick.bind(this);
         this.newWriterClick = this.newWriterClick.bind(this);
         this.publishersAndGenresClick = this.publishersAndGenresClick.bind(this);
+        this.productsStockClick = this.productsStockClick.bind(this);
     }
 
     refreshPageOptions = () => {
@@ -33,6 +35,7 @@ export default class HelperToolbar extends Component {
         this.setState({onNewProductPage: false});
         this.setState({onNewSellerPage: false});
         this.setState({onPublishersAndGenresPage: false});
+        this.setState({onProductsStockPage: false});
     }
 
     setLoggedInStates(loggedIn) {
@@ -85,6 +88,9 @@ export default class HelperToolbar extends Component {
         }else if(currentUrl.includes("/publishersAndGenres")) {
             this.refreshPageOptions();
             this.setState({onPublishersAndGenresPage: true});
+        }else if(currentUrl.includes("/productsStock")) {
+            this.refreshPageOptions();
+            this.setState({onProductsStockPage: true});
         }
     }
 
@@ -104,6 +110,8 @@ export default class HelperToolbar extends Component {
     newSellerClick = () => window.location.href = "http://localhost:3000/newSeller";
 
     publishersAndGenresClick = () => window.location.href = "http://localhost:3000/publishersAndGenres";
+
+    productsStockClick = () => window.location.href =  "http://localhost:3000/productsStock";
 
     render() {
         return (
@@ -145,6 +153,12 @@ export default class HelperToolbar extends Component {
                                     borderBottomStyle: this.state.onPublishersAndGenresPage ? 'solid' : '',
                                     borderColor: this.state.onPublishersAndGenresPage ? 'black' : '',
                                     display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Publishers and Genres</button>
+                    <button className="helperToolbarOption" 
+                            onClick={this.productsStockClick}
+                            style={{color: this.state.onPublishersAndGenresPage ? 'black' : '',
+                                    borderBottomStyle: this.state.onProductsStockPage ? 'solid' : '',
+                                    borderColor: this.state.onProductsStockPage ? 'black' : '',
+                                    display: this.state.bookstoreAdminLogged || this.state.sellerLogged ? 'inline' : 'none'}}>Products Stock</button>
                 </div>
             </div>
         )

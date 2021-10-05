@@ -27,10 +27,24 @@ async function createNewBook(book) {
     return response.status;
 }
 
+async function updateBook(book) {
+    const url = "http://localhost:8080/updateBook";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(book)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const bookService = {
     getAllBooks,
     getBooksByGenre,
-    createNewBook
+    createNewBook,
+    updateBook
 }
 
 export default bookService;

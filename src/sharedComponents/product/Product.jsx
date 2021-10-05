@@ -5,17 +5,22 @@ import WriterService from './../../services/writerService';
 import EditIcon from '@material-ui/icons/Edit';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import EditProductImageModal from '../../modals/product/EditProductImageModal';
+import EditProductModal from './../../modals/product/EditProductModal';
 
 export default class Product extends Component {
     constructor(props) {
         super(props);
 
         this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             writers: [],
             sysAdminLogged: false
         }
+
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.handlePhotoEditClick = this.handlePhotoEditClick.bind(this);
     }
 
     async componentDidMount() {
@@ -45,11 +50,14 @@ export default class Product extends Component {
 
     handlePhotoEditClick = () => this.child.current.toggleModal();
 
+    handleEditClick = () => this.child2.current.toggleModal();
+
     render() {
         return (
             <div className="productWrapper">
+                <EditProductModal ref={this.child2} product={this.props.product} />
                 <EditProductImageModal ref={this.child} product={this.props.product} />
-                <EditIcon className="productHelperIcons" style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>
+                <EditIcon className="productHelperIcons" onClick={this.handleEditClick} style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>
                 <PhotoCameraIcon className="productHelperIcons" onClick={this.handlePhotoEditClick} style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>
                 <img className="productImage" alt="productPic" src={this.props.product.coverImage===null ? NoImage : "http://localhost:8080/uploads/" + this.props.product.coverImage} />
                 <div className="productInfo">

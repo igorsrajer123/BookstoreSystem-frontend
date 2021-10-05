@@ -372,6 +372,8 @@ export default class NewProduct extends Component {
         const resp = await OtherProductService.createNewOtherProduct(object);
         if(resp === 201) {
             NotificationManager.success("New Product successfully created!", "Success!");
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            window.location.href = "http://localhost:3000/";
         }else {
             NotificationManager.error("Something went wrong!", "Error!");
         }

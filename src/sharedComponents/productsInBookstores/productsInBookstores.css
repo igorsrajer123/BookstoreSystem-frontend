@@ -12,4 +12,77 @@
 .booksInBookstore {
     display: flex;
     flex-direction: column;
+    width: 75%;
+    align-items: center;
+}
+
+.otherProductsInBookstore {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    align-items: center;
+    margin-bottom: 5%;
+    height: 20vh;
+}
+
+.booksInBookstoreHeader {
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.booksInBookstoreTable {
+    width: 100%;
+    min-height: 35%;
+    height: auto;
+    border-collapse: collapse;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: default;
+}
+
+.booksInBookstoreTableHead {
+    position: sticky;
+    background-color: brown;
+    color: #fff;
+}
+
+.booksInBookstoreTableBody {
+    background-color: #fff;
+}
+
+.booksInBookstoreTableBody > tr {
+    transition: 0.3s;
+}
+
+.booksInBookstoreTableBody > tr:hover {
+    transform: scale(1.02);
+}
+
+.booksInBookstoreContent {
+    color: white;
+    background-color: chocolate;
+    border-style: none;
+    outline: none;
+    height: 4vh;
+    text-align: center;
+    font-weight: bold;
+}
+
+.editProductAmount {
+    display: flex;
+    align-items: center;
+    outline: none;
+    border-style: none;
+    background-color: darkred;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    height: 4vh;
+    width: 90%;
+    transition: 0.5s;
+    border-radius: 30%;
+}
+
+.editProductAmount:hover {
+    color: darkred;
+    background-color: white;
 }

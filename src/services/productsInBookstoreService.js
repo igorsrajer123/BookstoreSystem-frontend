@@ -23,10 +23,47 @@ async function getBookByBooksInBookstoreId(id) {
     return book;
 }
 
+async function getOtherProductByOtherProductsBookstoresId(id) {
+    const url = "http://localhost:8080/getOtherProductByOtherProductsBookstoresId/" + id;
+    const response = await fetch(url);
+
+    const otherProduct = await response.json();
+    return otherProduct;
+}
+
+async function updateBooksBookstoresAmount(booksBookstores) {
+    const url = "http://localhost:8080/updateBooksBookstoresAmount";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(booksBookstores)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
+async function updateOtherProductsBookstoresAmount(otherProductsBookstores) {
+    const url = "http://localhost:8080/updateOtherProductsBookstoresAmount";
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(otherProductsBookstores)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const productsInBookstoreService = {
     getBooksInBookstore,
     getOtherProductsInBookstore,
-    getBookByBooksInBookstoreId
+    getBookByBooksInBookstoreId,
+    getOtherProductByOtherProductsBookstoresId,
+    updateBooksBookstoresAmount,
+    updateOtherProductsBookstoresAmount
 }
 
 export default productsInBookstoreService;

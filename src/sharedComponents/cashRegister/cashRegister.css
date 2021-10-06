@@ -1,0 +1,118 @@
+.cashRegisterWrapper {
+    background-color: wheat;
+    min-height: 50vh;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cashRegisterOptions {
+    width: 50%;
+    height: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.cashRegisterData {
+    margin-top: 0%;
+    width: 70%;
+    min-height: 25vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cashRegisterOptionsButton {
+    width: 15vw;
+    height: 50%;
+    margin-left: 5%;
+    outline: none;
+    border-style: none;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+}
+
+.cashRegisterOptionsButton:hover {
+    background-color: brown;
+    color: white;
+}
+
+.cashRegisterAllReceipts {
+    width: 100%;
+    background-color: goldenrod;
+    transition: 1s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cashRegisterCreateReceipt {
+    width: 100%;
+    background-color: goldenrod;
+    transition: 1s;
+    margin-bottom: 3%;
+}
+
+.cashRegisterOneReceipt {
+    margin: 5%;
+    width: 70%;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    border-radius: 10%;
+    background-color: brown;
+    opacity: 1;
+    border-color: white;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+.cashRegisterHeader {
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    transition: 0.3s;
+    margin-top: 5%;
+    font-weight: bold;
+}
+
+.receiptInformation {
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 70%;
+}
+
+.reverseReceiptButton {
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    background-color: red;
+    color: white;
+    outline: none;
+    border-style: none;
+    margin-left: 3%;
+    cursor: pointer;
+    transition: 0.6s;
+}
+
+.reverseReceiptButton:hover {
+    background-color: white;
+    color: red;
+}
+
+.divForReceiptItems {
+    width: 100%;
+    height: auto;
+}

@@ -14,7 +14,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import PublishersAndGenres from './sharedComponents/publishersAndGenres/PublishersAndGenres';
 import Customers from './sharedComponents/customers/Customers';
 import ProductsInBookstores from './sharedComponents/productsInBookstores/ProductsInBookstores';
-
+import CashRegister from './sharedComponents/cashRegister/CashRegister';
 function App() {
 	return (
         <BrowserRouter>
@@ -33,6 +33,7 @@ function App() {
             <Route path="/publishersAndGenres" exact component={PublishersAndGenres} />
             <Route path="/customers" exact component={Customers} />
             <Route path="/productsStock" exact component={ProductsInBookstores} />
+            <Route path="/cashRegister" exact component={CashRegister} />
         </BrowserRouter>
     );
 }

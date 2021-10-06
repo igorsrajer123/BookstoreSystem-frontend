@@ -16,7 +16,8 @@ export default class HelperToolbar extends Component {
             onNewProductPage: false,
             onNewSellerPage: false,
             onPublishersAndGenresPage: false,
-            onProductsStockPage: false
+            onProductsStockPage: false,
+            onCashRegisterPage: false
         }
 
         this.newProductClick = this.newProductClick.bind(this);
@@ -26,6 +27,7 @@ export default class HelperToolbar extends Component {
         this.newWriterClick = this.newWriterClick.bind(this);
         this.publishersAndGenresClick = this.publishersAndGenresClick.bind(this);
         this.productsStockClick = this.productsStockClick.bind(this);
+        this.cashRegisterClick = this.cashRegisterClick.bind(this);
     }
 
     refreshPageOptions = () => {
@@ -36,6 +38,7 @@ export default class HelperToolbar extends Component {
         this.setState({onNewSellerPage: false});
         this.setState({onPublishersAndGenresPage: false});
         this.setState({onProductsStockPage: false});
+        this.setState({onCashRegisterPage: false});
     }
 
     setLoggedInStates(loggedIn) {
@@ -91,6 +94,9 @@ export default class HelperToolbar extends Component {
         }else if(currentUrl.includes("/productsStock")) {
             this.refreshPageOptions();
             this.setState({onProductsStockPage: true});
+        }else if(currentUrl.includes("/cashRegister")) {
+            this.refreshPageOptions();
+            this.setState({onCashRegisterPage: true})
         }
     }
 
@@ -112,6 +118,8 @@ export default class HelperToolbar extends Component {
     publishersAndGenresClick = () => window.location.href = "http://localhost:3000/publishersAndGenres";
 
     productsStockClick = () => window.location.href =  "http://localhost:3000/productsStock";
+
+    cashRegisterClick = () => window.location.href = "http://localhost:3000/cashRegister";
 
     render() {
         return (
@@ -155,10 +163,16 @@ export default class HelperToolbar extends Component {
                                     display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Publishers and Genres</button>
                     <button className="helperToolbarOption" 
                             onClick={this.productsStockClick}
-                            style={{color: this.state.onPublishersAndGenresPage ? 'black' : '',
+                            style={{color: this.state.onProductsStockPage ? 'black' : '',
                                     borderBottomStyle: this.state.onProductsStockPage ? 'solid' : '',
                                     borderColor: this.state.onProductsStockPage ? 'black' : '',
                                     display: this.state.bookstoreAdminLogged || this.state.sellerLogged ? 'inline' : 'none'}}>Products Stock</button>
+                    <button className="helperToolbarOption" 
+                            onClick={this.cashRegisterClick}
+                            style={{color: this.state.onCashRegisterPage ? 'black' : '',
+                                    borderBottomStyle: this.state.onCashRegisterPage ? 'solid' : '',
+                                    borderColor: this.state.onCashRegisterPage ? 'black' : '',
+                                    display: this.state.sellerLogged ? 'inline' : 'none'}}>Cash Register</button>
                 </div>
             </div>
         )

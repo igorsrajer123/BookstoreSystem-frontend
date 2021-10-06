@@ -62,7 +62,11 @@ export default class ProductsInBookstores extends Component {
                 
                 await this.generateNewObjectsBooks(books);
                 await this.generateNewObjectsOtherProducts(otherProducts);
+            }else {
+                window.location.href = "http://localhost:3000/";
             }
+        }else {
+            window.location.href = "http://localhost:3000/";
         }
     }
 

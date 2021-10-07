@@ -30,11 +30,38 @@ async function getOtherProductByReceiptItem(id) {
     return otherProduct;
 }
 
+async function createReceipt(sellerId, items) {
+    const url = "http://localhost:8080/createReceipt/" + sellerId;
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+                    "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(items)
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
+async function reverseReceipt(receiptId, bookstoreId) {
+    const url = "http://localhost:8080/reverseReceipt/" + receiptId + "/" + bookstoreId;
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        }
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const receiptService = {
     getCashRegistersReceipts,
     getReceiptItems,
     getBookFromReceiptItem,
-    getOtherProductByReceiptItem
+    getOtherProductByReceiptItem,
+    createReceipt,
+    reverseReceipt
 }
 
 export default receiptService;

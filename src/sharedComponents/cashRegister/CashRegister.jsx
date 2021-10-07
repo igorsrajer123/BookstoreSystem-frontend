@@ -14,6 +14,7 @@ import OtherProductService from './../../services/otherProductService';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ProductsInBookstoreService from './../../services/productsInBookstoreService';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 export default class CashRegister extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ export default class CashRegister extends Component {
             currentCashRegister: null,
             currentBookstore: null,
             currentUser: null,
+            currentSeller: null,
             cashRegistersReceipts: [],
             newObjectList: [],
             bookIdsFromChild: [],
@@ -49,6 +51,7 @@ export default class CashRegister extends Component {
         this.handleDownArrowClickBook = this.handleDownArrowClickBook.bind(this);
         this.handleDownArrowClickProduct = this.handleDownArrowClickProduct.bind(this);
         this.createReceiptClick = this.createReceiptClick.bind(this);
+        this.reverseReceiptClick = this.reverseReceiptClick.bind(this);
     }
 
     async componentDidMount() {
@@ -60,6 +63,7 @@ export default class CashRegister extends Component {
         if(currentUser !== null) {
             if(currentUser.type === "ROLE_SELLER") {
                 const seller = await SellerService.getSellerByUserId(currentUser.id);
+                this.setState({currentSeller: seller});
 
                 const bookstore = await BookstoreService.getBookstoreBySellerId(seller.id);
                 this.setState({currentBookstore: bookstore});
@@ -263,17 +267,57 @@ export default class CashRegister extends Component {
             }
         }
         this.setState({newArrayOtherProducts: otherProductItems});
-        
+
+        let sendingObjects = [];
         if(allItemsAvailable) {
-            console.log("IMAGIIGUGUGUG");
+            for(var b of bookItems) {
+                const obj = {
+                    book: {
+                        id: parseInt(b.id)
+                    },
+                    amount: parseInt(b.amount)
+                }
+                sendingObjects.push(obj);
+            }
+
+            for(var o of otherProductItems) {
+                const obj = {
+                    otherProduct: {
+                        id: parseInt(o.id)
+                    },
+                    amount: parseInt(o.amount)
+                }
+                sendingObjects.push(obj);
+            }
+
+            const response = await ReceiptService.createReceipt(this.state.currentSeller.id, sendingObjects);
+            if(response === 200) {
+                NotificationManager.success("Receipt successfully created!", "Error!");
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                window.location.reload();
+            }else {
+                NotificationManager.error("Something went wrong!", "Error!");
+            }
         }else {
-            console.log("NEMA DOVOLJNOOO");
+            NotificationManager.error("Some items are currently not available for sale!", "Error!");
+        }
+    }
+
+    async reverseReceiptClick(receiptId) {
+        const response = await ReceiptService.reverseReceipt(receiptId, this.state.currentBookstore.id);
+        if(response === 200) {
+            NotificationManager.success("Receipt successfully reversed!", "Error!");
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            window.location.reload();
+        }else {
+            NotificationManager.error("Something went wrong!", "Error!");
         }
     }
 
     render() {
         return (
             <div className="cashRegisterWrapper">
+                <NotificationContainer />
                 <ChooseBooksModal ref={this.child} sendData={this.handleCallback} selectedBooks={this.state.bookIdsFromChild}/>
                 <ChooseOtherProductsModal ref={this.child2} sendData={this.handleCallback2} selectedOtherProducts={this.state.otherProductIdsFromChild} />
                 <div className="cashRegisterOptions">
@@ -298,7 +342,7 @@ export default class CashRegister extends Component {
                                     <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Number: <b>{r.number}</b></span>
                                     <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Date and Time: <b>{r.dateAndTime}</b></span>
                                     <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Value(RSD): <b>{r.value}</b></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Status:  <b>{r.status}</b><button style={{display: r.status === "CREATED" ? '' : 'none'}} className="reverseReceiptButton">Reverse</button></span>
+                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Status:  <b>{r.status}</b><button style={{display: r.status === "CREATED" ? '' : 'none'}} className="reverseReceiptButton" onClick={() => this.reverseReceiptClick(r.id)}>Reverse</button></span>
                                     <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Created By:  <b>{r.seller.user.firstName} {r.seller.user.lastName}</b></span>
                                     <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">
                                         <div className="divForReceiptItems">

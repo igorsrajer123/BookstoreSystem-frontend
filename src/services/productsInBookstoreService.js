@@ -57,13 +57,31 @@ async function updateOtherProductsBookstoresAmount(otherProductsBookstores) {
     return response.status;
 }
 
+async function checkBookAvailable(bookstoreId, bookId, amount) {
+    const url = "http://localhost:8080/checkBookAvailableInBookstore/" + bookstoreId + "/" + bookId + "/" + amount;
+    const response = await fetch(url);
+
+    const r = await response.json();
+    return r;
+}
+
+async function checkOtherProductAvailable(bookstoreId, otherProductId, amount) {
+    const url = "http://localhost:8080/checkOtherProductAvailableInBookstore/" + bookstoreId + "/" + otherProductId + "/" + amount;
+    const response = await fetch(url);
+
+    const r = await response.json();
+    return r;
+}
+
 const productsInBookstoreService = {
     getBooksInBookstore,
     getOtherProductsInBookstore,
     getBookByBooksInBookstoreId,
     getOtherProductByOtherProductsBookstoresId,
     updateBooksBookstoresAmount,
-    updateOtherProductsBookstoresAmount
+    updateOtherProductsBookstoresAmount,
+    checkBookAvailable,
+    checkOtherProductAvailable
 }
 
 export default productsInBookstoreService;

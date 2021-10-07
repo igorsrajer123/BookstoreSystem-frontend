@@ -40,11 +40,20 @@ async function updateBook(book) {
     return response.status;
 }
 
+async function getBookById(id) {
+    const url = "http://localhost:8080/getBookById/" + id;
+    const response = await fetch(url);
+
+    const book = await response.json();
+    return book;
+}
+
 const bookService = {
     getAllBooks,
     getBooksByGenre,
     createNewBook,
-    updateBook
+    updateBook,
+    getBookById
 }
 
 export default bookService;

@@ -7,22 +7,48 @@ import SellerService from './../../services/sellerService';
 import LoginService from './../../services/loginService';
 import BookstoreService from './../../services/bookstoreService';
 import ReceiptService from './../../services/receiptService';
+import ChooseBooksModal from './../../modals/chooseItemsForReceipt/ChooseBooksModal';
+import BookService from '../../services/bookService';
+import ChooseOtherProductsModal from '../../modals/chooseItemsForReceipt/ChooseOtherProductsModal';
+import OtherProductService from './../../services/otherProductService';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ProductsInBookstoreService from './../../services/productsInBookstoreService';
 
 export default class CashRegister extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        this.child = React.createRef();
+        this.child2 = React.createRef();
 
         this.state = {
             showAllReceipts: false,
             showNewReceipt: false,
             currentCashRegister: null,
+            currentBookstore: null,
             currentUser: null,
             cashRegistersReceipts: [],
-            newObjectList: []
+            newObjectList: [],
+            bookIdsFromChild: [],
+            otherProductIdsFromChild: [],
+            newArrayBooks: [],
+            newArrayOtherProducts: [],
+            bookItemsSelected: 0,
+            otherProductItemsSelected: 0
         }
 
         this.showAllReceiptsClick = this.showAllReceiptsClick.bind(this);
         this.showNewReceiptClick = this.showNewReceiptClick.bind(this);
+        this.openBooksModal = this.openBooksModal.bind(this);
+        this.handleCallback = this.handleCallback.bind(this);
+        this.handleCallback2 = this.handleCallback2.bind(this);
+        this.openOtherProductsModal = this.openOtherProductsModal.bind(this);
+        this.handleUpArrowClickBook = this.handleUpArrowClickBook.bind(this);
+        this.handleUpArrowClickProduct = this.handleUpArrowClickProduct.bind(this);
+        this.handleDownArrowClickBook = this.handleDownArrowClickBook.bind(this);
+        this.handleDownArrowClickProduct = this.handleDownArrowClickProduct.bind(this);
+        this.createReceiptClick = this.createReceiptClick.bind(this);
     }
 
     async componentDidMount() {
@@ -34,7 +60,10 @@ export default class CashRegister extends Component {
         if(currentUser !== null) {
             if(currentUser.type === "ROLE_SELLER") {
                 const seller = await SellerService.getSellerByUserId(currentUser.id);
+
                 const bookstore = await BookstoreService.getBookstoreBySellerId(seller.id);
+                this.setState({currentBookstore: bookstore});
+
                 const cashRegister = await CashRegisterService.getCashRegisterByBookstoreId(bookstore.id);
                 this.setState({currentCashRegister: cashRegister});
 
@@ -111,9 +140,142 @@ export default class CashRegister extends Component {
         }
     }
 
+    openBooksModal = () => this.child.current.toggleModal();
+
+    openOtherProductsModal = () =>  this.child2.current.toggleModal();
+
+    async handleCallback(childData) {
+        let myData = [];
+        if(childData.length !== 0)
+            for(var k of childData)
+                myData.push(k);
+
+        let newBooks = [];
+        for (let id of childData) {
+            const book = await BookService.getBookById(id);
+
+            const obj = {
+                id: id,
+                name: book.name,
+                amount: 1,
+                available: true
+            }
+            newBooks.push(obj);
+        }
+        this.setState({bookIdsFromChild: myData});
+        this.setState({newArrayBooks: newBooks});
+        this.setState({bookItemsSelected: newBooks.length});
+    }
+
+    async handleCallback2(childData) {
+        let myData = [];
+        if(childData.length !== 0)
+            for(var k of childData)
+                myData.push(k);
+        
+        let newOtherProducts = [];
+        for (let id of childData) {
+            const otherProduct = await OtherProductService.getOtherProductById(id);
+            
+            const obj = {
+                id: id,
+                name: otherProduct.name,
+                amount: 1,
+                available: true
+            }
+            newOtherProducts.push(obj);
+        }
+        this.setState({otherProductIdsFromChild: myData});
+        this.setState({newArrayOtherProducts: newOtherProducts});
+        this.setState({otherProductItemsSelected: newOtherProducts.length});
+    }
+
+    handleUpArrowClickBook = id => {
+        let myBooks = this.state.newArrayBooks;
+        for(var b of myBooks) {
+            if(b.id === id) {
+                b.amount += 1;
+            }
+        }
+        this.setState({newArrayBooks: myBooks});
+    }
+
+    handleUpArrowClickProduct = id => {
+        let myProducts = this.state.newArrayOtherProducts;
+        for(var p of myProducts) {
+            if(p.id === id) {
+                p.amount += 1;
+            }
+        }
+        this.setState({newArrayOtherProducts: myProducts});
+    }
+
+    handleDownArrowClickBook = id => {
+        let myBooks = this.state.newArrayBooks;
+        for(var b of myBooks) {
+            if(b.id === id) {
+                if(b.amount - 1 < 1)
+                    b.amount = 1;
+                else
+                    b.amount -= 1;
+            }
+        }
+        this.setState({newArrayBooks: myBooks});
+    }
+
+    handleDownArrowClickProduct = id => {
+        let myProducts = this.state.newArrayOtherProducts;
+        for(var p of myProducts) {
+            if(p.id === id) {
+                if(p.amount - 1 < 1)
+                    p.amount = 1;
+                else
+                    p.amount -= 1;
+            }
+        }
+        this.setState({newArrayOtherProducts: myProducts});
+    }
+
+    async createReceiptClick() {
+        const bookItems = this.state.newArrayBooks;
+        const otherProductItems = this.state.newArrayOtherProducts;
+
+        let allItemsAvailable = true;
+
+        for(var b of bookItems) {
+            const response = await ProductsInBookstoreService.checkBookAvailable(this.state.currentBookstore.id, parseInt(b.id), parseInt(b.amount));
+            if(response === true) {
+                b.available = true;
+            }else {
+                b.available = false;
+                allItemsAvailable = false;
+            }
+        }
+        this.setState({newArrayBooks: bookItems});
+
+        for(var o of otherProductItems) {
+            const response = await ProductsInBookstoreService.checkOtherProductAvailable(this.state.currentBookstore.id, parseInt(o.id), parseInt(o.amount));
+            if(response === true) {
+                o.available = true;
+            }else {
+                o.available = false;
+                allItemsAvailable = false;
+            }
+        }
+        this.setState({newArrayOtherProducts: otherProductItems});
+        
+        if(allItemsAvailable) {
+            console.log("IMAGIIGUGUGUG");
+        }else {
+            console.log("NEMA DOVOLJNOOO");
+        }
+    }
+
     render() {
         return (
             <div className="cashRegisterWrapper">
+                <ChooseBooksModal ref={this.child} sendData={this.handleCallback} selectedBooks={this.state.bookIdsFromChild}/>
+                <ChooseOtherProductsModal ref={this.child2} sendData={this.handleCallback2} selectedOtherProducts={this.state.otherProductIdsFromChild} />
                 <div className="cashRegisterOptions">
                     <button className="cashRegisterOptionsButton" 
                             onClick={this.showAllReceiptsClick}
@@ -153,7 +315,44 @@ export default class CashRegister extends Component {
                     </div>
                     <div className="cashRegisterCreateReceipt" style={{minHeight: this.state.showNewReceipt ? '30vh' : '0px', 
                                                                         height: this.state.showNewReceipt ? 'auto' : '0px'}}>
-                        
+                    
+                        <div className="cashRegisterCreateReceiptOptions"
+                            style={{minHeight: this.state.showNewReceipt ? '10vh' : '0px', 
+                                    height: this.state.showNewReceipt ? 'auto' : '0px'}}>
+                            <button style={{display: this.state.showNewReceipt ? 'inline' : 'none'}} 
+                                    className="cashRegisterCreateReceiptButton"
+                                    onClick={this.openBooksModal}>Add Book</button>
+                            <button style={{display: this.state.showNewReceipt ? 'inline' : 'none'}} 
+                                    className="cashRegisterCreateReceiptButton"
+                                    onClick={this.openOtherProductsModal}>Add Other Product</button>
+                        </div>
+                        <div className="cashRegisterCreateReceiptItems"
+                            style={{minHeight: this.state.showNewReceipt ? '10vh' : '0px', 
+                                    height: this.state.showNewReceipt ? 'auto' : '0px'}}>
+                            <ol key={1} className="itemsList" style={{display: this.state.showNewReceipt ? '' : 'none'}}>
+                                {this.state.newArrayBooks.map(b => (
+                                    <li key={b.id} className="itemsListItem" style={{minHeight: this.state.showNewReceipt ? '0px' : '0px', height: this.state.showNewReceipt ? 'auto' : '0px'}}>{b.name} 
+                                        <input type="text" disabled={true}  className="itemsListItemInput" value={b.amount} style={{borderStyle: b.available ? 'none' : 'solid', borderColor: b.available ? '' : 'red'}}/>
+                                        <div>
+                                            <KeyboardArrowUpIcon className="itemsListItemArrow" onClick={() => this.handleUpArrowClickBook(b.id)}/>
+                                            <KeyboardArrowDownIcon className="itemsListItemArrow" onClick={() => this.handleDownArrowClickBook(b.id)}/>
+                                        </div>
+                                    </li>
+                                ))}
+                                {this.state.newArrayOtherProducts.map(o => (
+                                    <li key={o.id} className="itemsListItem" style={{display: this.state.showNewReceipt ? '' : 'none'}}>{o.name}
+                                        <input type="text" disabled={true} className="itemsListItemInput" value={o.amount} style={{borderStyle: o.available ? 'none' : 'solid', borderColor: o.available ? '' : 'red'}}/>
+                                        <div>
+                                            <KeyboardArrowUpIcon className="itemsListItemArrow" onClick={() => this.handleUpArrowClickProduct(o.id)}/>
+                                            <KeyboardArrowDownIcon className="itemsListItemArrow" onClick={() => this.handleDownArrowClickProduct(o.id)}/>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                        <div className="cashRegisterCreateReceiptSave" style={{minHeight: this.state.showNewReceipt ? '5vh' : '0px', height: this.state.showNewReceipt ? 'auto' : '0px'}}>
+                            <button className="cashRegisterCreateReceiptSaveButton" style={{display: this.state.showNewReceipt && (this.state.bookItemsSelected > 0 || this.state.otherProductItemsSelected) ? '' : 'none'}} onClick={this.createReceiptClick}>Create Receipt</button>
+                        </div>
                     </div>
                 </div>
             </div>

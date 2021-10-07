@@ -1,0 +1,87 @@
+.chooseOtherProductsModal {
+    background-color: wheat;
+    min-width: 50vw;
+    width: auto;
+    min-height: 15vh;
+    height: auto;
+    outline: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.chooseOtherProductsWrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    min-width: 50vw;
+    width: 50vw;
+    height: 100%;
+}
+
+.chooseOtherProductInfo {
+    margin-top: 2%;
+    margin-left: 5%;
+    min-height: 4vh;
+    height: auto;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.chooseOtherProductInput {
+    outline: none;
+    height: 3vh;
+    width: 2vw;
+    filter: invert(100%) hue-rotate(18deg) brightness(2.5);
+}
+
+.chooseOtherProductLabel {
+    color: brown;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.chooseOtherProductSave {
+    grid-column: 1/5;
+    display: flex;
+    margin-bottom: 5%;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.chooseOtherProductButton {
+    height: 4vh;
+    width: 7vw;
+    background-color: lawngreen;
+    color: brown;
+    outline: none;
+    border-style: none;
+    font-weight: bold;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
+.chooseOtherProductButton:hover {
+    color: lawngreen;
+    background-color: brown;
+}
+
+.chooseOtherProductSearch {
+    grid-column: 1/5;
+    display: flex;
+    margin-bottom: 1%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.chooseOtherProductSearchBar {
+    outline: none;
+    border-style: none;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    height: 100%;
+}

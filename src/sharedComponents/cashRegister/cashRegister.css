@@ -49,7 +49,6 @@
 .cashRegisterAllReceipts {
     width: 100%;
     background-color: goldenrod;
-    transition: 1s;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +57,6 @@
 .cashRegisterCreateReceipt {
     width: 100%;
     background-color: goldenrod;
-    transition: 1s;
     margin-bottom: 3%;
 }
 
@@ -104,7 +102,6 @@
     border-style: none;
     margin-left: 3%;
     cursor: pointer;
-    transition: 0.6s;
 }
 
 .reverseReceiptButton:hover {
@@ -115,4 +112,94 @@
 .divForReceiptItems {
     width: 100%;
     height: auto;
+}
+
+.cashRegisterCreateReceiptOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cashRegisterCreateReceiptButton {
+    outline: none;
+    border-style: none;
+    width: 15vw;
+    height: 5vh;
+    margin-left: 5%;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cashRegisterCreateReceiptButton:hover {
+    background-color: white;
+    color: brown;
+}
+
+.cashRegisterCreateReceiptItems {
+    width: 53%;
+    margin-left: 26%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.itemsListItem {
+    background-color: red;
+    display: flex;
+    width: 100%;
+    margin-top: 1%;
+    background-color: burlywood;
+    border-style: groove;
+    align-items: center;
+    border-color: white;
+    padding-left: 3%;
+}
+
+.itemsListItem:hover {
+    transform: scale(1.02);
+    cursor: default;
+}
+
+.itemsList {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemsListItemInput {
+    width: 3vw;
+    margin-left: 5%;
+    text-align: center;
+}
+
+.itemsListItemArrow{
+    cursor: pointer;
+}
+
+.cashRegisterCreateReceiptSave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.cashRegisterCreateReceiptSaveButton {
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    background-color: brown;
+    color: white;
+    outline: none;
+    border-style: none;
+    margin-left: 3%;
+    cursor: pointer;
+    height: 5vh;
+    margin-bottom: 2%;
 }

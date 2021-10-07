@@ -6,6 +6,14 @@ async function getAllOtherProducts() {
     return products;
 }
 
+async function getOtherProductById(id) {
+    const url = "http://localhost:8080/getOtherProductById/" + id;
+    const response = await fetch(url);
+
+    const product = await response.json();
+    return product;
+}
+
 async function getOtherProductsByType(type) {
     const url = "http://localhost:8080/getOtherProductsByType/" + type;
     const response = await fetch(url);
@@ -44,7 +52,8 @@ const otherProductService = {
     getAllOtherProducts,
     getOtherProductsByType,
     createNewOtherProduct,
-    updateOtherProduct
+    updateOtherProduct,
+    getOtherProductById
 }
 
 export default otherProductService;

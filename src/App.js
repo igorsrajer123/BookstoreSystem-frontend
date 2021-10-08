@@ -15,6 +15,9 @@ import PublishersAndGenres from './sharedComponents/publishersAndGenres/Publishe
 import Customers from './sharedComponents/customers/Customers';
 import ProductsInBookstores from './sharedComponents/productsInBookstores/ProductsInBookstores';
 import CashRegister from './sharedComponents/cashRegister/CashRegister';
+import PreviewProduct from './sharedComponents/product/PreviewProduct';
+import ShoppingCart from './sharedComponents/shoppingCart/ShoppingCart';
+
 function App() {
 	return (
         <BrowserRouter>
@@ -34,6 +37,8 @@ function App() {
             <Route path="/customers" exact component={Customers} />
             <Route path="/productsStock" exact component={ProductsInBookstores} />
             <Route path="/cashRegister" exact component={CashRegister} />
+            <Route path="/previewProduct/" component={PreviewProduct} />
+            <Route path="/shoppingCart/" component={ShoppingCart} />
         </BrowserRouter>
     );
 }

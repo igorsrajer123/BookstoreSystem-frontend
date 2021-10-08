@@ -21,6 +21,7 @@ export default class Product extends Component {
 
         this.handleEditClick = this.handleEditClick.bind(this);
         this.handlePhotoEditClick = this.handlePhotoEditClick.bind(this);
+        this.handleProductClick = this.handleProductClick.bind(this);
     }
 
     async componentDidMount() {
@@ -52,9 +53,11 @@ export default class Product extends Component {
 
     handleEditClick = () => this.child2.current.toggleModal();
 
+    handleProductClick = id => window.location.href = "http://localhost:3000/previewProduct/" + id;
+
     render() {
         return (
-            <div className="productWrapper">
+            <div className="productWrapper" onClick={() => this.handleProductClick(this.props.product.id)}>
                 <EditProductModal ref={this.child2} product={this.props.product} />
                 <EditProductImageModal ref={this.child} product={this.props.product} />
                 <EditIcon className="productHelperIcons" onClick={this.handleEditClick} style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>

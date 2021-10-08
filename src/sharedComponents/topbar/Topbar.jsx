@@ -25,7 +25,8 @@ export default class Topbar extends Component {
             loggedIn: null,
             showHelperToolbar: false,
             onCustomersPage: false,
-            sysAdminLogged: false
+            sysAdminLogged: false,
+            customerLoggedIn: false
         }
 
         this.booksClick = this.booksClick.bind(this);
@@ -37,6 +38,7 @@ export default class Topbar extends Component {
         this.loginClick = this.loginClick.bind(this);
         this.logoutClick = this.logoutClick.bind(this);
         this.customersClick = this.customersClick.bind(this);
+        this.clickShoppingCartHandle = this.clickShoppingCartHandle.bind(this);
     }
 
     loginClick = () => this.child.current.toggleModal();
@@ -56,6 +58,8 @@ export default class Topbar extends Component {
     otherProductsClick = () => window.location.href = "http://localhost:3000/otherProducts";
 
     customersClick = () => window.location.href = "http://localhost:3000/customers";
+
+    clickShoppingCartHandle = () => window.location.href = "http://localhost:3000/shoppingCart/" + this.state.loggedIn.id;
 
     refreshPageOptions = () => {
         this.setState({onHomePage: false});
@@ -104,6 +108,11 @@ export default class Topbar extends Component {
             else
                 this.setState({sysAdminLogged: false});
 
+            if(currentUser.type === "ROLE_CUSTOMER") 
+                this.setState({customerLoggedIn: true});
+            else
+                this.setState({customerLoggedIn: false});
+
             if(currentUser.type === "ROLE_SELLER" || currentUser.type === "ROLE_BOOKSTORE_ADMIN") {
                 if(currentUser.firstLogin) {
                     this.child2.current.toggleModal();
@@ -136,7 +145,7 @@ export default class Topbar extends Component {
                         <div className="options">
                             <span className="optionText" onClick={this.loginClick} style={{display: this.state.loggedIn==null ? 'inline' : 'none'}}>Sign In</span>
                             <span className="optionText" onClick={this.logoutClick} style={{display: this.state.loggedIn==null ? 'none' : 'inline'}}>Sign Out</span>
-                            <AddShoppingCartIcon className="shoppingCart"/>
+                            <AddShoppingCartIcon className="shoppingCart" onClick={this.clickShoppingCartHandle} style={{display: this.state.customerLoggedIn ? 'inline' : 'none'}}/>
                         </div>
                     </div>
                 </div>

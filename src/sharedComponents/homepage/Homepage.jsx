@@ -29,7 +29,7 @@ export default class Homepage extends Component {
             <div className="homepageWrapper">
                 {this.state.products.map(p => (
                     <div key={p.id} className="product">
-                        <Product product={p} currentUser={this.state.currentUser} />
+                        <Product product={p} currentUser={this.state.currentUser}/>
                     </div>
                 ))}
             </div>

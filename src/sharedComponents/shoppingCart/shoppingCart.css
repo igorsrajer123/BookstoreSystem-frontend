@@ -1,0 +1,8 @@
+.shoppingCartWrapper {
+    background-color: wheat;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: 45vh;
+    height: auto;
+    display: flex;
+}

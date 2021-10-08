@@ -270,22 +270,22 @@ export default class CashRegister extends Component {
 
         let sendingObjects = [];
         if(allItemsAvailable) {
-            for(var b of bookItems) {
+            for(var z of bookItems) {
                 const obj = {
                     book: {
-                        id: parseInt(b.id)
+                        id: parseInt(z.id)
                     },
-                    amount: parseInt(b.amount)
+                    amount: parseInt(z.amount)
                 }
                 sendingObjects.push(obj);
             }
 
-            for(var o of otherProductItems) {
+            for(var y of otherProductItems) {
                 const obj = {
                     otherProduct: {
-                        id: parseInt(o.id)
+                        id: parseInt(y.id)
                     },
-                    amount: parseInt(o.amount)
+                    amount: parseInt(y.amount)
                 }
                 sendingObjects.push(obj);
             }

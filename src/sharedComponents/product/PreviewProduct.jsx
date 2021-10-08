@@ -5,6 +5,9 @@ import BookService from './../../services/bookService';
 import OtherProductService from './../../services/otherProductService';
 import NoImage from './../../assets/noimg.webp';
 import WriterService from './../../services/writerService';
+import ShoppingCartService from './../../services/shoppingCartService';
+import CustomerService from './../../services/customerService';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 export default class PreviewProduct extends Component {
     constructor(props) {
@@ -16,8 +19,11 @@ export default class PreviewProduct extends Component {
             productImage: "",
             currentProductIsBook: false,
             bookWriters: [],
-            currentUserCustomer: false
+            currentUserCustomer: false,
+            currentShoppingCart: null
         }
+
+        this.addToShoppingCart = this.addToShoppingCart.bind(this);
     }
 
     async componentDidMount() {
@@ -27,6 +33,9 @@ export default class PreviewProduct extends Component {
         if(currentUser !== null) {
             if(currentUser.type === "ROLE_CUSTOMER") {
                 this.setState({currentUserCustomer: true});
+                const customer = await CustomerService.getCustomerByUser(currentUser.id);
+                const shoppingCart = await ShoppingCartService.getShoppingCartByUserId(customer.id);
+                this.setState({currentShoppingCart: shoppingCart});
             }
         }
         const currentUrl = window.location.href.toString();
@@ -49,13 +58,51 @@ export default class PreviewProduct extends Component {
         }
     }
 
+    async addToShoppingCart() {
+        if(this.state.currentProduct.type === undefined) {
+            const obj = {
+                book: {
+                    id: this.state.currentProduct.id
+                },
+                shoppingCart: {
+                    id: this.state.currentShoppingCart.id
+                },
+                otherProduct: null
+            }
+
+            const response = await ShoppingCartService.createNewShoppingCartItem(obj);
+            if(response === 201) {
+                NotificationManager.success("Product:" + this.state.currentProduct.name + " added to shopping chart!", "Success!");
+            }else {
+                NotificationManager.error("Something went wrong!", "Error!");
+            }
+        }else {
+            const obj = {
+                otherProduct: {
+                    id: this.state.currentProduct.id
+                },
+                shoppingCart: {
+                    id: this.state.currentShoppingCart.id
+                },
+                book: null
+            }
+            const response = await ShoppingCartService.createNewShoppingCartItem(obj);
+            if(response === 201) {
+                NotificationManager.success("Product:" + this.state.currentProduct.name + " added to shopping chart!", "Success!");
+            }else {
+                NotificationManager.error("Something went wrong!", "Error!");
+            }
+        }
+    }
+
     render() {
         return (
             <div className="previewProductWrapper">
+                <NotificationContainer />
                 <div className="previewProductLeft">
                     <div className="previewProductPicture">
                         <img src={this.state.productImage === "" ? NoImage : this.state.productImage} alt="pic" className="previewProductImage"/>
-                        <button className="previewProductAddToCart" style={{display: this.state.currentUserCustomer ? 'inline' : 'none'}}>Add to Shopping Cart</button>
+                        <button className="previewProductAddToCart" style={{display: this.state.currentUserCustomer ? 'inline' : 'none'}} onClick={this.addToShoppingCart}>Add to Shopping Cart</button>
                     </div>
                     <div className="previewProductInformation">
                         <div className="previewProductData">

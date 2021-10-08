@@ -52,7 +52,8 @@ body {
     width: 28vw;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-right: 3%;
 }
 
 .topbarLogo {
@@ -96,6 +97,7 @@ body {
     font-size: 3vh;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     cursor: pointer;
+    margin-right: 1vw;
     transition: 0.5s;
 }
 
@@ -107,7 +109,8 @@ body {
     font-size: 4vh !important;
     color: brown;
     cursor: pointer;
-    margin-left: 0.5vw;
+    margin-top: 1vh;
+    margin-right: 3vw;
 }
 
 .shoppingCart:hover {

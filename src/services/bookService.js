@@ -48,12 +48,21 @@ async function getBookById(id) {
     return book;
 }
 
+async function getBookFromShoppingCartItem(id) {
+    const url = "http://localhost:8080/getBookFromShoppingCartItem/" + id;  
+    const response = await fetch(url);
+
+    const book= await response.json();
+    return book;
+}
+
 const bookService = {
     getAllBooks,
     getBooksByGenre,
     createNewBook,
     updateBook,
-    getBookById
+    getBookById,
+    getBookFromShoppingCartItem
 }
 
 export default bookService;

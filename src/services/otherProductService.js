@@ -48,12 +48,20 @@ async function updateOtherProduct(otherProduct) {
     return response.status;
 }
 
+async function getOtherProductByShoppingCartItem(id) {
+    const url = "http://localhost:8080/getOtherProductByShoppingCartItem/" + id;
+    const response = await fetch(url);
+
+    const otherProduct = await response.json();
+    return otherProduct;
+}
 const otherProductService = {
     getAllOtherProducts,
     getOtherProductsByType,
     createNewOtherProduct,
     updateOtherProduct,
-    getOtherProductById
+    getOtherProductById,
+    getOtherProductByShoppingCartItem
 }
 
 export default otherProductService;

@@ -4,6 +4,7 @@ import CustomerService from './../../services/customerService';
 import LoginService from './../../services/loginService';
 import UserService from './../../services/userService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import DeliveryService from './../../services/deliveryService';
 
 export default class Customers extends Component {
     constructor() {
@@ -11,10 +12,14 @@ export default class Customers extends Component {
 
         this.state = {
             allCustomers: [],
-            currentUser: null
+            currentUser: null,
+            allDeliveries: [],
+            newArray: []
         }
 
         this.buttonClick = this.buttonClick.bind(this);
+        this.declineDeliveryRequest = this.declineDeliveryRequest.bind(this);
+        this.acceptDeliveryRequest = this.acceptDeliveryRequest.bind(this);
     }
 
     async componentDidMount() {
@@ -25,6 +30,24 @@ export default class Customers extends Component {
 
         const customers = await CustomerService.getAllCustomers();
         this.setState({allCustomers: customers});
+        const deliveries = await DeliveryService.getAllDeliveries();
+        this.setState({allDeliveries: deliveries});
+        let array = [];
+        for(let d of deliveries) {
+            const customer = await CustomerService.getCustomerByDeliveryId(d.id);
+            const obj = {
+                id: d.id,
+                name: customer.user.firstName + " " + customer.user.lastName,
+                email: customer.user.email,
+                contactPhone: d.contactPhone,
+                deliveryAddress: d.deliveryAddress,
+                postalCode: d.postalCode,
+                createdDate: d.createdDate,
+                status: d.status
+            }
+            array.push(obj);
+        }
+        this.setState({newArray: array});
     }
 
     async buttonClick(userId) {
@@ -39,12 +62,48 @@ export default class Customers extends Component {
         window.location.reload();
     }
 
+    async declineDeliveryRequest(id) {
+        const resp = await DeliveryService.declineDelivery(id);
+        if(resp === 200) {
+            NotificationManager.success("Delivery successfully declined!", "Update Successful!");
+        }else {
+            NotificationManager.error("Something went wrong!", "Update Failed!");
+        }
+
+        let array = [];
+        for(let n of this.state.newArray){
+            if(n.id === id)
+                n.status = "DECLINED"
+
+            array.push(n);
+        }
+        this.setState({newArray: array});
+    }
+
+    async acceptDeliveryRequest(id) {
+        const resp = await DeliveryService.acceptDelivery(id);
+        if(resp === 200) {
+            NotificationManager.success("Delivery successfully accepted!", "Update Successful!");
+        }else {
+            NotificationManager.error("Something went wrong!", "Update Failed!");
+        }
+
+        let array = [];
+        for(let n of this.state.newArray){
+            if(n.id === id)
+                n.status = "ACCEPTED"
+
+            array.push(n);
+        }
+        this.setState({newArray: array});
+    }
+
     render() {
         return (
             <div className="viewCustomersWrapper">
                 <div className="viewCustomersHelper">
-                <NotificationContainer />
-                <h1 className="viewCustomersHeader">Registered Customers</h1>
+                    <NotificationContainer />
+                    <h1 className="viewCustomersHeader">Registered Customers</h1>
                     <table className="viewCustomersTable">
                         <thead className="viewCustomersTableHead">
                             <tr>
@@ -71,6 +130,45 @@ export default class Customers extends Component {
                                     <td className="viewCustomersContent"><button style={{backgroundColor: c.user.enabled ? 'crimson' : 'chartreuse'}}
                                                                                 className="disableCustomerAccount"
                                                                                         onClick={() => this.buttonClick(c.user.id)}>{c.user.enabled ? 'Disable' : 'Enable'}</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <h1 className="viewCustomersHeader">Delivery Requests</h1>
+                    <table className="viewCustomersTable">
+                        <thead className="viewCustomersTableHead">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact Phone</th>
+                                <th>Delivery Address</th>
+                                <th>Postal Code</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody className="viewPublishersTableBody">
+                            {this.state.newArray.map((d, ddx) => (
+                                <tr key={ddx}>
+                                    <td className="viewCustomersContent">{d.name}</td>
+                                    <td className="viewCustomersContent">{d.email}</td>
+                                    <td className="viewCustomersContent">{d.contactPhone}</td>
+                                    <td className="viewCustomersContent">{d.deliveryAddress}</td>
+                                    <td className="viewCustomersContent">{d.postalCode}</td>
+                                    <td className="viewCustomersContent">{d.createdDate}</td>
+                                    <td className="viewCustomersContent">{d.status}</td>
+                                    <td className="viewCustomersContent">
+                                        <button style={{display: d.status === "PENDING" ? 'inline' : 'none', backgroundColor: 'lawngreen'}} onClick={() => this.acceptDeliveryRequest(d.id)} className="disableCustomerAccount">
+                                            Accept
+                                        </button>
+                                    </td>
+                                    <td className="viewCustomersContent">
+                                        <button style={{display: d.status !== "PENDING" ? 'none' : 'inline', backgroundColor: 'crimson'}} onClick={() => this.declineDeliveryRequest(d.id)} className="disableCustomerAccount">
+                                            Decline
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

@@ -160,7 +160,7 @@ export default class HelperToolbar extends Component {
                             style={{color: this.state.onPublishersAndGenresPage ? 'black' : '',
                                     borderBottomStyle: this.state.onPublishersAndGenresPage ? 'solid' : '',
                                     borderColor: this.state.onPublishersAndGenresPage ? 'black' : '',
-                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Publishers and Genres</button>
+                                    display: this.state.sysAdminLogged ? 'inline' : 'none'}}>Publishers & Genres</button>
                     <button className="helperToolbarOption" 
                             onClick={this.productsStockClick}
                             style={{color: this.state.onProductsStockPage ? 'black' : '',

@@ -39,11 +39,20 @@ async function deleteShoppingCartItem(id) {
     return response.status;
 }
 
+async function checkItemAvailable(id, amount) {
+    const url = "http://localhost:8080/checkItemAvailable/" + id + "/" + amount;  
+    const response = await fetch(url);
+
+    const available = await response.json();
+    return available;
+}
+
 const shoppingCartService = {
     getShoppingCartByUserId,
     getShoppingCartItems,
     createNewShoppingCartItem,
-    deleteShoppingCartItem
+    deleteShoppingCartItem,
+    checkItemAvailable
 }
 
 export default shoppingCartService;

@@ -202,7 +202,7 @@ export default class Topbar extends Component {
                                     borderBottomStyle: this.state.onCustomersPage ? 'solid' : '',
                                     borderColor: this.state.onCustomersPage ? 'black' : '',
                                     display: this.state.sysAdminLogged=== false ? 'none' : 'inline'}}>
-                        Customers
+                        Customers & Deliveries
                     </button>
                 </div>
                 <div className="topbarBottomBottom">

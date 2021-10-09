@@ -14,9 +14,17 @@ async function getCustomerByUser(id) {
     return customer;
 }
 
+async function getCustomerByDeliveryId(id) {
+    const url = "http://localhost:8080/getCustomerByDeliveryId/" + id;
+    const response = await fetch(url);
+
+    const customer = await response.json();
+    return customer;
+}
 const customerService = {
     getAllCustomers,
-    getCustomerByUser
+    getCustomerByUser,
+    getCustomerByDeliveryId
 }
 
 export default customerService;

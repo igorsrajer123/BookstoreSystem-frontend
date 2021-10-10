@@ -164,15 +164,15 @@ export default class Customers extends Component {
                         </thead>
                         <tbody className="viewPublishersTableBody">
                             {this.state.newArray.map((d, ddx) => (
-                                <tr key={ddx} onClick={() => this.clickOnDelivery(d.id)}>
-                                    <td className="viewCustomersContent">{d.name}</td>
-                                    <td className="viewCustomersContent">{d.email}</td>
-                                    <td className="viewCustomersContent">{d.contactPhone}</td>
-                                    <td className="viewCustomersContent">{d.deliveryAddress}</td>
-                                    <td className="viewCustomersContent">{d.postalCode}</td>
-                                    <td className="viewCustomersContent">{d.createdDate}</td>
-                                    <td className="viewCustomersContent" style={{color: d.status === 'DECLINED' ? 'red' : d.status === 'PENDING' ? 'yellow' : 'lawngreen'}}>{d.status}</td>
-                                    <td className="viewCustomersContent">{d.price}din</td>
+                                <tr key={ddx}>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.name}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.email}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.contactPhone}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.deliveryAddress}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.postalCode}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.createdDate}</td>
+                                    <td className="viewCustomersContent" style={{color: d.status === 'DECLINED' ? 'red' : d.status === 'PENDING' ? 'yellow' : 'lawngreen'}} onClick={() => this.clickOnDelivery(d.id)}>{d.status}</td>
+                                    <td className="viewCustomersContent" onClick={() => this.clickOnDelivery(d.id)}>{d.price}din</td>
                                     <td className="viewCustomersContent">
                                         <button style={{display: d.status === "PENDING" ? 'inline' : 'none', backgroundColor: 'lawngreen'}} onClick={() => this.acceptDeliveryRequest(d.id)} className="disableCustomerAccount">
                                             Accept

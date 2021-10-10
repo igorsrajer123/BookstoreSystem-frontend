@@ -1,0 +1,38 @@
+.priceHistoryModal {
+    background-color: wheat;
+    min-width: 50vw;
+    width: auto;
+    min-height: 20vh;
+    height: auto;
+    outline: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.priceHistoryItem {
+    margin: 3%;
+    width: 80%;
+    border-bottom-style: groove;
+    align-items: center;
+    justify-content: center;
+}
+
+.priceHistoryLabel {
+    color: brown;
+    margin-left: 3%;
+}
+
+.priceHistoryNewPrice {
+    margin: 1%;
+    background-color: red;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

@@ -85,14 +85,43 @@ export default class ViewBookstoreStaffModal extends Component {
 
     async buttonClick(userId) {
         const user = await UserService.getUserById(userId);
-        if(user.enabled)
+        if(user.enabled) {
             await UserService.disableAccount(userId);
-        else
+            let adminArray = [];
+            let sellerArray = [];
+            for(let a of this.state.bookstoreAdmins) {
+                if(a.user.id === userId) 
+                    a.user.enabled = false;
+                adminArray.push(a);
+            }
+            this.setState({bookstoreAdmins: adminArray});
+
+            for(let s of this.state.bookstoreSellers) {
+                if(s.user.id === userId) 
+                    s.user.enabled = false;
+                sellerArray.push(s);
+            }
+            this.setState({bookstoreSellers: sellerArray});
+        }else{
             await UserService.enableAccount(userId);
+            let adminArray = [];
+            let sellerArray = [];
+            for(let a of this.state.bookstoreAdmins) {
+                if(a.user.id === userId) 
+                    a.user.enabled = true;
+                adminArray.push(a);
+            }
+            this.setState({bookstoreAdmins: adminArray});
+
+            for(let s of this.state.bookstoreSellers) {
+                if(s.user.id === userId) 
+                    s.user.enabled = true;
+                sellerArray.push(s);
+            }
+            this.setState({bookstoreSellers: sellerArray});
+        }
 
         NotificationManager.success("Account status changed successfully!", "Update Successful!");
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        window.location.reload();
     }
 
     render() {

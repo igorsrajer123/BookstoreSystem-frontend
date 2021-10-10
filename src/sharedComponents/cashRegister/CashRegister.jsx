@@ -292,7 +292,7 @@ export default class CashRegister extends Component {
 
             const response = await ReceiptService.createReceipt(this.state.currentSeller.id, sendingObjects);
             if(response === 200) {
-                NotificationManager.success("Receipt successfully created!", "Error!");
+                NotificationManager.success("Receipt successfully created!", "Success!");
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 window.location.reload();
             }else {
@@ -304,14 +304,22 @@ export default class CashRegister extends Component {
     }
 
     async reverseReceiptClick(receiptId) {
-        const response = await ReceiptService.reverseReceipt(receiptId, this.state.currentBookstore.id);
-        if(response === 200) {
-            NotificationManager.success("Receipt successfully reversed!", "Error!");
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            window.location.reload();
-        }else {
+        const response = await ReceiptService.reverseReceipt(parseInt(receiptId), parseInt(this.state.currentBookstore.id));
+        if(response === 200) 
+            NotificationManager.success("Receipt successfully reversed!", "Success!");
+        else 
             NotificationManager.error("Something went wrong!", "Error!");
+
+        console.table(this.state.newObjectList);
+        let array = [];
+        for(let a of this.state.newObjectList) {
+            if(parseInt(a.id) === parseInt(receiptId))
+                a.status = "REVERSED";
+            
+            array.push(a);
         }
+        
+        this.setState({newObjectList: array});
     }
 
     render() {

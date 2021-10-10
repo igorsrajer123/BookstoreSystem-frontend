@@ -57,12 +57,12 @@ export default class Product extends Component {
 
     render() {
         return (
-            <div className="productWrapper" onClick={() => this.handleProductClick(this.props.product.id)}>
+            <div className="productWrapper">
                 <EditProductModal ref={this.child2} product={this.props.product} />
                 <EditProductImageModal ref={this.child} product={this.props.product} />
                 <EditIcon className="productHelperIcons" onClick={this.handleEditClick} style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>
                 <PhotoCameraIcon className="productHelperIcons" onClick={this.handlePhotoEditClick} style={{display: this.state.sysAdminLogged ? '' : 'none'}}/>
-                <img className="productImage" alt="productPic" src={this.props.product.coverImage===null ? NoImage : "http://localhost:8080/uploads/" + this.props.product.coverImage} />
+                <img className="productImage" alt="productPic" src={this.props.product.coverImage===null ? NoImage : "http://localhost:8080/uploads/" + this.props.product.coverImage} onClick={() => this.handleProductClick(this.props.product.id)}/>
                 <div className="productInfo">
                     <span className="productName"><b>{this.props.product.name}</b></span>
                     <span className="productWriter">

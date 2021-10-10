@@ -17,32 +17,34 @@ export default class DeliveryDetails extends Component {
     }
 
     async componentDidMount() {
-        this.setState({selectedDeliveryId: this.props.delivery});
-        const items = await DeliveryService.getDeliveryItems(this.props.delivery);
-            this.setState({deliveryItems: items});
-            let array = [];
-            for(let i of items) {
-                const book = await DeliveryService.getBookFromDeliveryItem(i.id);
-                if(book.id === null) {
-                    const otherProduct = await DeliveryService.getOtherProductFromDeliveryItem(i.id);
-                    const obj = {
-                        amount: i.amount,
-                        name: otherProduct.name,
-                        image: otherProduct.coverImage,
-                        price: parseInt(i.amount) * parseInt(otherProduct.price)
+        if(this.props.delivery !== "") {
+            this.setState({selectedDeliveryId: this.props.delivery});
+            const items = await DeliveryService.getDeliveryItems(this.props.delivery);
+                this.setState({deliveryItems: items});
+                let array = [];
+                for(let i of items) {
+                    const book = await DeliveryService.getBookFromDeliveryItem(i.id);
+                    if(book.id === null) {
+                        const otherProduct = await DeliveryService.getOtherProductFromDeliveryItem(i.id);
+                        const obj = {
+                            amount: i.amount,
+                            name: otherProduct.name,
+                            image: otherProduct.coverImage,
+                            price: parseInt(i.amount) * parseInt(otherProduct.price)
+                        }
+                        array.push(obj);
+                    }else {
+                        const obj = {
+                            amount: i.amount,
+                            name: book.name,
+                            image: book.coverImage,
+                            price: parseInt(i.amount) * parseInt(book.price)
+                        }
+                        array.push(obj);
                     }
-                    array.push(obj);
-                }else {
-                    const obj = {
-                        amount: i.amount,
-                        name: book.name,
-                        image: book.coverImage,
-                        price: parseInt(i.amount) * parseInt(book.price)
-                    }
-                    array.push(obj);
                 }
-            }
-            this.setState({newArray: array});
+                this.setState({newArray: array});
+        }
     }
 
     async componentDidUpdate(prevProps) {

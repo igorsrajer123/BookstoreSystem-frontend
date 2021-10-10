@@ -29,10 +29,14 @@
     align-items: center;
 }
 
+.previewProductButtons {
+    display: flex;
+    width: 70%;
+}
 .previewProductAddToCart {
     outline: none;
     border-style: none;
-    width: 70%;
+    width: 65%;
     height: 5vh;
     color: white;
     font-weight: bold;
@@ -47,6 +51,27 @@
 .previewProductAddToCart:hover {
     color: brown;
     background-color: lawngreen;
+}
+
+.previewProductPrices {
+    outline: none;
+    border-style: none;
+    width: 30%;
+    height: 5vh;
+    color: white;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+    background-color: brown;
+    cursor: pointer;
+    transition: 0.7s;
+    margin-top: 3%;
+    margin-left: 5%;
+}
+
+.previewProductPrices:hover {
+    color: brown;
+    background-color: burlywood;
 }
 
 .previewProductImage {
@@ -102,7 +127,7 @@
 }
 
 .previewProductLabel {
-    color: brown;
+    color: black;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: large;
     margin-top: 5%;
@@ -116,7 +141,6 @@
     border-color: brown;
     min-height: 10vh;
     background-color: burlywood;
-    border-radius: 10%;
     text-align: center;
     padding: 3%;
 }

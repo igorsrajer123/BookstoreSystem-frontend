@@ -8,10 +8,13 @@ import WriterService from './../../services/writerService';
 import ShoppingCartService from './../../services/shoppingCartService';
 import CustomerService from './../../services/customerService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import PreviewPriceHistory  from './PreviewPriceHistory';
 
 export default class PreviewProduct extends Component {
     constructor(props) {
         super(props);
+
+        this.child = React.createRef();
 
         this.state = {
             currentUser: null,
@@ -95,14 +98,25 @@ export default class PreviewProduct extends Component {
         }
     }
 
+    viewPriceHistoryClick = () => {
+        const product = this.state.currentProduct;
+        this.setState({currentProduct: ""});
+        this.setState({currentProduct: product});
+        this.child.current.toggleModal();
+    }
+
     render() {
         return (
             <div className="previewProductWrapper">
                 <NotificationContainer />
+                <PreviewPriceHistory ref={this.child} product={this.state.currentProduct} />
                 <div className="previewProductLeft">
                     <div className="previewProductPicture">
                         <img src={this.state.productImage === "" ? NoImage : this.state.productImage} alt="pic" className="previewProductImage"/>
-                        <button className="previewProductAddToCart" style={{display: this.state.currentUserCustomer ? 'inline' : 'none'}} onClick={this.addToShoppingCart}>Add to Shopping Cart</button>
+                        <div className="previewProductButtons">
+                            <button className="previewProductAddToCart" style={{display: this.state.currentUserCustomer ? 'inline' : 'none'}} onClick={this.addToShoppingCart}>Add to Shopping Cart</button>
+                            <button className="previewProductPrices"  style={{display: this.state.currentUser !== null ? 'inline' : 'none'}} onClick={() => this.viewPriceHistoryClick(this.state.currentProduct.id)}>Prices</button>
+                        </div>
                     </div>
                     <div className="previewProductInformation">
                         <div className="previewProductData">

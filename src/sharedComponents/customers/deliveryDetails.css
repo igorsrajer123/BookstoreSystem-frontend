@@ -1,0 +1,44 @@
+.deliveryDetailsModal {
+    background-color: wheat;
+    width: 40vw;
+    min-height: 20vh;
+    height: auto;
+    outline: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+
+.deliveryDetailsWrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.deliveryDetailsItem {
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    border-top-style: groove;
+    border-bottom-style: groove;
+    margin: 1%;
+}
+
+.deliveryDetailsItemImage {
+    height: 90%;
+    width: 20%;
+    margin: 1%;
+}
+
+.deliveryDetailsItemLabel {
+    color: brown;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    font-weight: bold;
+    margin-left: 2%;
+}

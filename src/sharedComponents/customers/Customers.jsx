@@ -5,16 +5,20 @@ import LoginService from './../../services/loginService';
 import UserService from './../../services/userService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import DeliveryService from './../../services/deliveryService';
+import DeliveryDetails from './DeliveryDetails';
 
 export default class Customers extends Component {
     constructor() {
         super();
 
+        this.child = React.createRef();
+
         this.state = {
             allCustomers: [],
             currentUser: null,
             allDeliveries: [],
-            newArray: []
+            newArray: [],
+            selectedDelivery: ""
         }
 
         this.buttonClick = this.buttonClick.bind(this);
@@ -42,8 +46,9 @@ export default class Customers extends Component {
                 contactPhone: d.contactPhone,
                 deliveryAddress: d.deliveryAddress,
                 postalCode: d.postalCode,
-                createdDate: d.createdDate,
-                status: d.status
+                createdDate: d.createdDate.replace("T", " "),
+                status: d.status,
+                price: d.price
             }
             array.push(obj);
         }
@@ -88,6 +93,7 @@ export default class Customers extends Component {
             NotificationManager.error("Something went wrong!", "Update Failed!");
         }
 
+        console.log(resp);
         let array = [];
         for(let n of this.state.newArray){
             if(n.id === id)
@@ -98,9 +104,15 @@ export default class Customers extends Component {
         this.setState({newArray: array});
     }
 
+    clickOnDelivery = id => {
+        this.setState({selectedDelivery: id});
+        this.child.current.toggleModal();
+    }
+
     render() {
         return (
             <div className="viewCustomersWrapper">
+                <DeliveryDetails ref={this.child} delivery={this.state.selectedDelivery} />
                 <div className="viewCustomersHelper">
                     <NotificationContainer />
                     <h1 className="viewCustomersHeader">Registered Customers</h1>
@@ -145,20 +157,22 @@ export default class Customers extends Component {
                                 <th>Postal Code</th>
                                 <th>Created</th>
                                 <th>Status</th>
+                                <th>Price</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody className="viewPublishersTableBody">
                             {this.state.newArray.map((d, ddx) => (
-                                <tr key={ddx}>
+                                <tr key={ddx} onClick={() => this.clickOnDelivery(d.id)}>
                                     <td className="viewCustomersContent">{d.name}</td>
                                     <td className="viewCustomersContent">{d.email}</td>
                                     <td className="viewCustomersContent">{d.contactPhone}</td>
                                     <td className="viewCustomersContent">{d.deliveryAddress}</td>
                                     <td className="viewCustomersContent">{d.postalCode}</td>
                                     <td className="viewCustomersContent">{d.createdDate}</td>
-                                    <td className="viewCustomersContent">{d.status}</td>
+                                    <td className="viewCustomersContent" style={{color: d.status === 'DECLINED' ? 'red' : d.status === 'PENDING' ? 'yellow' : 'lawngreen'}}>{d.status}</td>
+                                    <td className="viewCustomersContent">{d.price}din</td>
                                     <td className="viewCustomersContent">
                                         <button style={{display: d.status === "PENDING" ? 'inline' : 'none', backgroundColor: 'lawngreen'}} onClick={() => this.acceptDeliveryRequest(d.id)} className="disableCustomerAccount">
                                             Accept

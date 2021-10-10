@@ -265,8 +265,11 @@ export default class ShoppingCart extends Component {
                     }
                     const response = await DeliveryService.createDelivery(obj);
                     if(response === 201) {
+                        for(let i of this.state.shoppingCartItems)
+                            await ShoppingCartService.deleteShoppingCartItem(i.id);
+
                         NotificationManager.success("Delivery successfully created. You will be notified if it's accepted or declined!", "Success!");
-                        await new Promise(resolve => setTimeout(resolve, 1500));
+                        await new Promise(resolve => setTimeout(resolve, 2000));
                         window.location.href="http://localhost:3000/"
                     }else {
                         NotificationManager.error("Error has occurred!!", "Error!");
@@ -339,8 +342,11 @@ export default class ShoppingCart extends Component {
                         
                         const response = await DeliveryService.createDelivery(obj);
                         if(response === 201) {
+                            for(let i of this.state.shoppingCartItems)
+                                await ShoppingCartService.deleteShoppingCartItem(i.id);
+                                
                             NotificationManager.success("Delivery successfully created. You will be notified if it's accepted or declined!", "Success!");
-                            await new Promise(resolve => setTimeout(resolve, 1500));
+                            await new Promise(resolve => setTimeout(resolve, 2000));
                             window.location.href="http://localhost:3000/"
                         }else {
                             NotificationManager.error("Error has occurred!!", "Error!");

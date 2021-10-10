@@ -25,7 +25,7 @@
 
 .viewCustomersTable {
     margin-top: 1%;
-    width: 100%;
+    width: 80vw;
     min-height: 10vh;
     height: auto;
     border-collapse: collapse;
@@ -59,10 +59,11 @@
     height: 4vh;
     text-align: center;
     font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .disableCustomerAccount {
-    width: 6vw;
+    width: 5vw;
     height: 3vh;
     border-style: none;
     outline: none;

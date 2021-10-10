@@ -43,11 +43,38 @@ async function acceptDelivery(id) {
     return response.status;
 }
 
+async function getDeliveryItems(id) {
+    const url = "http://localhost:8080/getDeliveryItemsByDeliveryId/" + id;
+    const response = await fetch(url);
+
+    const deliveryItems = await response.json();
+    return deliveryItems;
+}
+
+async function getBookFromDeliveryItem(id) {
+    const url = "http://localhost:8080/getBookFromDeliveryItem/" + id;
+    const response = await fetch(url);
+
+    const book = await response.json();
+    return book;
+}
+
+async function getOtherProductFromDeliveryItem(id) {
+    const url = "http://localhost:8080/getOtherProductByDeliveryItem/" + id;
+    const response = await fetch(url);
+
+    const otherProduct = await response.json();
+    return otherProduct;
+}
+
 const deliveryService = {
     getAllDeliveries,
     createDelivery,
     declineDelivery,
-    acceptDelivery
+    acceptDelivery,
+    getDeliveryItems,
+    getBookFromDeliveryItem,
+    getOtherProductFromDeliveryItem
 }
 
 export default deliveryService;

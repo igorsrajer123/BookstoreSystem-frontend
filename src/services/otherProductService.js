@@ -55,13 +55,27 @@ async function getOtherProductByShoppingCartItem(id) {
     const otherProduct = await response.json();
     return otherProduct;
 }
+
+async function updateOtherProductPrice(id, price) {
+    const url = "http://localhost:8080/updateOtherProductPrice/" + id + "/" + price;
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        }
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const otherProductService = {
     getAllOtherProducts,
     getOtherProductsByType,
     createNewOtherProduct,
     updateOtherProduct,
     getOtherProductById,
-    getOtherProductByShoppingCartItem
+    getOtherProductByShoppingCartItem,
+    updateOtherProductPrice
 }
 
 export default otherProductService;

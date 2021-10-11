@@ -13,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 10%;
 }
 
 .priceHistoryItem {
@@ -30,9 +31,31 @@
 
 .priceHistoryNewPrice {
     margin: 1%;
-    background-color: red;
     width: 80%;
+    display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.priceHistoryInput {
+    outline: none;
+    border-style: none;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-align: center;
+    width: 25%;
+    height: 3vh;
+}
+
+.priceHistoryButtonSave {
+    margin-left: 5%;
+    width: 10%;
+    height: 3vh;
+    border-style: none;
+    outline: none;
+    color: brown;
+    background-color: lawngreen;
+    font-weight: bold;
+    cursor: pointer;
 }

@@ -56,13 +56,26 @@ async function getBookFromShoppingCartItem(id) {
     return book;
 }
 
+async function upodateBookPrice(id, price) {
+    const url = "http://localhost:8080/updateBookPrice/" + id + "/" + price;
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+                    "Content-Type": 'application/json'
+        }
+    }).catch(e => console.error(e));
+
+    return response.status;
+}
+
 const bookService = {
     getAllBooks,
     getBooksByGenre,
     createNewBook,
     updateBook,
     getBookById,
-    getBookFromShoppingCartItem
+    getBookFromShoppingCartItem,
+    upodateBookPrice
 }
 
 export default bookService;

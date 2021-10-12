@@ -36,10 +36,10 @@ export default class ViewBookstoreStaffModal extends Component {
             this.setState({bookstore: this.props.bookstore});
 
             const bookstoreAdmins = await BookstoreAdministratorService.getAllBookstoreAdmins(this.props.bookstore.id);
-            this.setState({bookstoreAdmins: bookstoreAdmins});
+            this.setState({bookstoreAdmins: bookstoreAdmins.sort((a, b) => a.email.localeCompare(b.email))});
 
             const bookstoreSellers = await SellerService.getAllBookstoreSellers(this.props.bookstore.id);
-            this.setState({bookstoreSellers: bookstoreSellers});
+            this.setState({bookstoreSellers: bookstoreSellers.sort((a, b) => a.email.localeCompare(b.email))});
 
             if(this.props.currentUser.type === "ROLE_SYSTEM_ADMIN") {
                 this.setState({currentUserSysAdmin: true});
@@ -62,10 +62,10 @@ export default class ViewBookstoreStaffModal extends Component {
             this.setState({bookstore: this.props.bookstore});
 
             const bookstoreAdmins = await BookstoreAdministratorService.getAllBookstoreAdmins(this.props.bookstore.id);
-            this.setState({bookstoreAdmins: bookstoreAdmins});
+            this.setState({bookstoreAdmins: bookstoreAdmins.sort((a, b) => a.email.localeCompare(b.email))});
 
             const bookstoreSellers = await SellerService.getAllBookstoreSellers(this.props.bookstore.id);
-            this.setState({bookstoreSellers: bookstoreSellers});
+            this.setState({bookstoreSellers: bookstoreSellers.sort((a, b) => a.email.localeCompare(b.email))});
 
             if(this.props.currentUser.type === "ROLE_SYSTEM_ADMIN") {
                 this.setState({currentUserSysAdmin: true});

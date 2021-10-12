@@ -17,6 +17,7 @@ import ProductsInBookstores from './sharedComponents/productsInBookstores/Produc
 import CashRegister from './sharedComponents/cashRegister/CashRegister';
 import PreviewProduct from './sharedComponents/product/PreviewProduct';
 import ShoppingCart from './sharedComponents/shoppingCart/ShoppingCart';
+import SearchResults from './sharedComponents/search/SearchResults';
 
 function App() {
 	return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/cashRegister" exact component={CashRegister} />
             <Route path="/previewProduct/" component={PreviewProduct} />
             <Route path="/shoppingCart/" component={ShoppingCart} />
+            <Route path="/search/" component={SearchResults} />
         </BrowserRouter>
     );
 }

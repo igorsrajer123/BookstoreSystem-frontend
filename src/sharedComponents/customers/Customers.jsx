@@ -33,7 +33,7 @@ export default class Customers extends Component {
             window.location.href = "http://localhost:3000/";
 
         const customers = await CustomerService.getAllCustomers();
-        this.setState({allCustomers: customers});
+        this.setState({allCustomers: customers.sort((a, b) => a.firstName.localeCompare(b.name))});
         const deliveries = await DeliveryService.getAllDeliveries();
         this.setState({allDeliveries: deliveries});
         let array = [];
@@ -52,7 +52,7 @@ export default class Customers extends Component {
             }
             array.push(obj);
         }
-        this.setState({newArray: array});
+        this.setState({newArray: array.sort((a, b) => b.createdDate.localeCompare(a.name))});
     }
 
     async buttonClick(userId) {

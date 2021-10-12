@@ -16,6 +16,7 @@ export default class ChooseOtherProductsModal extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.sendOtherProducts = this.sendOtherProducts.bind(this);
         this.handleOtherProductChange = this.handleOtherProductChange.bind(this);
+        this.searchForOtherProduct = this.searchForOtherProduct.bind(this);
     }
 
     async componentDidMount() {
@@ -29,7 +30,7 @@ export default class ChooseOtherProductsModal extends Component {
             }
             createdArray.push(obj);
         }
-        this.setState({otherProducts: createdArray});
+        this.setState({otherProducts: createdArray.sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     componentDidUpdate(prevProps) {
@@ -45,7 +46,7 @@ export default class ChooseOtherProductsModal extends Component {
                     if(o.id === parseInt(b)) 
                         o.checked = true;
                     
-            this.setState({otherProducts: array});
+            this.setState({otherProducts: array.sort((a, b) => a.name.localeCompare(b.name))});
         }
     }
 
@@ -53,7 +54,7 @@ export default class ChooseOtherProductsModal extends Component {
         if(e.target.checked) {
             let array = this.state.selectedOtherProducts;
             array.push(e.target.value);
-            this.setState({selectedOtherProducts: array});
+            this.setState({selectedOtherProducts: array.sort((a, b) => a.name.localeCompare(b.name))});
         }
         
         if(!e.target.checked) {
@@ -73,12 +74,28 @@ export default class ChooseOtherProductsModal extends Component {
             this.setState({isOpen: true});
     }
 
+    searchForOtherProduct = async e => {
+        if(e.target.value === "") {
+            const otherProducts = await OtherProductService.getAllOtherProducts();
+            this.setState({otherProducts: otherProducts.sort((a, b) => a.name.localeCompare(b.name))});
+        }else {
+            const otherProducts = await OtherProductService.getAllOtherProducts();
+            let array = [];
+            for(let o of otherProducts) {
+                if(o.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    array.push(o);
+                }
+            }
+            this.setState({otherProducts: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
+    }
+
     render() {
         return (
             <Modal isOpen={this.state.isOpen} onRequestClose={this.toggleModal} ariaHideApp={false} className="chooseOtherProductsModal">
                 <div className="chooseOtherProductsWrapper">
                     <div className="chooseOtherProductSearch">
-                        <input type="text" placeholder="Search..." className="chooseOtherProductSearchBar"/>
+                        <input type="text" placeholder="Search..." className="chooseOtherProductSearchBar" onChange={this.searchForOtherProduct}/>
                     </div>
                     {this.state.otherProducts.map(o => (
                         <div key={o.id} className="chooseOtherProductInfo">

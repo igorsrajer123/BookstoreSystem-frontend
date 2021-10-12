@@ -19,12 +19,15 @@ export default class ProductsInBookstores extends Component {
             otherProductsInBookstore: [],
             newObjectsBooks: [],
             newObjectsOtherProducts: [],
+            currentBookstore: "",
             bookstoreAdminLogged: false,
             sellerLogged: false,
             selectedProduct: null
         }
 
         this.editProductAmountClick = this.editProductAmountClick.bind(this);
+        this.searchBooks = this.searchBooks.bind(this);
+        this.searchOtherProducts = this.searchOtherProducts.bind(this);
     }
 
     async componentDidMount() {
@@ -38,7 +41,8 @@ export default class ProductsInBookstores extends Component {
 
                 const seller = await SellerService.getSellerByUserId(currentUser.id);
                 const sellersBookstore = await BookstoreService.getBookstoreBySellerId(seller.id);
-                
+                this.setState({currentBookstore: sellersBookstore});
+
                 const books = await ProductsInBookstoresService.getBooksInBookstore(sellersBookstore.id);
                 this.setState({booksInBookstore: books});
 
@@ -53,6 +57,7 @@ export default class ProductsInBookstores extends Component {
                 
                 const admin = await BookstoreAdministratorService.getBookstoreAdministratorByUserId(currentUser.id);
                 const adminsBookstore = await BookstoreService.getBookstoreByAdminId(admin.id);
+                this.setState({currentBookstore: adminsBookstore});
 
                 const books = await ProductsInBookstoresService.getBooksInBookstore(adminsBookstore.id);
                 this.setState({booksInBookstore: books});
@@ -84,7 +89,7 @@ export default class ProductsInBookstores extends Component {
             }
             ourBooks.push(object);
         }
-        this.setState({newObjectsBooks: ourBooks});
+        this.setState({newObjectsBooks: ourBooks.sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     async generateNewObjectsOtherProducts(otherProductsInBookstore) {
@@ -101,12 +106,46 @@ export default class ProductsInBookstores extends Component {
             }
             ourOtherProducts.push(object);
         }
-        this.setState({newObjectsOtherProducts: ourOtherProducts});
+        this.setState({newObjectsOtherProducts: ourOtherProducts.sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     editProductAmountClick  = productInBookstore => {
         this.setState({selectedProduct: productInBookstore});
         this.child.current.toggleModal();
+    }
+
+    searchBooks = async e => {
+        if(e.target.value === "") {
+            const books = await ProductsInBookstoresService.getBooksInBookstore(this.state.currentBookstore.id);
+            await this.generateNewObjectsBooks(books);
+        }else {
+            const books = await ProductsInBookstoresService.getBooksInBookstore(this.state.currentBookstore.id);
+            await this.generateNewObjectsBooks(books);
+            let array = [];
+            for(let o of this.state.newObjectsBooks) {
+                if(o.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    array.push(o);
+                }
+            }
+            this.setState({newObjectsBooks: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
+    }
+
+    searchOtherProducts = async e => {
+        if(e.target.value === "") {
+            const otherProducts = await ProductsInBookstoresService.getOtherProductsInBookstore(this.state.currentBookstore.id);
+            await this.generateNewObjectsOtherProducts(otherProducts);
+        }else {
+            const otherProducts = await ProductsInBookstoresService.getOtherProductsInBookstore(this.state.currentBookstore.id);
+            await this.generateNewObjectsOtherProducts(otherProducts);
+            let array = [];
+            for(let o of this.state.newObjectsOtherProducts) {
+                if(o.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    array.push(o);
+                }
+            }
+            this.setState({newObjectsOtherProducts: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
     }
 
     render() {
@@ -115,6 +154,7 @@ export default class ProductsInBookstores extends Component {
                 <EditProductAmountModal ref={this.child} product={this.state.selectedProduct}/>
                 <div className="booksInBookstore">
                     <h2 className="booksInBookstoreHeader">Books on Stock</h2>
+                    <input type="text" placeholder="Search..." onChange={this.searchBooks} className="booksInBookstoreSearchInput" />
                     <table className="booksInBookstoreTable">
                         <thead className="booksInBookstoreTableHead">
                             <tr>
@@ -142,6 +182,7 @@ export default class ProductsInBookstores extends Component {
                 </div>
                 <div className="otherProductsInBookstore">
                     <h2 className="booksInBookstoreHeader">Other Products on Stock</h2>
+                    <input type="text" placeholder="Search..." onChange={this.searchOtherProducts} className="booksInBookstoreSearchInput" />
                     <table className="booksInBookstoreTable">
                         <thead className="booksInBookstoreTableHead">
                             <tr>

@@ -86,3 +86,12 @@
     color: darkred;
     background-color: white;
 }
+
+.booksInBookstoreSearchInput {
+    outline: none;
+    border-style: none;
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    margin-bottom: 1%;
+}

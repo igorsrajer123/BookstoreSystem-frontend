@@ -16,6 +16,7 @@ export default class ChooseBooksModal extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.sendBooks = this.sendBooks.bind(this);
         this.handleBookChange = this.handleBookChange.bind(this);
+        this.searchForBook = this.searchForBook.bind(this);
     }
 
     toggleModal = () => {
@@ -36,7 +37,7 @@ export default class ChooseBooksModal extends Component {
             }
             createdArray.push(obj);
         }
-        this.setState({books: createdArray});
+        this.setState({books: createdArray.sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     componentDidUpdate(prevProps) {
@@ -55,7 +56,7 @@ export default class ChooseBooksModal extends Component {
                     }
                 }
             }
-            this.setState({books: array});
+            this.setState({books: array.sort((a, b) => a.name.localeCompare(b.name))});
         }
     }
 
@@ -63,7 +64,7 @@ export default class ChooseBooksModal extends Component {
         if(e.target.checked) {
             let array = this.state.selectedBooks;
             array.push(e.target.value);
-            this.setState({selectedBooks: array});
+            this.setState({selectedBooks: array.sort((a, b) => a.name.localeCompare(b.name))});
         }
         
         if(!e.target.checked) {
@@ -76,12 +77,28 @@ export default class ChooseBooksModal extends Component {
 
     sendBooks = () => this.props.sendData(this.state.selectedBooks);
     
+    searchForBook = async e => {
+        if(e.target.value === "") {
+            const allBooks = await BookService.getAllBooks();
+            this.setState({books: allBooks.sort((a, b) => a.name.localeCompare(b.name))});
+        }else {
+            const allBooks = await BookService.getAllBooks();
+            let array = [];
+            for(let o of allBooks) {
+                if(o.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    array.push(o);
+                }
+            }
+            this.setState({books: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
+    }
+
     render() {
         return (
             <Modal isOpen={this.state.isOpen} onRequestClose={this.toggleModal} ariaHideApp={false} className="chooseBooksModal">
                 <div className="chooseBooksWrapper">
                     <div className="chooseBookSearch">
-                        <input type="text" placeholder="Search..." className="chooseBooksSearchBar"/>
+                        <input type="text" placeholder="Search..." className="chooseBooksSearchBar" onChange={this.searchForBook}/>
                     </div>
                     {this.state.books.map(b => (
                         <div key={b.id} className="chooseBooksInfo">

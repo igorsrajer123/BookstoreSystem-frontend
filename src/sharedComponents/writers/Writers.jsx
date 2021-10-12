@@ -36,8 +36,8 @@ export default class Writers extends Component {
                 this.setState({showEditWriter: true});
                 this.setState({showWriterEditPhoto: true});
             }else {
-                this.setState({showEditWriter: true});
-                this.setState({showWriterEditPhoto: true});
+                this.setState({showEditWriter: false});
+                this.setState({showWriterEditPhoto: false});
             }
         }
     }

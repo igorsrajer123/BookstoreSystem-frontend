@@ -12,7 +12,7 @@ export default class Homepage extends Component {
         this.state = {
             products: [],
             currentUser: null
-        }
+        }  
     }
 
     async componentDidMount() {

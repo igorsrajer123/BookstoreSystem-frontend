@@ -25,6 +25,8 @@ export default class PublishersAndGenres extends Component {
         this.newPublisherClick = this.newPublisherClick.bind(this);
         this.editGenreClick = this.editGenreClick.bind(this);
         this.editPublisherClick = this.editPublisherClick.bind(this);
+        this.searchPublishers = this.searchPublishers.bind(this);
+        this.searchGenres = this.searchGenres.bind(this);
     }
 
     async componentDidMount() {
@@ -34,10 +36,10 @@ export default class PublishersAndGenres extends Component {
             window.location.href = "http://localhost:3000/";
 
         const publishers = await PublisherService.getAllPublishers();
-        this.setState({allPublishers: publishers});
+        this.setState({allPublishers: publishers.sort((a, b) => a.name.localeCompare(b.name))});
 
         const genres = await GenreService.getAllGenres();
-        this.setState({allGenres: genres});
+        this.setState({allGenres: genres.sort((a, b) => a.name.localeCompare(b.name))});
     }
 
     newGenreClick = () => {
@@ -60,6 +62,38 @@ export default class PublishersAndGenres extends Component {
         this.child2.current.toggleModal();
     }
 
+    searchPublishers = async e => {
+        if(e.target.value === "") {
+            const publishers = await PublisherService.getAllPublishers();
+            this.setState({allPublishers: publishers.sort((a, b) => a.name.localeCompare(b.name))});
+        }else {
+            const publishers = await PublisherService.getAllPublishers();
+            let array = [];
+            for(let p of publishers) {
+                if(p.name.toLowerCase().includes(e.target.value.toLowerCase())){
+                    array.push(p);
+                }
+            }
+            this.setState({allPublishers: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
+    }
+
+    searchGenres = async e => {
+        if(e.target.value === "") {
+            const genres = await GenreService.getAllGenres();
+            this.setState({allGenres: genres.sort((a, b) => a.name.localeCompare(b.name))});
+        }else {
+            const genres = await GenreService.getAllGenres();
+            let array = [];
+            for(let g of genres) {
+                if(g.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    array.push(g);
+                }
+            }
+            this.setState({allGenres: array.sort((a, b) => a.name.localeCompare(b.name))});
+        }
+    }
+
     render() {
         return (
             <div className="viewPublishersAndGenresWrapper">
@@ -68,6 +102,7 @@ export default class PublishersAndGenres extends Component {
                 <div className="viewPublishersHelper1">
                     <h1 className="viewPublishersAndGenresHeader">Publishers</h1>
                     <button className="createNewButton" onClick={this.newPublisherClick}><AddIcon />New Publisher</button>
+                    <input type="text" placeholder="Search..." onChange={this.searchPublishers} className="viewPublishersAndGenresSearch" />
                     <table className="viewPublishersTable">
                         <thead className="viewPublishersTableHead">
                             <tr>
@@ -92,6 +127,7 @@ export default class PublishersAndGenres extends Component {
                 <div className="viewPublishersHelper2">
                     <h1 className="viewPublishersAndGenresHeader">Genres</h1>
                     <button className="createNewButton" onClick={this.newGenreClick}><AddIcon />New Genre</button>
+                    <input type="text" placeholder="Search..." onChange={this.searchGenres} className="viewPublishersAndGenresSearch" />
                     <table className="viewPublishersTable">
                         <thead className="viewPublishersTableHead">
                             <tr>

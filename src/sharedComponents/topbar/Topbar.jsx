@@ -26,7 +26,8 @@ export default class Topbar extends Component {
             showHelperToolbar: false,
             onCustomersPage: false,
             sysAdminLogged: false,
-            customerLoggedIn: false
+            customerLoggedIn: false,
+            searchContent: ""
         }
 
         this.booksClick = this.booksClick.bind(this);
@@ -39,6 +40,7 @@ export default class Topbar extends Component {
         this.logoutClick = this.logoutClick.bind(this);
         this.customersClick = this.customersClick.bind(this);
         this.clickShoppingCartHandle = this.clickShoppingCartHandle.bind(this);
+        this.searchInputHandle = this.searchInputHandle.bind(this);
     }
 
     loginClick = () => this.child.current.toggleModal();
@@ -128,6 +130,13 @@ export default class Topbar extends Component {
         }
     }
 
+    searchInputHandle = e => this.setState({searchContent: e.target.value});
+
+    clickSearchIcon = () => {
+        if(this.state.searchContent.trim() !== "") 
+            window.location.href = "http://localhost:3000/search/" + this.state.searchContent;    
+    }
+
     render() {
         return (
             <div className="topbarWrapper">
@@ -137,8 +146,8 @@ export default class Topbar extends Component {
                     </div>
                     <div className="topbarTopCenter">
                         <div className="topbarSearch">
-                            <input type="text" className="searchInput" placeholder="Search bookstores, books, writers..." />
-                            <SearchIcon className="searchIcon" />
+                            <input type="text" className="searchInput" placeholder="Search bookstores, books, writers..." onChange={this.searchInputHandle}/>
+                            <SearchIcon className="searchIcon" onClick={this.clickSearchIcon}/>
                         </div>
                     </div>
                     <div className="topbarTopRight">

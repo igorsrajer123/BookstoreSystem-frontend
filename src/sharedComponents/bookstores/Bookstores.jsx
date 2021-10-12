@@ -37,7 +37,7 @@ export default class Bookstores extends Component {
 
     async componentDidMount() {
         const bookstores = await BookstoreService.getAllBookstores();
-        this.setState({bookstores: bookstores});
+        this.setState({bookstores: bookstores.sort((a, b) => a.name.localeCompare(b.name))});
 
         const currentUser = await LoginService.getCurrentUser();
         this.setState({currentUser: currentUser})

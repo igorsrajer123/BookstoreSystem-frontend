@@ -374,7 +374,13 @@ export default class ShoppingCart extends Component {
                                 <li className="shoppingCartItem" style={{backgroundColor: i.available ? '' : '', color: 'red'}}>
                                     <h4 style={{display: i.available ? 'none' : 'inline'}}>Out of Stock!</h4>
                                     <img alt="pic" src={i.coverImage === null ? NoImage : "http://localhost:8080/uploads/" + i.coverImage } className="shoppingCartItemPicture"/>
-                                    <span className="shoppingCartItemLabel">{i.name} (x{i.amount}) - <i style={{color: 'black'}}>{i.amount * i.price}din</i></span>
+                                    <div className="shoppingCartMiddleSection">
+                                        <span className="shoppingCartItemLabel">{i.name} - </span>
+                                        <div className="shoppingCartHelperInformation">
+                                            <span className="shoppingCartItemLabel">Unit Price: <i style={{color: 'black'}}>{i.price}din</i></span>
+                                            <span className="shoppingCartItemLabel">Amount: <i style={{color: 'black'}}>{i.amount}</i></span>
+                                        </div>
+                                    </div>
                                     <button className="shoppingCartItemDiscardButton" onClick={() => this.discardItem(i.id)}>Discard</button>
                                 </li>  
                             </div>

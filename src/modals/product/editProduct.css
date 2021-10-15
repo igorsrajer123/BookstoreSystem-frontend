@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 2%;
 }
 
 .editProductWrapper {
@@ -116,7 +116,7 @@ option:not(:checked) {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: -12%;
+    margin-top: 7%;
 }
 
 .editProductSaveButton {

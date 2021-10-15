@@ -35,6 +35,7 @@
     height: 20vh;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     border-top-style: groove;
     border-bottom-style: groove;
     border-color: brown;
@@ -51,18 +52,26 @@
     height: 95%;
 }
 
+.shoppingCartMiddleSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+    height: 100%;
+}
+
 .shoppingCartItemLabel {
     color: brown;
     font-weight: bold;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: large;
-    width: 60%;
+    width: auto;
     margin-left: 5%;
 }
 
 .shoppingCartItemDiscardButton {
     background-color: red;
-    width: 10vw;
+    width: 6vw;
     height: 5vh;
     outline: none;
     border-style: none;
@@ -184,6 +193,12 @@
 .creditCardDetailsInput {
     width: 100%;
     text-align: end;
+}
+
+.shoppingCartHelperInformation {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
 }
 
 .createShippingRequest {

@@ -119,23 +119,25 @@ export default class PreviewProduct extends Component {
                         </div>
                     </div>
                     <div className="previewProductInformation">
+                        <span className="previewProductHelperSpan">Information</span>
                         <div className="previewProductData">
                             <span className="previewProductLabel"><b>Product Code: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.code}</span>
-                            <span className="previewProductLabel"><b>Price(RSD): </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.price}</span>
+                            <span className="previewProductLabel"><b>Price: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.price}din</span>
                             <span className="previewProductLabel"><b>Publisher: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.publisher.name}</span>
                             <span className="previewProductLabel"><b>Publishing Date: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.published}</span>
                         </div>
                         <div className="previewProductMoreInformation">
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Language: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.language}</span>
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Cover Type: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.coverType}</span>
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Writer(s): </b>{this.state.currentProduct === null ? '' : this.state.bookWriters.map(w => (w.name))}</span>
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Number of Pages: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.numberOfPages}</span>
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'none' : 'inline'}}><b>Expiration Date: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.expirationDate}</span>
-                            <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'none' : 'inline'}}><b>Product Type: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.type}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Language: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.language}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Cover Type: </b>{this.state.currentProduct === null ? '' : this.state.currentProduct.coverType}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Writer(s): </b>{this.state.currentProduct === null ? '' : this.state.bookWriters.map(w => (w.name))}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'inline' : 'none'}}><b>Number of Pages: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.numberOfPages}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'none' : 'inline'}}><b>Expiration Date: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.expirationDate}</span>
+                                <span className="previewProductLabel" style={{display: this.state.currentProductIsBook ? 'none' : 'inline'}}><b>Product Type: </b> {this.state.currentProduct === null ? '' : this.state.currentProduct.type}</span>
                         </div>
                     </div>
                 </div>
                 <div className="previewProductRight">
+                    <span className="previewProductHelperSpanDescription">Description</span>
                     <div className="previewProductDescription">
                         {this.state.currentProduct === null ? '' : this.state.currentProduct.description}
                     </div>

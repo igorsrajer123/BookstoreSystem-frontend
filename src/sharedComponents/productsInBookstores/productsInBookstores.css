@@ -49,14 +49,6 @@
     background-color: #fff;
 }
 
-.booksInBookstoreTableBody > tr {
-    transition: 0.3s;
-}
-
-.booksInBookstoreTableBody > tr:hover {
-    transform: scale(1.02);
-}
-
 .booksInBookstoreContent {
     color: white;
     background-color: chocolate;

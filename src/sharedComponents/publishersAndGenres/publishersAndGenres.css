@@ -77,14 +77,6 @@
     background-color: #fff;
 }
 
-.viewPublishersTableBody > tr {
-    transition: 0.3s;
-}
-
-.viewPublishersTableBody > tr:hover {
-    transform: scale(1.02);
-}
-
 .viewPublishersContent {
     color: white;
     background-color: chocolate;

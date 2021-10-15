@@ -65,15 +65,45 @@
     width: 70%;
     transition: 0.3s;
     display: flex;
-    flex-direction: column;
     border-style: groove;
     border-radius: 10%;
     background-color: brown;
     opacity: 1;
     border-color: white;
     color: white;
+}
+
+.cashRegisterOneReceiptLeftDiv {
+    margin: 5%;
+    width: 70%;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    border-color: white;
+    color: white;
     align-items: center;
     justify-content: center;
+}
+
+.cashRegisterOneReceiptRightDiv {
+    margin: 5%;
+    transition: 0.3s;
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.exportToPdfFile {
+    cursor: pointer;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 10%;
+
+}
+
+.exportToPdfFile:hover {
+    color: black;
 }
 
 .cashRegisterHeader {
@@ -203,3 +233,4 @@
     height: 5vh;
     margin-bottom: 2%;
 }
+

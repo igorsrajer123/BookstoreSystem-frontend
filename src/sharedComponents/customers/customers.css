@@ -43,14 +43,6 @@
     background-color: #fff;
 }
 
-.viewCustomersTableBody > tr {
-    transition: 0.3s;
-}
-
-.viewCustomersTableBody > tr:hover {
-    transform: scale(1.02);
-}
-
 .viewCustomersContent {
     color: white;
     background-color: chocolate;

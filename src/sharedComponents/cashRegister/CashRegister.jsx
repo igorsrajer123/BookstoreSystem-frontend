@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ProductsInBookstoreService from './../../services/productsInBookstoreService';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { PDFDownloadLink, Document, Page, Text, View, Font, StyleSheet } from '@react-pdf/renderer';
 
 export default class CashRegister extends Component {
     constructor(props) {
@@ -322,6 +323,86 @@ export default class CashRegister extends Component {
         this.setState({newObjectList: array});
     }
 
+    styles = StyleSheet.create({
+        header: {
+            color: 'brown',
+            marginTop: 15,
+            fontSize: 30,
+            textAlign: 'center'
+        },
+        headerItems: {
+            fontSize: 15,
+            textAlign: 'center'
+        },
+        headerView: {
+            marginBottom: 20
+        },
+        views: {
+            marginLeft: 10,
+            marginRight: 10,
+            fontSize: 10,
+            display: 'flex',
+            flexDirection: 'column'
+        },
+        item: {
+            width: 260,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start'
+        },
+        itemPrice: {
+            color: 'brown',
+            marginLeft: 25,
+            marginRight: 35
+        },
+        note: {
+            textAlign: 'center'
+        }
+    });
+
+    MyDoc = (props) => (
+        <Document>
+            <Page size="A6" style={{backgroundColor: 'wheat'}}>
+                <View style={this.styles.headerView}>
+                    <Text style={this.styles.header}>Bookstore++</Text>
+                    <Text style={this.styles.headerItems}>{this.state.currentBookstore.name}</Text>
+                    <Text style={this.styles.headerItems}>{this.state.currentBookstore.address}, {this.state.currentBookstore.city}</Text>
+                </View>
+                <View style={this.styles.views}>
+                    <Text>{props.receipt.dateAndTime}</Text>
+                    <Text>--------------------------------------------------------------------------------</Text>
+                </View>
+                <View style={this.styles.views}>
+                    <Text>Number: {props.receipt.number}</Text>
+                    <Text>Status: {props.receipt.status}</Text>
+                    <Text>Created By: {props.receipt.seller.user.firstName} {props.receipt.seller.user.lastName}</Text>
+                    <Text>--------------------------------------------------------------------------------</Text>
+                </View>
+                <View style={this.styles.views}>
+                            {props.receipt.items.map((i, idx) => (
+                            <View key={idx}>
+                                <Text>{i.name}</Text>
+                                <View style={this.styles.item}>
+                                    <Text style={this.styles.itemPrice}>{i.amount}x</Text> 
+                                    <Text style={this.styles.itemPrice}>{i.price}.00</Text> 
+                                    <Text style={this.styles.itemPrice}>{parseInt(i.amount) * parseInt(i.price)}.00</Text>
+                                </View>
+                            </View>
+                        ))}
+                    <Text>--------------------------------------------------------------------------------</Text>
+                </View>
+                <View style={this.styles.views}>
+                    <Text>Total(RSD): {props.receipt.value}</Text>
+                    <Text>--------------------------------------------------------------------------------</Text>
+                </View>
+                <View style={this.styles.views}>
+                    <Text style={this.styles.note}>THANK YOU FOR VISITING!</Text>
+                </View>
+            </Page>
+        </Document>
+    )
+    
     render() {
         return (
             <div className="cashRegisterWrapper">
@@ -347,21 +428,28 @@ export default class CashRegister extends Component {
                                 style={{minHeight: this.state.showAllReceipts ? '10vh' : '0px', 
                                         height: this.state.showAllReceipts ? 'auto' : '0px',
                                         borderStyle: this.state.showAllReceipts ? 'groove' : 'none'}}>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Number: <b>{r.number}</b></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Date and Time: <b>{r.dateAndTime}</b></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Value(RSD): <b>{r.value}</b></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Status:  <b>{r.status}</b><button style={{display: r.status === "CREATED" ? '' : 'none'}} className="reverseReceiptButton" onClick={() => this.reverseReceiptClick(r.id)}>Reverse</button></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Created By:  <b>{r.seller.user.firstName} {r.seller.user.lastName}</b></span>
-                                    <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">
-                                        <div className="divForReceiptItems">
-                                            <span style={{textDecoration: 'underline'}}>Items:</span>
-                                            <ol>
-                                                {r.items.map(i => (
-                                                    <li key={i.name}>{i.name}(x{i.amount}) - {i.price}RSD</li>
-                                                ))}
-                                            </ol>
-                                        </div>
-                                    </span>
+                                    <div className="cashRegisterOneReceiptLeftDiv">
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Number: <b>{r.number}</b></span>
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Date and Time: <b>{r.dateAndTime}</b></span>
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Value: <b>{r.value}din</b></span>
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Status:  <b>{r.status}</b><button style={{display: r.status === "CREATED" ? '' : 'none'}} className="reverseReceiptButton" onClick={() => this.reverseReceiptClick(r.id)}>Reverse</button></span>
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">Created By:  <b>{r.seller.user.firstName} {r.seller.user.lastName}</b></span>
+                                        <span style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="receiptInformation">
+                                            <div className="divForReceiptItems">
+                                                <span style={{textDecoration: 'underline'}}>Items:</span>
+                                                <ol>
+                                                    {r.items.map(i => (
+                                                        <li key={i.name}>{i.name}(x{i.amount}) - {i.price}din</li>
+                                                    ))}
+                                                </ol>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div className="cashRegisterOneReceiptRightDiv">
+                                        <PDFDownloadLink document={<this.MyDoc receipt={r} />} fileName={`receipt${r.number}.pdf`} style={{display: this.state.showAllReceipts ? 'inline' : 'none'}} className="exportToPdfFile">
+                                            {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF!')}
+                                        </PDFDownloadLink>
+                                    </div>
                             </div>
                         ))}
                     </div>
